@@ -1,14 +1,97 @@
 # Spearman
+// anny: i broke point 1 into 2 parts -> part1a, and part1b, so we can now delete point 1
 1.	As a UBC student, I would like to view my respective prerequisites, co-requisities, and courses (and labs & tutorials) that I could take as a resultant of taking this specific course selected, and the option of displaying the related information in a graphical manner.
   a)	Note: would split this into at least two parts....
 
-2.	 As a UBC student, I would like to be able to create a (or multiple) worklist(s) to store various combinations of courses and the resultant timetable.
+1a.	As a UBC student, I would like to view a selected number of prerequisite and/or co-requisite courses, in one or more selected departments, that I need to take for a specific course or courses, in form of a list or a graph.
+// anny: we don't need to include the option to view labs and tutorials separately, because they are listed under the course itself, along with course sections.
+acceptance criteria: 
+- User must be able to select a course (the course that he is interested in to discover the prerequisite and/or co-requisite courses)
+- User must be able to select a number of courses to show
+- User must be able to select whether he wants to see prerequisite courses, co-requisite courses, or both
+- If the user selects the option to show both prerequisite and co-requisite courses, then the results will contain indicated number(chosen by the user earlier) of prerequisite courses, and a desired number of co-requisite courses.
+- User must be able to select one or more department
+- By default, the results will be displayed in a list, to account for users with slow internet, or with older browsers, and the user will have the option to see there results in form of a graph.
+- Initially, in the list, results will be displayed alphabetically. 
+- Each course tuple will have the following information displayed: department, course number, number of credits, and course title
 
-3.	As a UBC student, I would like to be able to login via various social media outlets and share my respective schedule with whom I specify.
+1b. 	As a UBC student, if I choose to display prerequisite and/or co-requisite courses in form of a list, I would like to be able to sort the list by departments, level of the course(first digit of the course number), title of the course(alphabetically)
+acceptance criteria: 
+- User must be able to click on the heading "Department", and as a result of that, the results will be sorted by department
+- User must be able to click on the heading "Course number", and as a result of that,  the results will be sorted by course number
+- User must be able to click on the heading "Course title", and as a result of that, the results will be sorted by the course title.
+- Each course tuple will have the following information displayed: department, course number, number of credits, and course title
 
+1c.	As a UBC student, I would like to view a selected number of courses I can take, in one or more selected departments, as a result of completing a specific course or courses, in form of a list.
+acceptance criteria:
+- User must be able to select a course (the course that he wants to find out more about)
+- User must be able to select a number of results to be displayed
+- User must be able to select one or more departments
+- Results must be displayed in a list
+- Each course tuple must have the following information displayed: department, course number, number of credits, and course title
+
+2a.	 As a UBC student, I would like to be able to create a (or multiple) worklist(s) to store various combinations of courses and view the resultant in form of a list or a timetable.
+acceptance criteria:
+- User must be able to create worklists and give them unique names
+- When a user has opened a course/lab/tutorial section view, he must be able to add this section to a desired worklist, unless the section is full.
+- When viewing worklists, the results will be displayed in form of a timetable by default
+- User must be able to switch to list view or timetable view as needed.
+- User must be able to delete sections from his worklist
+- User must be able to delete worklists
+- User must be able to rename worklists
+anny: WHAT ABOUT CONFLICTS, ARE WE ADDRESSING THEM HERE?
+
+3a.	As a UBC student, I would like to be able to login via various social media outlets and share my respective schedule with whom I specify.
+acceptance criteria:
+anny: THOUGHT WE WERENT DOING IT
+
+3b. 	As a UBC student, I would like to login via Facebook, and I would like to be able to save my worklists, so that when I log out my worklists are not deleted.
+acceptance criteria:
+- User must be able to login with Facebook
+- Upon logging in again, user must be able to see his worklists again
+
+
+// Anny: I changed point 4 into (a more concrete) point 4a, so we can delete point 4
 4.	As a UBC student, I would like to know the distance between the locations of my lectures/labs/tutorials/etc.
-  a)	Note: We can consider the approximate time required for traveling between locations, varying among different modes of transport if we have time??
+  a)	Note: We can consider the approximate time required for traveling between locations, varying among different modes of transport if we have time?? anny: sure sure !!!
 
-5.	As a UBC student, I would like to be able to search for/browse courses according to filters (e.g. Semester, course code, professors, title, time, location, etc.)
+4a.	As a UBC student, when browsing courses, I would like to be able to see the distance between the location of a selected course/lab/tutorial section, and a course/lab/tutorial section that is already saved in my worklist. 
+acceptance criteria:
+- In a course/lab/tutorial section view, an option "calculate distance" must be displayed
+- When selecting the option "calculate distance", user must be presented with a choice to select the desired worklist, and with a choice to select the desired course in that worklist.
+- User must be able to select whether to display the distance in kilometres or miles.
 
-6.	As a UBC student, I would like to be notified (e.g. Warning message upon selecting course, red color highlights) when my worklist includes conflicting scheduling arrangements.
+5.	As a UBC student, I would like to be able to search for/browse course/lab/tutorial sections according to filters (e.g. Semester, course code, professors, title, time, location, etc.) and have them displayed in form of a list.
+acceptance criteria:
+// ANNY: THIS IS ACCEPTANCE CRITERIA FOR COURSE/LAB/TUTORIAL SECTIONS
+// anny: i changed it from course -> to a course section, lab section and a tutorial section, because if we want to search by time, 
+// then,  logically, we are interested in sections themselves, and not just the course. feel free to change it back, 
+
+
+- User must be able to select between a course, lab and a tutorial section
+- if the user selects the option to browse course sections, then all filters must be available for use.
+- if the user selects the option to browse tutorial sections, then all but "professor" filters must be available for use.
+- if the user selects the option to browse lab section, then all but "professor" filters must be available for use. 
+- User must be able to indicate the semester, and then the results must include only the sections from that semester
+- If browsing course sections, user must be able to enter the name of the professor, and the results must include only the course sections that are taught by the indicated professor
+- User must be able to enter the time slot and the results must include only the sections that take place during the indicated time slot
+- User must be able to enter the name of the building, and the results must include only the sections that take place in the indicated building
+- User must be able to use several filters at once (e.g. select time slot +  building)
+- If the search filter is invalid (e.g. invalid professor name) no results must displayed
+- Each section tuple will have the following information displayed: department, course #, # of credits, title, time, location, professor(if applicable) 
+
+// ANNY: THIS IS ACCEPTANCE CRITERIA FOR COURSE, if we just decide to go with displaying the courses… or we could do both and mix them..
+- User must be able to select a course
+- User must be able to enter the name of the professor, and the results must include only the courses that are taught by the indicated professor
+- User must be able to indicate the semester, and then the results must include only the courses from that semester
+- Users must be able to enter the time slot and the results must include only the courses that have sections that are taught during the indicated time slot
+- Users must be able to enter the name of the building, and the results must include only the courses that have sections are taught in the indicated building
+- User must be able to use several filters at once (e.g. select time slot +  building)
+- If the search filter is invalid (e.g. invalid professor name) no results must displayed
+- Each course tuple will have the following information displayed: department, course #, # of credits, and course title
+
+6.	As a UBC student, I would like to be notified in a visual manner (e.g. Warning message upon selecting course, red color highlights) when my worklist contains conflicting scheduling arrangements.
+acceptance criteria:
+- When the user selects the option to add the indicated section, that conflicts (time-wise) with another course in the indicated worklist, a warning message must be displayed to the user.
+- When user views any worklist in the format of a list, conflicting courses must be underlined in red.
+ 
