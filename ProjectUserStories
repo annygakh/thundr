@@ -1,0 +1,14 @@
+# Spearman
+1.	As a UBC student, I would like to view my respective prerequisites, co-requisities, and courses (and labs & tutorials) that I could take as a resultant of taking this specific course selected, and the option of displaying the related information in a graphical manner.
+  a)	Note: would split this into at least two parts....
+
+2.	 As a UBC student, I would like to be able to create a (or multiple) worklist(s) to store various combinations of courses and the resultant timetable.
+
+3.	As a UBC student, I would like to be able to login via various social media outlets and share my respective schedule with whom I specify.
+
+4.	As a UBC student, I would like to know the distance between the locations of my lectures/labs/tutorials/etc.
+  a)	Note: We can consider the approximate time required for traveling between locations, varying among different modes of transport if we have time??
+
+5.	As a UBC student, I would like to be able to search for/browse courses according to filters (e.g. Semester, course code, professors, title, time, location, etc.)
+
+6.	As a UBC student, I would like to be notified (e.g. Warning message upon selecting course, red color highlights) when my worklist includes conflicting scheduling arrangements.
