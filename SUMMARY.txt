@@ -1,6 +1,6 @@
 # Spearman
 
-Name of Application：<TODO>
+Name of Application：Thundr
 
 Summary of Application:
 
