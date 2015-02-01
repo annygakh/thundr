@@ -7,11 +7,11 @@
 // anny: we don't need to include the option to view labs and tutorials separately, because they are listed under the course itself, along with course sections.
 acceptance criteria: 
 - User must be able to select a course (the course that he is interested in to discover the prerequisite and/or co-requisite courses)
-- User must be able to select a number of courses to show
+- User must be able to select a number of courses to show // naomi: show what??
 - User must be able to select whether he wants to see prerequisite courses, co-requisite courses, or both
 - If the user selects the option to show both prerequisite and co-requisite courses, then the results will contain indicated number(chosen by the user earlier) of prerequisite courses, and a desired number of co-requisite courses.
 - User must be able to select one or more department
-- By default, the results will be displayed in a list, to account for users with slow internet, or with older browsers, and the user will have the option to see there results in form of a graph.
+- By default, the results will be displayed in a list, to account for users with slow internet, or with older browsers, and the user will have the option to see their results in form of a graph.
 - Initially, in the list, results will be displayed alphabetically. 
 - Each course tuple will have the following information displayed: department, course number, number of credits, and course title
 
@@ -40,10 +40,12 @@ acceptance criteria:
 - User must be able to delete worklists
 - User must be able to rename worklists
 anny: WHAT ABOUT CONFLICTS, ARE WE ADDRESSING THEM HERE?
+// naomi: the conflicts problem is already addressed in part 6.... but it also seems relevent to this part here too.... maybe we can merge/integrate the two parts together somewhere, or make a clearer distinction between the two parts?
 
 3a.	As a UBC student, I would like to be able to login via various social media outlets and share my respective schedule with whom I specify.
 acceptance criteria:
 anny: THOUGHT WE WERENT DOING IT
+// naomi: but integrating our web app with social media is one of the requirements of this project.... but deciding who to share with part is optional
 
 3b. 	As a UBC student, I would like to login via Facebook, and I would like to be able to save my worklists, so that when I log out my worklists are not deleted.
 acceptance criteria:
@@ -66,6 +68,7 @@ acceptance criteria:
 // ANNY: THIS IS ACCEPTANCE CRITERIA FOR COURSE/LAB/TUTORIAL SECTIONS
 // anny: i changed it from course -> to a course section, lab section and a tutorial section, because if we want to search by time, 
 // then,  logically, we are interested in sections themselves, and not just the course. feel free to change it back, 
+// naomi: true, or we can stalk random ppl by searching for their lecture/lab/tutorial time XD
 
 
 - User must be able to select between a course, lab and a tutorial section
@@ -78,6 +81,7 @@ acceptance criteria:
 - User must be able to enter the name of the building, and the results must include only the sections that take place in the indicated building
 - User must be able to use several filters at once (e.g. select time slot +  building)
 - If the search filter is invalid (e.g. invalid professor name) no results must displayed
+// naomi: maybe we can return a warning message for an invalid search too (or should this belong to part 6?)
 - Each section tuple will have the following information displayed: department, course #, # of credits, title, time, location, professor(if applicable) 
 
 // ANNY: THIS IS ACCEPTANCE CRITERIA FOR COURSE, if we just decide to go with displaying the courses… or we could do both and mix them..
@@ -88,10 +92,10 @@ acceptance criteria:
 - Users must be able to enter the name of the building, and the results must include only the courses that have sections are taught in the indicated building
 - User must be able to use several filters at once (e.g. select time slot +  building)
 - If the search filter is invalid (e.g. invalid professor name) no results must displayed
+// naomi: same suggestion here. adding an error message? (e.g. "Sorry, we are either unable to identify relevant courses with <search filter(s)> or your search is invalid.") (or should this belong to part 6?)
 - Each course tuple will have the following information displayed: department, course #, # of credits, and course title
 
 6.	As a UBC student, I would like to be notified in a visual manner (e.g. Warning message upon selecting course, red color highlights) when my worklist contains conflicting scheduling arrangements.
 acceptance criteria:
 - When the user selects the option to add the indicated section, that conflicts (time-wise) with another course in the indicated worklist, a warning message must be displayed to the user.
 - When user views any worklist in the format of a list, conflicting courses must be underlined in red.
- 
