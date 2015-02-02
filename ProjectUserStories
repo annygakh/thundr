@@ -62,3 +62,12 @@ acceptance criteria:
 - When the user selects the option to add the indicated section, that conflicts (time-wise) with another course in the indicated worklist, a warning message must be displayed to the user.
 - When a user tries to add a blocked/full/restricted course to the worklist, it must be added to the worklist, but a warning message must be displayed upon adding.
 - Blocked/full/restricted courses in the worklist will be visually distinguishable from other courses, when viewed in form of a list or a timetable
+
+8.	As a developer, I will write a web scraper to scrape course information from the SSC course website and parse it.
+acceptance criteria:
+- Data is comprehensively scraped from the SSC website
+- Data is correctly parsed into relevant categories (course name, course code, professor, location, time, prerequisites (of and for), etc.)
+
+9.	As a developer, I will store the parsed course data into a backend cloud data storage service, where the data will persistently be kept and accessed by the client to dynamically load data into the website.
+acceptance criteria:
+- Data is successfully loaded to the cloud
