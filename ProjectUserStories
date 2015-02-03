@@ -1,13 +1,13 @@
 # Spearman
 
-1.	As a UBC student, I would like to view a selected number of prerequisite and/or co-requisite courses, in one or more selected departments, that I need to take for a specific course or courses, in form of a list or a graph.
+1.	As a UBC student, I would like to view a selected number of prerequisite and/or co-requisite courses, in one or more selected departments, that I need to take for a specific course or courses, in form of a list.
 acceptance criteria: 
 - User must be able to select a course (the course that he is interested in to discover the prerequisite and/or co-requisite courses)
 - User must be able to select a number of results to be displayed 
 - User must be able to select whether he wants to see prerequisite courses, co-requisite courses, or both
 - If the user selects the option to show both prerequisite and co-requisite courses, then the results will contain indicated number(chosen by the user earlier) of prerequisite courses, and indicated number of co-requisite courses.
 - User must be able to select one or more department
-- By default, the results will be displayed in a list, to account for users with slow internet, or with older browsers, and the user will have the option to see their results in form of a graph.
+- The results will be displayed in a list
 - Initially, in the list, results will be displayed alphabetically. 
 - Each course tuple will have the following information displayed: department, course number, number of credits, and course title
 
@@ -41,7 +41,7 @@ acceptance criteria:
 - Upon logging in again, user must be able to see his worklist again
 
 
-6.	As a UBC student, I would like to be able to search for/browse course/lab/tutorial sections according to filters (e.g. Semester, course code, professors, title, time, location, etc.) and have them displayed in form of a list.
+6.	As a UBC student, I would like to be able to search for course/lab/tutorial sections according to filters (e.g. Semester, course code, professors, title, time, location, etc.) and have them displayed in form of a list.
 acceptance criteria:
 
 - User must be able to select between a course, lab and a tutorial section
