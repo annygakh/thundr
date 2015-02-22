@@ -2,23 +2,23 @@
 
 ###USAGE:
 
-install necessary modules
+#####1. install necessary modules
 
   `$npm install`
 
-start mongodb server
+#####2. start mongodb server
 
   `$mongod --dbpath ./data`
 
-connect to mongodb server
+#####3. connect to mongodb server
 
   `$mongo`
 
-run server on localhost
+#####4. run server on localhost
 
   `npm start`
 
-navigate to localhost:3000
+#####5. navigate to localhost:3000
 
 ###Source:
 http://cwbuecheler.com/web/tutorials/2014/restful-web-app-node-express-mongodb/
