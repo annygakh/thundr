@@ -18,7 +18,7 @@
 
   `npm start`
 
-#####5. navigate to localhost:3000
+#####5. navigate to [localhost:3000](http://localhost:3000)
 
 ###Source:
 http://cwbuecheler.com/web/tutorials/2014/restful-web-app-node-express-mongodb/
