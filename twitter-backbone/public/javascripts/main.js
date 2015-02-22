@@ -4,6 +4,7 @@
 		interpolate: /\{\{(.+?)\}\}/g
 	};
 
+
 	// Tweet Model
 	var Tweet = Backbone.Model.extend({
 		defaults: function() {
@@ -15,8 +16,22 @@
 	});
 
 	// Collection = Group of Models
-	var TweetList = Backbone.Collection.extend({
-		model: Tweet
+	var TweetList = Backbone.Firebase.Collection.extend({
+		model: Tweet,
+		// YOUR FIREBASE URL
+		url: "https://twittertut.firebaseio.com/"
+	});
+
+	var RealtimeList = Backbone.Firebase.Collection.extend({
+		// YOUR FIREBASE URL
+		url: "https://twittertut.firebaseio.com/tweets",
+		autoSync: true
+	})
+
+	var realtimeList = new RealtimeList();
+
+	realtimeList.on('sync', function(collection) {
+		console.log('collection is loaded', collection);
 	});
 
 	var tweets = new TweetList();
@@ -83,9 +98,10 @@
 
 	$(document).ready(function() {
 		$('#new-tweet').submit(function(ev) {
-			var tweet = new Tweet({ author: $('#author-name').val(), status: $('#status-update').val() });
-			tweets.add(tweet);
-			console.log(tweets.toJSON());
+			tweets.add({
+				author: $('#author-name').val(),
+				status: $('#status-update').val()
+			});
 			return false;
 		});
 		var appView = new TweetsView();
