@@ -1,20 +1,24 @@
 var request = require('request')
 	cheerio = require('cheerio')
 	HashMap = require('hashmap').HashMap
+	Firebase = require('firebase');
 
-var	courses = []
+var db = new Firebase("https://scraper.firebaseio.com/courses");
+
+// var courses = []
 	urls = new HashMap()
 	// All classes
 	//root = '/cs/main?pname=subjarea&tname=subjareas&req=0'
 	// Only CPSC classes
-	//root = '/cs/main?pname=subjarea&tname=subjareas&req=1&dept=CPSC'
-	// Only 'THTR' classes
-	root = '/cs/main?pname=subjarea&tname=subjareas&req=1&dept=THTR'
+	root = '/cs/main?pname=subjarea&tname=subjareas&req=1&dept=CPSC'
 	base = 'https://courses.students.ubc.ca';
 
 scrape();
 
 function scrape() {
+	// Clear db
+	db.set({});
+
 	urls.set(200, new Array());
 	urls.get(200).push(root);
 	urls.set(404, new Array());
@@ -22,10 +26,9 @@ function scrape() {
 }
 
 function crawl() {
-	console.log(urls.get()length);
 	if (urls.get(200).length == 0) {
-		console.log(courses);
-		console.log(courses.length);
+		// console.log(courses);
+		// console.log(courses.length);
 		return;
 	}
 	var link = urls.get(200).pop();
@@ -62,8 +65,21 @@ function parse(link) {
 			var $ = cheerio.load(body);
 			if (link.indexOf('section') != -1) {
 				// Add course title courses
-				var course = $('h4').text();
-				courses.push(course);
+				var course = link.substring(link.indexOf("course=") + 7, link.indexOf("course=") + 10);
+				var dept = link.substring(link.indexOf("dept=") + 5, link.indexOf("dept=") + 9);
+				var section = link.substring(link.indexOf("section=") + 8, link.indexOf("section=") + 11);
+				console.log(dept);
+				console.log(course);
+				console.log(section);
+				var instructor = $('tr td a').text();
+				console.log(instructor);
+				db.push({
+					dept: dept,
+					course: course,
+					section: section,
+					instructor: instructor
+				})
+				// courses.push(course);
 			}
 		} else {
 			console.log(resp.statusCode + " occured at " + base + link);
