@@ -1,0 +1,198 @@
+/** Fonts
+--------------------------------------------- **/
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+/* Font size
+--------------------------------------------- */
+
+.regular-font {
+	font-size: 16px;
+}
+
+.medium-font {
+	font-size: 20px;
+}
+
+.large-font {
+	font-size: 50px;
+	font-weight: 100;
+}
+
+@media (min-width: 50rem) {
+	.regular-font {
+		font-size: 16px;	
+	}
+
+  	.medium-font {
+		font-size: 24px;
+	}
+
+	.large-font {
+		font-size: 60px;
+		font-weight: 100;
+	}	
+}
+
+@media (min-width: 70rem) {
+  	.regular-font {
+		font-size: 18px;
+	}
+
+  	.medium-font {
+		font-size: 32px;
+	}
+
+	.large-font {
+		font-size: 80px;
+		font-weight: 700;
+	}		
+}
+
+/** Main styles
+--------------------------------------------- **/
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body, html {
+  font: 100%/1.5 'Lato';
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: #333333;
+  background-color: #004786;
+}
+
+a {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+section {
+	display: inline-block;
+}
+
+.container {
+	width: 90%;
+	margin: auto;
+}
+
+/** Header
+--------------------------------------------- **/
+
+section.header {
+	width: 100vw;
+	min-width: 800px;
+	height: 10vh;
+	min-height: 80px;
+	background-color: #004786;
+	color: #FFFFFF;
+}
+
+section.header * {
+	display: inline-block;
+	float: left;
+	margin: auto;
+}
+
+section.header p {
+	line-height: 100%;
+}
+
+.logo {
+	height: 10vh;
+	min-height: 80px;
+}
+
+
+@media (min-width: 50rem) {
+	section.header p {
+		line-height: 100%;
+	}	
+}
+
+@media (min-width: 70rem) {
+ 	section.header p {
+		line-height: 100%;
+	}	
+}
+
+/** Content
+--------------------------------------------- **/
+
+section.content {
+	width: 100vw;
+	min-width: 800px;
+}
+
+/** Left **/
+
+.left {
+	width: 30vw;
+	min-width: 240px;
+	height: 90vh;
+	min-height: 500px;
+	float: left;
+	background-color: #FFFFFF;
+}
+
+/** Search **/
+
+.search {
+	height: 50vh;
+	min-height: 250px;
+	background-color: #FFFFFF;
+}
+
+input {
+	width: 90%;
+	margin: 20px auto 0 auto;
+	padding: 5px;
+	border-radius: 4px;
+	border-width: 1px;
+	color: #333333;
+}
+
+button {
+	display: block;
+	margin: 20px auto 0 auto;
+	padding: 5px 10px;
+	border-radius: 4px;
+	border-width: 1px;
+	background-color: #004786;
+	color: #FFFFFF;
+}
+
+/** Worklist **/
+
+.worklist {
+	height: 40vh;
+	min-height: 250px;
+}
+
+.worklist .item {
+	display: inline-block;
+	width: 100%;
+}
+
+.worklist p {
+	float: left;
+}
+
+.worklist div.icon {
+	float: right;
+}
+
+/** Right **/
+
+.right {
+	width: 70vw;
+	min-width: 560px;
+	height: 90vh;
+	min-height: 500px;
+	float: left;
+	background-color: green;
+}
