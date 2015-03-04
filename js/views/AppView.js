@@ -3,21 +3,17 @@ var app = app || {};
 
 app.AppView = Backbone.View.extend({
 	el: 'body', 
-	// template:
+	
 
-	worklist_template: _.template($('#worklist-item-template').html()), // i will move this into a diff view class
-	course_code_query: function(){
-		// TODO
-	},
-
+	// worklist_template: _.template($('#worklist-item-template').html()), // i will move this into a diff view class
 
 	events: {
 		'click #search-button' : 'search',
-		 'keyup .code' : 'search',
-		 'keyup .title' : 'search',
-		 'keyup .dept' : 'search',
-		 'keyup .prof' : 'search',
-		 'keyup .time' : 'search',
+		'keyup .code' : 'search',
+		'keyup .title' : 'search',
+		'keyup .dept' : 'search',
+		'keyup .prof' : 'search',
+		'keyup .time' : 'search',
 		'click .add-cart' : 'add_to_cart'
 	},
 	initialize: function(){
@@ -27,7 +23,7 @@ app.AppView = Backbone.View.extend({
 		var self = this;
 		_.bindAll(this, 'query_on_success', 'query_on_error', 
 			'add_to_cart_success', 'add_to_cart_error');
-		this.query = null;
+		self.search_results_courses = [];
 	},
 	render: function(){
 
@@ -47,17 +43,18 @@ app.AppView = Backbone.View.extend({
 		4)----------
 
 		*/
+		self.$('#results').html(""); // clear results before 
+
 		var code_input = this.$('.code').val();
 		var title_input = this.$('.title').val();
 		var dept_input = this.$('.dept').val();
 		var prof_input = this.$('.prof').val();
 		var time_input = this.$('.time').val();
-		var query = this.query;
-		if (query == null){
-			query = new Parse.Query(app.CourseModel);
-		}
+
+		var	query = new Parse.Query(app.CourseModel);
 
 		if (title_input) {
+			
 			query.startsWith("title", title_input);
 		}
 		if (code_input) {
@@ -79,14 +76,13 @@ app.AppView = Backbone.View.extend({
 			});
 		}
 
-
 	},
 
 	handle_change_in_code_input: function(){
 		// call to parse to return results
 		var code_input = this.$('.code').val();
-		this.$("#result-code").text(code_input);
-		this.search();
+		self.$("#result-code").text(code_input);
+		self.search();
 	},
 
 	query_on_success: function(results){
@@ -95,11 +91,11 @@ app.AppView = Backbone.View.extend({
 			
 			if (document.getElementById(obj.id) == null) {
 				var view = new self.app.CourseView({model: obj});
-		       	// view.render();
 		       	self.$('#results').append(view.el);
 				
 			}
 		}
+
 	},	
 
 	query_on_error: function(err){
@@ -115,11 +111,9 @@ app.AppView = Backbone.View.extend({
 			success: this.add_to_cart_success,
 			error: this.add_to_cart_error
 		})
-
 	},
 	add_to_cart_success: function(obj){
 		var view = new self.app.CourseView({model: obj});
-		// view.render(); i guess this is unneccessary here
 		view.$('.add-cart').addClass("hidden");
 		view.$('.credits').addClass("hidden");
 		self.$('#worklist-container').append(view.el);
