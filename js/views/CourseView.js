@@ -14,14 +14,9 @@ app.CourseView = Backbone.View.extend({
 	reg_template:  _.template($('#course-template').html()),
 	worklist_template: _.template($('#worklist-item-template').html()),
 
-<<<<<<< HEAD
 	events: {
 		"click .item" : "toggleItem"
 	},
-=======
-	
-	
->>>>>>> 07289900a7701fbf77fa1439bdce5f00e76f9dba
 
 	initialize: function(){
 		this.template = this.reg_template;
