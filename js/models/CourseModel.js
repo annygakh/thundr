@@ -7,12 +7,12 @@ var app = app || {};
 		code: "",
 		credit: "",
 		description: "",
-		pre-reqs: [],
-		co-reqs: [],
-		post-reqs: [],
+		pre_reqs: [],
+		co_reqs: [],
+		post_reqs: [],
 		labs: [],
 		tutorials: [],
-		sections = [];
+		sections: [],
 	},
 
 	initialize: function(){
