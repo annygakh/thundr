@@ -15,12 +15,7 @@ app.CourseView = Backbone.View.extend({
 	worklist_template: _.template($('#worklist-item-template').html()),
 
 	events: {
-		'click .add-cart' : 'toggleButton'
-		// var events = {};
-		// // amounts to 'click #<id of this view>'' : 'handle_click'
-		// // events['click '+ '#' + this.id] = 'handle_click' ;//not sure if this is necessary yet
-		// events['click .add-cart'] = 'toggleButton';
-		// return events; 
+		"click .item" : "toggleItem"
 	},
 
 	initialize: function(){
