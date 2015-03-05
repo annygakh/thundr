@@ -1,7 +1,7 @@
 var app = app || {};
 
  app.CourseModel = Parse.Object.extend({
- 	className: 'TestObject',
+ 	className: 'Section',
     defaults: {
 		department: "",
 		code: "",

@@ -75,6 +75,13 @@
       <div class="right">
         <div class="container">
         <div id="results">
+        <table style="width:100%">
+          <tr>
+          <td>Department</td>
+          <td>Course code</td>
+          <td>Number of credits</td>
+          </tr>
+        </table>
 
          <!--  <div item>
             <div class="tag">
@@ -115,10 +122,17 @@
 
   <script type="text/template" id="course-template">
     <div class="item" id="<%=html_id%>">
-      <p><%=course_title%></p>
+       <!--<p><%=course_title%></p>
       <p class="credits"> <%=num_credits%> credits </p>
       <div class="icon" data-icon="ei-plus" data-size="s"></div>
-      <button class="<%=html_id%> add-cart">add to cart</button>
+     <button class="<%=html_id%> add-cart">add to cart</button>-->
+     <table style="width:100%" class="course-result">
+          <tr>
+          <td><%=course_title%></td>
+          <!--<td>Course code</td>-->
+          <td class="credits"><%=num_credits%></td>
+          </tr>
+        </table>
     </div>
   </script>
 
@@ -128,6 +142,7 @@
   <script src="js/lib/backbone-min.js"></script>
   <script src="js/lib/backbone.localStorage.js"></script>
   <script src="js/models/CourseModel.js"></script>
+  <script src="js/collections/CourseCollection.js"></script>
   <script src="js/views/AppView.js"></script>
   <script src="js/views/CourseView.js"></script>
   <script src="js/app.js"></script>

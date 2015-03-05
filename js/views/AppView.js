@@ -22,8 +22,12 @@ app.AppView = Backbone.View.extend({
 		});
 		var self = this;
 		_.bindAll(this, 'query_on_success', 'query_on_error', 
-			'add_to_cart_success', 'add_to_cart_error');
+			'add_to_cart_success', 'add_to_cart_error', 'addCourse');
 		self.search_results_courses = [];
+		// app.LocalCourses.fetch();
+		// app.results = new app.CourseCollection();
+		// this.listenTo(app.results, 'add', this.addCourse);
+		// this.listenTo(app.results, 'reset', this.addCourse);
 	},
 	render: function(){
 
@@ -58,7 +62,7 @@ app.AppView = Backbone.View.extend({
 			query.startsWith("title", title_input);
 		}
 		if (code_input) {
-			query.startsWith("course_id", code_input);
+			query.startsWith("section_id", code_input);
 		}
 		if (dept_input) {
 			query.startsWith("dept", dept_input);
@@ -86,19 +90,23 @@ app.AppView = Backbone.View.extend({
 	},
 
 	query_on_success: function(results){
+		app.results.reset(); 
 		for (var i = 0; i < results.length; i++){
 			var obj = results[i];
 			
 			if (document.getElementById(obj.id) == null) {
+				app.results.add(obj);
+				// console.log(obj);
+				// console.log(obj instanceof(app.CourseModel)); // returns true 
 				var view = new self.app.CourseView({model: obj});
-		       	self.$('#results').append(view.el);
-				
+				self.$('#results').append(view.el);
 			}
 		}
 
 	},	
 
 	query_on_error: function(err){
+		app.results.reset();
 		alert(err.message);
 	},
 	add_to_cart: function(event){
@@ -127,6 +135,17 @@ app.AppView = Backbone.View.extend({
 	logIn: function(){
 
 	},
+	sort_by_department: function(){
+
+	},
+	sort_by_level: function(){
+
+	},
+	addCourse: function(obj){
+		var view = new self.app.CourseView({model: obj});
+		self.$('#results').append(view.el);
+	},
+
 
 
 });
