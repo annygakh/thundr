@@ -199,3 +199,10 @@ button {
 	float: left;
 	background-color: white;
 }
+
+table, th, td {
+    border: 1px solid black;
+}
+.course-result {
+	border: 0.5px solid black;
+}

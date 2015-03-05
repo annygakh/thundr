@@ -14,13 +14,19 @@ app.CourseView = Backbone.View.extend({
 	reg_template:  _.template($('#course-template').html()),
 	worklist_template: _.template($('#worklist-item-template').html()),
 
+<<<<<<< HEAD
 	events: {
 		"click .item" : "toggleItem"
 	},
+=======
+	
+	
+>>>>>>> 07289900a7701fbf77fa1439bdce5f00e76f9dba
 
 	initialize: function(){
 		this.template = this.reg_template;
 		this.render();
+
 	},
 	render: function(){
 		var obj = {
@@ -28,6 +34,7 @@ app.CourseView = Backbone.View.extend({
 			"course_title" : this.model.get("title"),
 			"num_credits" : this.model.get("credits")
 		};
+		console.log(obj.num_credits);
 		$(this.el).html(this.template(obj));
 		return this; // to allow chained calls
 	},
@@ -40,6 +47,7 @@ app.CourseView = Backbone.View.extend({
 	},
 	handle_click: function(){
 		// reroute??
+
 	},
 	toggleButton: function(){
 		this.$('.add-cart').addClass("hidden");
