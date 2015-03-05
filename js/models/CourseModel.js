@@ -15,7 +15,6 @@ var app = app || {};
 		sections = [];
 	},
 
-
 	initialize: function(){
 	},
 	validate: function(attributes){
