@@ -65,6 +65,7 @@ body, html {
   color: #333333;
   background-color: #004786;
   overflow-x:hidden; 
+  overflow-y: scroll ;
 }
 
 a {
@@ -209,7 +210,7 @@ button {
 
 .table-header.top {
 	background-color: white;
-	position: fixed;
+	/*position: ;*/
 }
 
 table, th, td.table-header {
