@@ -64,6 +64,7 @@ body, html {
   -webkit-font-smoothing: antialiased;
   color: #333333;
   background-color: #004786;
+  overflow-x:hidden; 
 }
 
 a {
@@ -78,6 +79,9 @@ section {
 .container {
 	width: 90%;
 	margin: auto;
+	position :relative;
+	will-change: overflow; //new
+	overflow: hidden; //new
 }
 .hidden {
 	visibility: hidden;
@@ -137,6 +141,7 @@ section.content {
 	width: 30vw;
 	min-width: 240px;
 	height: 90vh;
+	/*overflow: auto; //new*/
 	min-height: 500px;
 	float: left;
 	background-color: #FFFFFF;
@@ -195,6 +200,8 @@ button {
 	width: 70vw;
 	min-width: 560px;
 	height: 90vh;
+	/*height: auto;  //new */
+	overflow: scroll; // new
 	min-height: 500px;
 	float: left;
 	background-color: white;
@@ -233,6 +240,15 @@ td.credits.course-result {
 	padding-right: 35px;
 	/*padding-left: 30px;*/
 }
+
+/*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
+.left::-webkit-scrollbar,
+.middle::-webkit-scrollbar,
+.right::-webkit-scrollbar {
+    display: none;
+}
+
+
 
 
 

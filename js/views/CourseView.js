@@ -24,6 +24,17 @@ app.CourseView = Backbone.View.extend({
 		this.render();
 
 	},
+    
+    toggleCourse: function (){
+        
+        this.get("description");
+        
+        var viewCourse = new self.app.SubSection({model: obj});
+        // self.$("#results").append(view.el);
+        
+        
+    },
+    
 	render: function(){
 		var obj = {
 			"html_id" : this.model.id,
