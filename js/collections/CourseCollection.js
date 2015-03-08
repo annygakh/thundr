@@ -3,11 +3,10 @@ var app = app || {};
 app.CourseCollection = Parse.Collection.extend({
     // will hold objects of CourseModel
 	model: app.CourseModel,
-<<<<<<< HEAD
-        getChecked: function() {
-            return this.where({checked: true});
-        }
-=======
+    
+    getChecked: function() {
+        return this.where({checked: true});
+    }
 
 	initialize: (function(){
 		var self = this;	
@@ -19,8 +18,6 @@ app.CourseCollection = Parse.Collection.extend({
 		});	
 	}
 
-
->>>>>>> 9cf04a58d8ead5e0c03ea54c928d80cb82a994ea
 });
 
 // app.results = new app.CourseCollection();
