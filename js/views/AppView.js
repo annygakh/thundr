@@ -6,15 +6,16 @@ app.AppView = Backbone.View.extend({
 	
 
 	// worklist_template: _.template($('#worklist-item-template').html()), // i will move this into a diff view class
-
+	results_header_template: _.template($('#results-header-template').html()),
 	events: {
 		'click #search-button' : 'search',
 		'keyup .code' : 'search',
 		'keyup .title' : 'search',
 		'keyup .dept' : 'search',
-		'keyup .prof' : 'search',
+		// 'keyup .prof' : 'search',
 		'keyup .time' : 'search',
-		'click .add-cart' : 'add_to_cart'
+		// 'click #table-header-credits': 'handle_sorting_by_credits',
+
 	},
 	initialize: function(){
 		this.$('#search-button').click(function(event){
@@ -22,14 +23,14 @@ app.AppView = Backbone.View.extend({
 		});
 		var self = this;
 		_.bindAll(this, 'query_on_success', 'query_on_error', 
-			'add_to_cart_success', 'add_to_cart_error', 'addCourse');
-		self.search_results_courses = [];
-		// app.LocalCourses.fetch();
-		// app.results = new app.CourseCollection();
-		// this.listenTo(app.results, 'add', this.addCourse);
+			'add_to_cart_success', 'add_to_cart_error', 'addCourse', 'sort_by_credits'
+			,'handle_sorting_by_credits');
+		app.results = new app.CourseCollection();
+		this.listenTo(app.results, 'add', this.addCourse);
 		// this.listenTo(app.results, 'reset', this.addCourse);
 	},
 	render: function(){
+			console.log("stuff");
 
 	},
 	search: function(){
@@ -47,33 +48,63 @@ app.AppView = Backbone.View.extend({
 		4)----------
 
 		*/
-		self.$('#results').html(""); // clear results before 
+		$('#results').html('');
 
-		var code_input = this.$('.code').val();
-		var title_input = this.$('.title').val();
-		var dept_input = this.$('.dept').val();
-		var prof_input = this.$('.prof').val();
-		var time_input = this.$('.time').val();
+		var code_input = this.$('.code').val().trim();
+		var title_input, dept_input;
+		// var title_input = this.$('.title').val().trim();
+		// var dept_input = this.$('.dept').val().trim();
+		var prof_input = this.$('.prof').val().trim();
+		var time_input = this.$('.time').val().trim();
 
 		var	query = new Parse.Query(app.CourseModel);
 
-		if (title_input) {
-			
-			query.startsWith("title", title_input);
-		}
 		if (code_input) {
-			query.startsWith("section_id", code_input);
+		// query.limit(1000);
+
+			var search_string_code = code_input.toUpperCase();
+			var index_of_space = search_string_code.indexOf(' ');
+			var contains_spaces = index_of_space > -1;
+
+			if (contains_spaces){
+				query.startsWith("title", search_string_code);
+			} else {
+				query.startsWith("section_id", search_string_code);
+			}
+
 		}
-		if (dept_input) {
-			query.startsWith("dept", dept_input);
-		}
+		// if (title_input) {
+			
+		// 	query.startsWith("title", title_input);
+		// }
+		// if (dept_input) {
+		// 	query.startsWith("dept", dept_input);
+		// }
 		if (prof_input) {
-			query.startsWith("prof", prof_input);
+			var search_string_prof = prof_input;
+
+			var index_of_space = search_string_prof.indexOf(' ');
+			var contains_spaces = index_of_space > -1;
+
+			if (contains_spaces){
+				var first_name = search_string_prof.slice(0, index_of_space);
+				var last_name = search_string_prof.slice(index_of_space + 1);
+				var search_string_prof = last_name + ", " + first_name;
+				console.log(search_string_prof);
+			}
+				// just contains the last name;
+
+			var prof_query = new Parse.Query(app.SubsectionModel);
+			prof_query.startsWith("instructor", search_string_prof.toUpperCase());
+
+			query.equalTo("subsections", prof_query);
+
 		}
 		if (time_input) {
 			// TODO
 		}
 		if (code_input || title_input || dept_input || prof_input || time_input){
+
 			query.find({
 				success: this.query_on_success,
 				error: this.query_on_error
@@ -96,10 +127,6 @@ app.AppView = Backbone.View.extend({
 			
 			if (document.getElementById(obj.id) == null) {
 				app.results.add(obj);
-				// console.log(obj);
-				// console.log(obj instanceof(app.CourseModel)); // returns true 
-				var view = new self.app.CourseView({model: obj});
-				self.$('#results').append(view.el);
 			}
 		}
 
@@ -141,11 +168,35 @@ app.AppView = Backbone.View.extend({
 	sort_by_level: function(){
 
 	},
+
 	addCourse: function(obj){
 		var view = new self.app.CourseView({model: obj});
 		self.$('#results').append(view.el);
 	},
+	addCourseByCredits: function(obj){
+		
 
+		console.log('stuff');
+		var view = new self.app.CourseView({model: obj});
+		self.$('#results').append(view.el);
+	},
+	sort_by_credits: function(){
+		app.results.sortBy(function(course){
+			return course.get("credits");
+		});		
+	},
+	handle_sorting_by_credits: function(){
+		function sort_by_credits(){
+			app.results.sortBy(function(course){
+			return course.get("credits");
+		});	}
 
-
+		$('#results').html('');
+		sort_by_credits.forEach(function(course){
+			console.log("adding the views");
+			console.log(course);
+			console.log(course instanceof(app.CourseModel)); // returns true 
+			this.app.appp.addCourse(course);
+		});
+	}
 });

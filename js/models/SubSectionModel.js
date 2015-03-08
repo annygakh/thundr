@@ -1,30 +1,30 @@
 var app = app || {};
 
-app.SubSectionModel = Parse.Model.extend({
+app.SubsectionModel = Parse.Object.extend({
 
 	className: 'SubSection',
-    defaults: {
-		type: "",
-		term: "",
-		course: "",
-		code: "",
-		start: "",
-		end: "",
-		days: "",
-		location: "",
-        // one or more instructors, hence an array of strings??
-		instructor(s): [],
-		labs: [],
-		tutorials: [],
-		sections = [];
-	},
+ //    defaults: {
+	// 	type: "",
+	// 	term: "",
+	// 	course: "",
+	// 	code: "",
+	// 	start: "",
+	// 	end: "",
+	// 	days: "",
+	// 	location: "",
+ //        // one or more instructors, hence an array of strings??
+	// 	instructor(s): [],
+	// 	labs: [],
+	// 	tutorials: [],
+	// 	sections = [];
+	// },
     
-	initialize: function(){
-		// OPTIONAL
-	},
-	validate: function(attributes){
+	// initialize: function(){
+	// 	// OPTIONAL
+	// },
+	// validate: function(attributes){
 		
-	}
+	// }
 
 
 

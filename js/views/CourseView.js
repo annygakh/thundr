@@ -5,10 +5,11 @@ app.CourseView = Backbone.View.extend({
 	// tagName: 'li', //even though it is so by default, i'll make it explicit
 	// className: 'course-result',
 	// el: '.search_results',
+
 	id: function(){
 		return this.model.id;
 	}, 
-
+	tagName: 'tr',
 	// template: //TODO
 	num_tmpl: 1,
 	reg_template:  _.template($('#course-template').html()),
@@ -38,10 +39,10 @@ app.CourseView = Backbone.View.extend({
 	render: function(){
 		var obj = {
 			"html_id" : this.model.id,
-			"course_title" : this.model.get("title"),
+			"course_title" : this.model.get("title").trim(),
 			"num_credits" : this.model.get("credits")
 		};
-		console.log(obj.num_credits);
+		// console.log(typeof obj.num_credits === 'number' );
 		$(this.el).html(this.template(obj));
 		return this; // to allow chained calls
 	},
