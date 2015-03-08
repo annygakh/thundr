@@ -1,22 +1,21 @@
 var app = app || {};
 
 app.CourseCollection = Parse.Collection.extend({
-    // will hold objects of CourseModel
 	model: app.CourseModel,
-    
-    getChecked: function() {
-        return this.where({checked: true});
-    }
+	// comparator: 'section_id',
 
-	initialize: (function(){
-		var self = this;	
-	}),
+	initialize: function(){
+		var self = this;
+		// self.comparator = 'section_id';	
+	},
 	
 	sort_by_credits: function(){
 		app.results.sortBy(function(course){
 			return course.get("credits");
 		});	
-	}
+	},
+	// comparator: 'section_id',
+
 
 });
 

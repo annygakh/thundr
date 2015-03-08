@@ -27,12 +27,13 @@ app.AppView = Backbone.View.extend({
 			,'handle_sorting_by_credits', 'findCourse');
 		app.results = new app.CourseCollection();
 		app.prof_results = new app.SubsectionCollection();
+		results.comparator = 'section_id';
 
 
 		this.listenTo(app.results, 'add', this.addCourse);
 		this.listenTo(app.prof_results, 'add', this.findCourse);
-		// this.listenTo(app.results, 'reset', this.addCourse);
-		var looking_for_prof = 0;
+		this.listenTo(app.results, 'reset', this.reset_all_courses);
+		var looking_for_prof, looking_for_courses = 0;
 		var prof_results_courses = [];
 	},
 	render: function(){
@@ -71,7 +72,6 @@ app.AppView = Backbone.View.extend({
 			var search_string_code = code_input.toUpperCase();
 			var index_of_space = search_string_code.indexOf(' ');
 			var contains_spaces = index_of_space > -1;
-
 			if (contains_spaces){
 				query.startsWith("title", search_string_code);
 			} else {
@@ -96,14 +96,14 @@ app.AppView = Backbone.View.extend({
 			if (contains_spaces){
 				var first_name = search_string_prof.slice(0, index_of_space);
 				var last_name = search_string_prof.slice(index_of_space + 1);
-				var search_string_prof = last_name + ", " + first_name;
+				var search_string_prof = '["' + last_name + ", " + first_name + ']"';
 				console.log(search_string_prof);
 			}
 				// just contains the last name;
 
-			var prof_query = new Parse.Query(app.SubsectionModel);
-			prof_query.startsWith("instructor", search_string_prof.toUpperCase());
-			query = prof_query;
+			// var prof_query = new Parse.Query(app.SubsectionModel);
+			// prof_query.startsWith("instructor", search_string_prof.toUpperCase());
+			// query = prof_query;
 
 			// query.equalTo("subsections", prof_query);
 
@@ -111,58 +111,52 @@ app.AppView = Backbone.View.extend({
 		if (time_input) {
 			// TODO
 		}
-		if (false){
-			query.find({
-				success: this.query_on_success,
-				error: this.query_on_error
-			});
-		}
-		else if (code_input || title_input || dept_input || prof_input || time_input){
 
+		if (code_input || title_input || dept_input || prof_input || time_input){
 			query.find({
 				success: this.query_on_success,
 				error: this.query_on_error
 			});
 		}
 
-	},
-
-	handle_change_in_code_input: function(){
-		// call to parse to return results
-		var code_input = this.$('.code').val();
-		self.$("#result-code").text(code_input);
-		self.search();
 	},
 
 	query_on_success: function(results){
+		console.log('Here');
 		app.results.reset(); 
 		app.prof_results.reset();
 		for (var i = 0; i < results.length; i++){
 			var obj = results[i];
 			if (obj instanceof(app.CourseModel)){
-				looking_for_prof = 0;
+				self.looking_for_courses = 1;
 				if (document.getElementById(obj.id) == null) {
 					app.results.add(obj);
 				}
 			} else if (obj instanceof(app.SubsectionModel)) {
-				looking_for_prof = 1;
+				self.looking_for_prof = 1;
 				if (document.getElementById(obj.id) == null) {
 					app.prof_results.add(obj);
 				}
 			};
 			
-			looking_for_prof = 0;
 		}
-		if (false){
-			self.prof_results_courses = app.prof_results.pluck("section_id");
-			console.log(app.prof_results_courses);
-			var courses_query = new Parse.Query(app.CourseModel);
-			courses_query.containedIn("section_id", self.prof_results_courses);
-			courses_query.find({
-				success: self.find_courses_from_prof,
-				error: self.find_courses_from_prof
-			});
-		}
+
+		// if (looking_for_prof) {
+		// 	// app.results.sortBy
+		// } else if (looking_for_courses){
+
+		// }
+
+		// if (false){
+		// 	self.prof_results_courses = app.prof_results.pluck("section_id");
+		// 	console.log(app.prof_results_courses);
+		// 	var courses_query = new Parse.Query(app.CourseModel);
+		// 	courses_query.containedIn("section_id", self.prof_results_courses);
+		// 	courses_query.find({
+		// 		success: self.find_courses_from_prof,
+		// 		error: self.find_courses_from_prof
+		// 	});
+		// }
 
 
 
@@ -174,7 +168,6 @@ app.AppView = Backbone.View.extend({
 	},
 	add_to_cart: function(event){
 		var id_obj = event.target.className.split(" ")[0];
-
 		var query = new Parse.Query(app.CourseModel);
 		console.log(id_obj);
 		console.log(query);
@@ -225,8 +218,11 @@ app.AppView = Backbone.View.extend({
 
 	},
 
+	reset_all_courses: function(){
+		// $('#results').html('');
+	},
+
 	addCourseByCredits: function(obj){
-		console.log('stuff');
 		var view = new self.app.CourseView({model: obj});
 		self.$('#results').append(view.el);
 	},

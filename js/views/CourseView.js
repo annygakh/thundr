@@ -16,26 +16,14 @@ app.CourseView = Backbone.View.extend({
 	worklist_template: _.template($('#worklist-item-template').html()),
 
 	events: {
-		"click .item" : "toggleCourse"
+		"click .item" : "toggleItem"
 	},
 
 	initialize: function(){
 		this.template = this.reg_template;
-		// this.render();
-        // var self = this;
-        this.listenTo(this.model, 'change', this.render);
+		this.render();
+
 	},
-    
-    toggleCourse: function (){
-        
-        this.get("description");
-        
-        var viewCourse = new self.app.SubSection({model: obj});
-        self.$("#results').append(view.el);
-        
-        
-    },
-    
 	render: function(){
 		var obj = {
 			"html_id" : this.model.id,
