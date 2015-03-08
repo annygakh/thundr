@@ -8,3 +8,20 @@ $(function(){
 	// kick things off by creating THE APP
 	app.appp = new app.AppView();	
 });
+
+// $('.right').scroll(function(e){ 
+//   $el = $('.table-header'); 
+
+//   if ($(this).scrollTop() > 5 && $el.css('position') != 'fixed'){ 
+//     $('.table-header.top').css({'position': 'fixed' , 'top': 'auto'}); 
+//   }
+//   if ($(this).scrollTop() < 10 && $el.css('position') == 'fixed')
+//   {
+//     $('.table-header.top').css({'position': 'static' , 'top': '0px'}); 
+//   } 
+// });
+// $(window).scroll(function(e){
+// 	$el = $('.table-header');
+// 	var scrolltop = $(window).scrollTop();
+// 	$('.table-header.top').css({'position': 'fixed' , 'top': -scrolltop}); 
+// });

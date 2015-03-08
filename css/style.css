@@ -64,8 +64,7 @@ body, html {
   -webkit-font-smoothing: antialiased;
   color: #333333;
   background-color: #004786;
-  overflow-x:hidden; 
-  overflow-y: scroll ;
+	/*overflow: scroll;*/
 }
 
 a {
@@ -81,8 +80,8 @@ section {
 	width: 90%;
 	margin: auto;
 	position :relative;
-	will-change: overflow; //new
-	overflow: hidden; //new
+	/*will-change: overflow; //new*/
+	/*overflow: hidden; //new*/
 }
 .hidden {
 	visibility: hidden;
@@ -197,20 +196,34 @@ button {
 
 /** Right **/
 
-.right {
+.right, .right-results {
 	width: 70vw;
 	min-width: 560px;
 	height: 90vh;
-	/*height: auto;  //new */
-	overflow: scroll; // new
+	/*height: auto;  //new *//*
+	overflow-y: scroll; // new
+	overflow-x:hidden; // new*/
 	min-height: 500px;
 	float: left;
 	background-color: white;
 }
 
 .table-header.top {
+	/*background-color: white;*/
+	/*float: center;*/
+	
+
+}
+.right-results{
+	width: 100%;
+	/*min-width: 500px;*/
+	height: 60vh;
+	/*height: auto;  //new */
+	overflow-y: auto; // new
+	overflow-x: hidden; // new
+	min-height: 500px;
+	float: left;
 	background-color: white;
-	/*position: ;*/
 }
 
 table, th, td.table-header {

@@ -164,7 +164,7 @@ app.AppView = Backbone.View.extend({
 
 	query_on_error: function(err){
 		app.results.reset();
-		alert(err.message);
+		// alert(err.message);
 	},
 	add_to_cart: function(event){
 		var id_obj = event.target.className.split(" ")[0];
