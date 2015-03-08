@@ -42,10 +42,10 @@
         <div class="search">
           <div class="container">
             <form class="search" id="form">
-              <input class="code" id="search-input" placeholder="Course code">
-              <input class="title" id="search-input" placeholder="Course title">
-              <input class="dept" id="search-input" placeholder="Department">
-              <input class="prof" id="search-input" placeholder="Professor">
+              <input class="code" id="search-input" placeholder='Course code, e.g. "CPSC 210"'>
+              <!-- <input class="title hidden" id="search-input" placeholder="Course title"> -->
+              <!-- <input class="dept hidden" id="search-input" placeholder="Department"> -->
+              <input class="prof" id="search-input" placeholder="Professor's name,  e.g. 'Sam Lee' or 'Ovechkin'">
               <input class="time" id="search-input" placeholder="Time">
               <button id="search-button">Search</button>
 <!--               maybe add a reset button too until we implement the "super"search -->
@@ -145,6 +145,7 @@
   <script src="js/lib/backbone-min.js"></script>
   <script src="js/lib/backbone.localStorage.js"></script>
   <script src="js/models/CourseModel.js"></script>
+  <script src="js/models/SubSectionModel.js"></script>
   <script src="js/collections/CourseCollection.js"></script>
   <script src="js/views/AppView.js"></script>
   <script src="js/views/CourseView.js"></script>

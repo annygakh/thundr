@@ -12,9 +12,9 @@ app.AppView = Backbone.View.extend({
 		'keyup .code' : 'search',
 		'keyup .title' : 'search',
 		'keyup .dept' : 'search',
-		'keyup .prof' : 'search',
+		// 'keyup .prof' : 'search',
 		'keyup .time' : 'search',
-		'click #table-header-credits': 'handle_sorting_by_credits',
+		// 'click #table-header-credits': 'handle_sorting_by_credits',
 
 	},
 	initialize: function(){
@@ -51,34 +51,60 @@ app.AppView = Backbone.View.extend({
 		$('#results').html('');
 
 		var code_input = this.$('.code').val().trim();
-		var title_input = this.$('.title').val().trim();
-		var dept_input = this.$('.dept').val().trim();
+		var title_input, dept_input;
+		// var title_input = this.$('.title').val().trim();
+		// var dept_input = this.$('.dept').val().trim();
 		var prof_input = this.$('.prof').val().trim();
 		var time_input = this.$('.time').val().trim();
 
 		var	query = new Parse.Query(app.CourseModel);
 
 		if (code_input) {
-			
-			if (code_input.indexOf(' ') > -1 ){
+		// query.limit(1000);
 
+			var search_string_code = code_input.toUpperCase();
+			var index_of_space = search_string_code.indexOf(' ');
+			var contains_spaces = index_of_space > -1;
+
+			if (contains_spaces){
+				query.startsWith("title", search_string_code);
+			} else {
+				query.startsWith("section_id", search_string_code);
 			}
-			query.startsWith("title", code_input.toUpperCase());
+
 		}
-		if (title_input) {
+		// if (title_input) {
 			
-			query.startsWith("title", title_input);
-		}
-		if (dept_input) {
-			query.startsWith("dept", dept_input);
-		}
+		// 	query.startsWith("title", title_input);
+		// }
+		// if (dept_input) {
+		// 	query.startsWith("dept", dept_input);
+		// }
 		if (prof_input) {
-			query.startsWith("prof", prof_input);
+			var search_string_prof = prof_input;
+
+			var index_of_space = search_string_prof.indexOf(' ');
+			var contains_spaces = index_of_space > -1;
+
+			if (contains_spaces){
+				var first_name = search_string_prof.slice(0, index_of_space);
+				var last_name = search_string_prof.slice(index_of_space + 1);
+				var search_string_prof = last_name + ", " + first_name;
+				console.log(search_string_prof);
+			}
+				// just contains the last name;
+
+			var prof_query = new Parse.Query(app.SubsectionModel);
+			prof_query.startsWith("instructor", search_string_prof.toUpperCase());
+
+			query.equalTo("subsections", prof_query);
+
 		}
 		if (time_input) {
 			// TODO
 		}
 		if (code_input || title_input || dept_input || prof_input || time_input){
+
 			query.find({
 				success: this.query_on_success,
 				error: this.query_on_error
@@ -101,10 +127,6 @@ app.AppView = Backbone.View.extend({
 			
 			if (document.getElementById(obj.id) == null) {
 				app.results.add(obj);
-				// console.log(obj);
-				// console.log(obj instanceof(app.CourseModel)); // returns true 
-				// var view = new self.app.CourseView({model: obj});
-				// self.$('#results').append(view.el);
 			}
 		}
 
