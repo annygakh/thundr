@@ -12,7 +12,7 @@ app.AppView = Backbone.View.extend({
 		'keyup .code' : 'search',
 		'keyup .title' : 'search',
 		'keyup .dept' : 'search',
-		// 'keyup .prof' : 'search',
+		'keyup .prof' : 'search',
 		'keyup .time' : 'search',
 		// 'click #table-header-credits': 'handle_sorting_by_credits',
 
@@ -24,10 +24,16 @@ app.AppView = Backbone.View.extend({
 		var self = this;
 		_.bindAll(this, 'query_on_success', 'query_on_error', 
 			'add_to_cart_success', 'add_to_cart_error', 'addCourse', 'sort_by_credits'
-			,'handle_sorting_by_credits');
+			,'handle_sorting_by_credits', 'findCourse');
 		app.results = new app.CourseCollection();
+		app.prof_results = new app.SubsectionCollection();
+
+
 		this.listenTo(app.results, 'add', this.addCourse);
+		this.listenTo(app.prof_results, 'add', this.findCourse);
 		// this.listenTo(app.results, 'reset', this.addCourse);
+		var looking_for_prof = 0;
+		var prof_results_courses = [];
 	},
 	render: function(){
 			console.log("stuff");
@@ -81,6 +87,7 @@ app.AppView = Backbone.View.extend({
 		// 	query.startsWith("dept", dept_input);
 		// }
 		if (prof_input) {
+
 			var search_string_prof = prof_input;
 
 			var index_of_space = search_string_prof.indexOf(' ');
@@ -96,14 +103,21 @@ app.AppView = Backbone.View.extend({
 
 			var prof_query = new Parse.Query(app.SubsectionModel);
 			prof_query.startsWith("instructor", search_string_prof.toUpperCase());
+			query = prof_query;
 
-			query.equalTo("subsections", prof_query);
+			// query.equalTo("subsections", prof_query);
 
 		}
 		if (time_input) {
 			// TODO
 		}
-		if (code_input || title_input || dept_input || prof_input || time_input){
+		if (false){
+			query.find({
+				success: this.query_on_success,
+				error: this.query_on_error
+			});
+		}
+		else if (code_input || title_input || dept_input || prof_input || time_input){
 
 			query.find({
 				success: this.query_on_success,
@@ -122,13 +136,35 @@ app.AppView = Backbone.View.extend({
 
 	query_on_success: function(results){
 		app.results.reset(); 
+		app.prof_results.reset();
 		for (var i = 0; i < results.length; i++){
 			var obj = results[i];
+			if (obj instanceof(app.CourseModel)){
+				looking_for_prof = 0;
+				if (document.getElementById(obj.id) == null) {
+					app.results.add(obj);
+				}
+			} else if (obj instanceof(app.SubsectionModel)) {
+				looking_for_prof = 1;
+				if (document.getElementById(obj.id) == null) {
+					app.prof_results.add(obj);
+				}
+			};
 			
-			if (document.getElementById(obj.id) == null) {
-				app.results.add(obj);
-			}
+			looking_for_prof = 0;
 		}
+		if (false){
+			self.prof_results_courses = app.prof_results.pluck("section_id");
+			console.log(app.prof_results_courses);
+			var courses_query = new Parse.Query(app.CourseModel);
+			courses_query.containedIn("section_id", self.prof_results_courses);
+			courses_query.find({
+				success: self.find_courses_from_prof,
+				error: self.find_courses_from_prof
+			});
+		}
+
+
 
 	},	
 
@@ -169,13 +205,27 @@ app.AppView = Backbone.View.extend({
 
 	},
 
+
 	addCourse: function(obj){
 		var view = new self.app.CourseView({model: obj});
 		self.$('#results').append(view.el);
 	},
-	addCourseByCredits: function(obj){
-		
 
+	findCourse: function(obj){
+		// console.log(obj instanceof(app.SubsectionModel));
+		// console.log(obj);
+		var instr = obj.get("instructor");
+		// console.log(instr);
+		var sub_id = obj.get("section_id");
+		// console.log(sub_id);
+		self.$('#results').append("<p> instructor: " + instr + " " 
+									+ sub_id +
+								 "</p>");
+
+
+	},
+
+	addCourseByCredits: function(obj){
 		console.log('stuff');
 		var view = new self.app.CourseView({model: obj});
 		self.$('#results').append(view.el);
