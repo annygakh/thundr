@@ -30,7 +30,7 @@ app.CourseView = Backbone.View.extend({
         this.get("description");
         
         var viewCourse = new self.app.SubSection({model: obj});
-        // self.$("#results").append(view.el);
+        // self.$("#results").append(view.el); // u need to define your own html element with its own id to write results to
         
         
     },

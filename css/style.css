@@ -207,6 +207,11 @@ button {
 	background-color: white;
 }
 
+.table-header.top {
+	background-color: white;
+	position: fixed;
+}
+
 table, th, td.table-header {
 	/*border: 1px solid black;*/
 }
@@ -219,7 +224,7 @@ td {
 }
 /*------------Header Table----------*/
 tr.table-header, td.table-header{
-	width: 100%;
+	width: 90%;
 }
 td.table-header-credits {
 /* 	text-align: center; */
