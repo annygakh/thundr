@@ -156,7 +156,7 @@ app.AppView = Backbone.View.extend({
 	subsections_query_on_success: function(results){
 		app.results.reset(); 
 		app.sub_results.reset();
-
+		$('#results').html(''); 
 		for (var i = 0; i < results.length; i++){
 			var obj = results[i];
 			if (obj instanceof(app.SubsectionModel)) {
@@ -166,7 +166,8 @@ app.AppView = Backbone.View.extend({
 				}
 			};
 		}
-		this.find_courses_from_course_code();
+		if (self.looking_for_courses)
+			this.find_courses_from_course_code();
 		self.looking_for_courses = 0;
 	}, 
 	subsections_query_on_error: function(err){
@@ -191,7 +192,7 @@ app.AppView = Backbone.View.extend({
 		var	inner_query = new Parse.Query(app.SubsectionModel);
 		var inner_query_needed = false;
 
-		// $('#results').html(''); 
+		$('#results').html(''); 
 
 		if (self.looking_for_courses){
 			// var extra_queries = [];
