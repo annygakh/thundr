@@ -4,16 +4,14 @@ var app = app || {};
 app.AppView = Backbone.View.extend({
 	el: 'body', 
 	
-
-	// worklist_template: _.template($('#worklist-item-template').html()), // i will move this into a diff view class
 	results_header_template: _.template($('#results-header-template').html()),
 	events: {
 		'click #search-button' : 'search',
-		'keyup .code' : 'search',
-		'keyup .title' : 'search',
-		'keyup .dept' : 'search',
-		'keyup .prof' : 'search',
-		'keyup .time' : 'search',
+		// 'keyup .code' : 'search',
+		// 'keyup .title' : 'search',
+		// 'keyup .dept' : 'search',
+		// 'keyup .prof' : 'search',
+		// 'keyup .time' : 'search',
 		// 'click #table-header-credits': 'handle_sorting_by_credits',
 
 	},
@@ -25,94 +23,129 @@ app.AppView = Backbone.View.extend({
 		_.bindAll(this, 'query_on_success', 'query_on_error', 
 			'add_to_cart_success', 'add_to_cart_error', 'addCourse', 'sort_by_credits'
 			,'handle_sorting_by_credits', 'findCourse');
+
+		/*---------------Declare and initialize some variables-----------------------*/
 		app.results = new app.CourseCollection();
 		app.prof_results = new app.SubsectionCollection();
 		results.comparator = 'section_id';
 
-
+		/*----------------Setting up listeners-----------------------*/
 		this.listenTo(app.results, 'add', this.addCourse);
-		this.listenTo(app.prof_results, 'add', this.findCourse);
-		this.listenTo(app.results, 'reset', this.reset_all_courses);
+		// this.listenTo(app.prof_results, 'add', this.findCourse);
+		// this.listenTo(app.results, 'reset', this.reset_all_courses);
+		// $('#browserinput').on('input',function() {
+		//     self.option_building = $('option[value="'+$(this).val()+'"]').val();
+		//     console.log($.type(self.option_building) === 'string');
+		//   });
+
+		// $("input[name=browsers]").on('change', function(){
+		//     alert($(this).val());
+		// });
+
+		/*---------------Initialized the rest of the variables------------------*/
 		var looking_for_prof, looking_for_courses = 0;
 		var prof_results_courses = [];
 	},
 	render: function(){
-			console.log("stuff");
+			// console.log("stuff");
 
 	},
 	search: function(){
-		/*
-		this is a very rough search functionality
-		still have to implement the following functionality
-		1)---------- as a user if i am typing up results, and i suddenly erase some letters, 
-					i want it to be reflected in the results
-					- so if i was typing CP and all the CPSC courses showed up,
-					if i was to erase the letter P, i want the results to contain
-					all courses with title starting with C
-		2)----------make our searches case insensitive
-		3)----------make our search more efficient and allow users to search by 
-					bits
-		4)----------
-
-		*/
 		$('#results').html('');
 
-		var code_input = this.$('.code').val().trim();
+		/*------------Getting values from input form-----------*/
+
+		var code_input = this.$('#code').val().trim();
 		var title_input, dept_input;
 		// var title_input = this.$('.title').val().trim();
 		// var dept_input = this.$('.dept').val().trim();
-		var prof_input = this.$('.prof').val().trim();
-		var time_input = this.$('.time').val().trim();
+		var prof_input = this.$('#prof').val().trim();
+		var time_input = this.$('#time').val().trim();
+		var term1_is_checked = this.$('#term1').is(':checked');
+		var term2_is_checked = this.$('#term2').is(':checked');
 
+		/*------------Form appropriate queries---------------*/
 		var	query = new Parse.Query(app.CourseModel);
+		var	inner_query = new Parse.Query(app.SubsectionModel);
+		var inner_query_needed = false;
 
+		
 		if (code_input) {
-		// query.limit(1000);
 
 			var search_string_code = code_input.toUpperCase();
 			var index_of_space = search_string_code.indexOf(' ');
 			var contains_spaces = index_of_space > -1;
+
 			if (contains_spaces){
 				query.startsWith("title", search_string_code);
 			} else {
 				query.startsWith("section_id", search_string_code);
 			}
-
 		}
-		// if (title_input) {
-			
-		// 	query.startsWith("title", title_input);
-		// }
-		// if (dept_input) {
-		// 	query.startsWith("dept", dept_input);
-		// }
 		if (prof_input) {
-
-			var search_string_prof = prof_input;
+			// inner_query_needed = true;
+			var search_string_prof = prof_input.toUpperCase();
 
 			var index_of_space = search_string_prof.indexOf(' ');
 			var contains_spaces = index_of_space > -1;
 
+			// if (contains_spaces){
+			// 	var first_name = search_string_prof.slice(0, index_of_space);
+			// 	var last_name = search_string_prof.slice(index_of_space + 1);
+			// 	var search_string_prof = '["' + last_name + ", " + first_name + '"]';
+			// 	console.log(search_string_prof);
+			// }
+			// 	// just contains the last name;
+
+
+
 			if (contains_spaces){
+				inner_query_needed = true;
+				var prof_names = [];
 				var first_name = search_string_prof.slice(0, index_of_space);
 				var last_name = search_string_prof.slice(index_of_space + 1);
-				var search_string_prof = '["' + last_name + ", " + first_name + ']"';
-				console.log(search_string_prof);
+				var search_string_prof =  last_name + ", " + first_name + " " ;
+				prof_names.push(search_string_prof);
+				inner_query.containedIn("instructor", prof_names);
 			}
-				// just contains the last name;
-
-			// var prof_query = new Parse.Query(app.SubsectionModel);
-			// prof_query.startsWith("instructor", search_string_prof.toUpperCase());
-			// query = prof_query;
-
-			// query.equalTo("subsections", prof_query);
 
 		}
 		if (time_input) {
-			// TODO
+			inner_query_needed = true;
+			var time_string = time_input;
+			var format = "HHMM-HHMM";
+
+			if (time_string.length == format.length) {
+				var start_time = parseInt(time_string.slice(0, 4));
+				var end_time = parseInt(time_string.slice(5));
+				inner_query.greaterThanOrEqualTo("startTime", start_time);
+				inner_query.lessThanOrEqualTo("endTime", end_time);
+			}
 		}
 
+		if (term1_is_checked || term2_is_checked){
+			inner_query_needed = true;
+
+			if (term1_is_checked && term2_is_checked){
+				inner_query.containedIn("term", [1,2]);
+			} else if (term1_is_checked){
+				inner_query.equals("term", 1);
+			} else if (term2_is_checked){
+				inner_query.equals("term", 2);
+			}
+
+		}
+		if (self.option_building) {
+			inner_query_needed = true;
+			var building_search_string = self.option_building;
+			console.log(building_search_string);
+			inner_query.startsWith("location", building_search_string);
+		}
 		if (code_input || title_input || dept_input || prof_input || time_input){
+
+			if (inner_query_needed)
+				query.matchesQuery("subsections", inner_query);
+
 			query.find({
 				success: this.query_on_success,
 				error: this.query_on_error
@@ -122,7 +155,7 @@ app.AppView = Backbone.View.extend({
 	},
 
 	query_on_success: function(results){
-		console.log('Here');
+		console.log('Results');
 		app.results.reset(); 
 		app.prof_results.reset();
 		for (var i = 0; i < results.length; i++){
@@ -135,6 +168,7 @@ app.AppView = Backbone.View.extend({
 			} else if (obj instanceof(app.SubsectionModel)) {
 				self.looking_for_prof = 1;
 				if (document.getElementById(obj.id) == null) {
+					// console.log(obj.get("startTime"));
 					app.prof_results.add(obj);
 				}
 			};

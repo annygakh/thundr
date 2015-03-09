@@ -80,6 +80,7 @@ section {
 	width: 90%;
 	margin: auto;
 	position :relative;
+	height: auto;
 	/*will-change: overflow; //new*/
 	/*overflow: hidden; //new*/
 }
@@ -150,7 +151,8 @@ section.content {
 /** Search **/
 
 .search {
-	height: 50vh;
+	/*height: 50vh;*/
+	height: auto; //new
 	min-height: 250px;
 	background-color: #FFFFFF;
 }
@@ -173,6 +175,10 @@ button {
 	background-color: #004786;
 	color: #FFFFFF;
 }
+.term-checkboxes{
+	diplay: block;
+}
+
 
 /** Worklist **/
 
@@ -200,32 +206,22 @@ button {
 	width: 70vw;
 	min-width: 560px;
 	height: 90vh;
-	/*height: auto;  //new *//*
-	overflow-y: scroll; // new
-	overflow-x:hidden; // new*/
-	min-height: 500px;
+	min-height: 00px;
 	float: left;
 	background-color: white;
 }
 
-.table-header.top {
-	/*background-color: white;*/
-	/*float: center;*/
-	
-
-}
 .right-results{
 	width: 100%;
 	/*min-width: 500px;*/
 	height: 60vh;
-	/*height: auto;  //new */
 	overflow-y: auto; // new
 	overflow-x: hidden; // new
 	min-height: 500px;
 	float: left;
 	background-color: white;
 }
-
+/*--------All tables---------------*/
 table, th, td.table-header {
 	/*border: 1px solid black;*/
 }
@@ -259,7 +255,7 @@ td.credits.course-result {
 	padding-right: 35px;
 	/*padding-left: 30px;*/
 }
-
+/*---------Scrolling - header of the table */
 /*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
 .left::-webkit-scrollbar,
 .middle::-webkit-scrollbar,
@@ -267,8 +263,73 @@ td.credits.course-result {
     display: none;
 }
 
+/*----------Radio Buttons-----------*/
+.checkbox-custom, .radio-custom {
+    opacity: 0;
+    position: absolute;  
+    display: inline;	
+}
 
+.checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
+    display: inline-block;
+    vertical-align: middle;
 
+    /*margin: 5px;*/
+    margin: 20px auto 0 auto;
+    cursor: pointer;
+}
 
+.checkbox-custom-label, .radio-custom-label {
+    position: relative;
+}
 
+.checkbox-custom + .checkbox-custom-label:before, .radio-custom + .radio-custom-label:before {
+    content: '';
+    background: #fff;
+    border: 1px solid #ddd;
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    margin-right: 10px;
+    text-align: center;
+}
 
+.checkbox-custom:checked + .checkbox-custom-label:before {
+    background-color: #004786;
+    box-shadow: inset 0px 0px 0px 2px #fff;
+}
+
+.radio-custom + .radio-custom-label:before {
+    border-radius: 50%;
+}
+
+.radio-custom:checked + .radio-custom-label:before {
+    background: #ccc;
+    box-shadow: inset 0px 0px 0px 4px #fff;
+}
+/*--------------Drop down list styling-----------------*/
+.select-style {
+    border: 1px solid #ccc;
+    width: 120px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 20px auto 0 auto;
+    float: left;
+    background: #fafafa urlurl("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 50%;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}

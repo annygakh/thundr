@@ -14,7 +14,11 @@ app.CourseCollection = Parse.Collection.extend({
 			return course.get("credits");
 		});	
 	},
-	// comparator: 'section_id',
+	comparator: function(course){
+		return course.get("section_id");
+	
+	},
+
 
 
 });
