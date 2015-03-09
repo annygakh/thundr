@@ -61,6 +61,8 @@ app.AppView = Backbone.View.extend({
 			this.find_courses_from_subsections();
 		} else if (code_input) {
 			this.find_courses_from_course_code();
+		} else {
+			self.$('#results').html('');
 		}
 
 	},
