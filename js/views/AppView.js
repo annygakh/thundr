@@ -123,18 +123,18 @@ app.AppView = Backbone.View.extend({
 			}
 		}
 
-		if (term1_is_checked || term2_is_checked){
-			inner_query_needed = true;
+		// if (term1_is_checked || term2_is_checked){
+		// 	inner_query_needed = true;
 
-			if (term1_is_checked && term2_is_checked){
-				inner_query.containedIn("term", [1,2]);
-			} else if (term1_is_checked){
-				inner_query.equals("term", 1);
-			} else if (term2_is_checked){
-				inner_query.equals("term", 2);
-			}
+		// 	if (term1_is_checked && term2_is_checked){
+		// 		inner_query.containedIn("term", [1,2]);
+		// 	} else if (term1_is_checked){
+		// 		inner_query.equals("term", 1);
+		// 	} else if (term2_is_checked){
+		// 		inner_query.equals("term", 2);
+		// 	}
 
-		}
+		// }
 		if (self.option_building) {
 			inner_query_needed = true;
 			var building_search_string = self.option_building;
