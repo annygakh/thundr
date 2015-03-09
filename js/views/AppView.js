@@ -157,6 +157,10 @@ app.AppView = Backbone.View.extend({
 		app.results.reset(); 
 		app.sub_results.reset();
 		$('#results').html(''); 
+		if (results.length == 0){
+			var error_msg = '<p>No results were found. Please check your spelling.</p>';
+			self.$('#results').prepend(error_msg);
+		}
 		for (var i = 0; i < results.length; i++){
 			var obj = results[i];
 			if (obj instanceof(app.SubsectionModel)) {
