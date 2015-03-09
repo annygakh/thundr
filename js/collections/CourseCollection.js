@@ -10,17 +10,16 @@ app.CourseCollection = Parse.Collection.extend({
 	},
 	
 	sort_by_credits: function(){
-		app.results.sortBy(function(course){
+		app.results.sortBy(function(course1, course2){
 			return course.get("credits");
 		});	
 	},
-	comparator: function(course){
-		return course.get("section_id");
+	// comparator: function(course1, course2){
+	// 	return course1.get("section_id") < course2.get("section_id");
 	
-	},
+	// },
 
 
 
 });
 
-// app.results = new app.CourseCollection();

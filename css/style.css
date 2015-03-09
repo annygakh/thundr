@@ -205,8 +205,8 @@ button {
 .right, .right-results {
 	width: 70vw;
 	min-width: 560px;
-	height: 90vh;
-	min-height: 00px;
+	height: 100h;
+	/*min-height: 00px;*/
 	float: left;
 	background-color: white;
 }
@@ -214,10 +214,10 @@ button {
 .right-results{
 	width: 100%;
 	/*min-width: 500px;*/
-	height: 60vh;
+	height: 80vh;
 	overflow-y: auto; // new
 	overflow-x: hidden; // new
-	min-height: 500px;
+	min-height: 400px;
 	float: left;
 	background-color: white;
 }
@@ -267,7 +267,7 @@ td.credits.course-result {
 .checkbox-custom, .radio-custom {
     opacity: 0;
     position: absolute;  
-    display: inline;	
+    /*display: inline;	*/
 }
 
 .checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
@@ -317,7 +317,7 @@ td.credits.course-result {
     overflow: hidden;
     margin: 20px auto 0 auto;
     float: left;
-    background: #fafafa urlurl("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 50%;
+    background: #fafafa url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 90% 50%;
 }
 
 .select-style select {
