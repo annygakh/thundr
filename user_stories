@@ -1,0 +1,147 @@
+1.	As a UBC student, I would like to view a selected number of prerequisite and/or co-requisite courses, in one or more selected departments, that I need to take for a specific course or courses, in form of a list.
+
+Main epic it belongs to: Data display
+Priority: 2
+Estimate: 20 hours
+acceptance criteria: 
+- User must be able to select a course (the course that he is interested in to discover the prerequisite and/or co-requisite courses)
+- User must be able to select a number of results to be displayed 
+- User must be able to select whether he wants to see prerequisite courses, co-requisite courses, or both
+- If the user selects the option to show both prerequisite and co-requisite courses, then the results will contain indicated number(chosen by the user earlier) of prerequisite courses, and indicated number of co-requisite courses.
+- User must be able to select one or more department
+- The results will be displayed in a list
+- Initially, in the list, results will be displayed alphabetically. 
+- Each course tuple will have the following information displayed:  course title and number of credits
+Task breakdown: 
+- Create parse queries to find prerequisite and/or requisite courses using user's input as requirements
+- Create a separate tab that will contain different input options
+- Display the results in form of a list(possibly in form of a graph)
+
+2. 	As a UBC student, if I choose to display prerequisite and/or co-requisite courses in form of a list, I would like to be able to sort the list by departments, level of the course(first digit of the course number), title of the course(alphabetically).
+
+Main epic it belongs to: Display
+Priority: 3
+Estimate: 10 hours
+Acceptance criteria: 
+- User must be able to click on the heading "Department", and as a result of that, the results will be sorted by department
+- User must be able to click on the heading "Course number", and as a result of that,  the results will be sorted by course number
+- User must be able to click on the heading "Course title", and as a result of that, the results will be sorted by the course title.
+- Each course tuple will have the following information displayed: department, course number, number of credits, and course title
+Tasks breakdown: TODO
+
+3.	As a UBC student, I would like to view a selected number of courses I can take, in one or more selected departments, as a result of completing a specific course or courses, in form of a list.
+Main epic: Display
+Priority: 2
+Estimate: 10 hours
+acceptance criteria:
+- User must be able to select a course or multiple courses (course(s) that he wants to find out more about)
+- User must be able to select a number of results to be displayed
+- User must be able to select one or more departments
+- Results must be displayed in a list
+- In the results, each course tuple must have the following information displayed: department, course number, number of credits, and course title
+Task breakdown: 
+- Create parse queries to find post requisite courses using user's input as requirements
+- Create a separate tab that will contain different input options
+- Display the results in form of a list(possibly in form of a graph)
+
+4.	 As a UBC student, I would like to be able to create a worklist that will contain desired courses and view the resultant in form of a list or a timetable.
+
+Main epic: Access
+Priority: 2
+Estimate: 20 hours
+acceptance criteria:
+- User must be able to create a worklist
+- When a user has opened a course/lab/tutorial section view, he must be able to add this section to the worklist
+- When viewing courses in a worklist, the results will be displayed in form of a timetable by default
+- User must be able to switch to list view or timetable view as needed.
+- User must be able to delete sections from his worklist
+Tasks breakdown:
+- Create the option for the user to add a section of the course to the user's worklist
+- Display the course in the worklist section in form of a graph or possibly in form of a timetable
+- Save user's courses using Backbone's local storage
+
+ 
+5. 	As a UBC student, I would like to login via Facebook, and I would like to be able to save my worklist, so that when I log out my worklist is not deleted.
+
+Main Epic: Social network integration 
+Priority: 3
+Estimate: 20 hours
+acceptance criteria:
+- User must be able to login with Facebook
+- Upon logging in again, user must be able to see his worklist again
+Tasks breakdown: 
+- Create the option for the user to log in
+- Hide courses saved in local storage, if the user is logged in, and show only the courses associated with his/hers Facebook account
+
+
+
+6.	As a UBC student, I would like to be able to search for course/lab/tutorial sections according to filters (e.g. Semester, course code, professors, title, time, location, etc.) and have them displayed in form of a list.
+Main epic: Data display
+Priority: 1
+Estimate: 20 hours
+Task Breakdown:
+	•	HTML/CSS frame for a single page app with sidebar (search by filters and worklist) and main area (detailed course information)
+	•	a container that will have the results, and will be updated according to filters, when “search” button is pressed
+	•	Backbone views (for each dynamic section of the page)
+	•	Backbone controllers
+	•	A selector for course/lab/tutorial section
+	•	A selector for semester(semester 1 or semester 2)
+	•	A textbox to enter department + must be able to populate the list
+	•	A textbox to enter course code + must be able to populate the list
+	•	A textbox to enter professors name + must be able to populate the list 
+	⁃	(disabled for lab and tutorials)
+	•	A box to select start time
+	•	A box to select end time
+	•	A textbox to select building + must be able to populate the list
+	•	
+
+Acceptance Criteria:
+
+- User must be able to select between a course, lab and a tutorial section
+- if the user selects the option to browse course sections, then all filters must be available for use.
+- if the user selects the option to browse tutorial sections, then all but "professor" filters must be available for use.
+- if the user selects the option to browse lab section, then all but "professor" filters must be available for use. 
+- User must be able to indicate the semester, and then the results must include only the sections from that semester
+- If browsing course sections, user must be able to enter the name of the professor, and the results must include only the course sections that are taught by the indicated professor
+- User must be able to enter the time slot and the results must include only the sections that take place during the indicated time slot
+- User must be able to enter the name of the building, and the results must include only the sections that take place in the indicated building
+- User must be able to use several filters at once (e.g. select time slot +  building)
+- If the search filter is invalid (e.g. invalid professor name) no results must displayed and an error message will be displayed.
+- Each section tuple will have the following information displayed: department, course #, # of credits, title, time, location, professor(if applicable) 
+
+
+7.	As a UBC student, I would like to be notified in a visual manner (e.g. warning message upon selecting course, red color highlights) when my worklist contains conflicting scheduling arrangements.
+
+Main epic: Data display
+Priority: 2
+Estimate: 8 hours
+acceptance criteria:
+- When the user selects the option to add the indicated section, that conflicts (time-wise) with another course in the indicated worklist, a warning message must be displayed to the user.
+Tasks breakdown: 
+- create some kind of visual warning that will remind user that his/hers worklist will now contain conflicting sections
+- conflicting courses will be visually distinguishable in the worklist view
+
+8.	As a developer, I will write a web scraper to scrape course information from the SSC course website and parse it.
+Main Epic: Import and clean data
+Estimate: 20 hours
+Priority: 1
+acceptance criteria:
+- Data is comprehensively scraped from the SSC website
+- Data is correctly parsed into relevant categories (course name, course code, professor, location, time, prerequisites (of and for), etc.)
+Task Breakdance:
+	•	Find library to parse HTML for course links
+	•	Create algorithm to follow all links on SSC website
+	•	Follow links and parse for class information
+	•	Aggregate class info into JSON format
+
+9.	As a developer, I will store the parsed course data into a backend cloud data storage service, where the data will persistently be kept and accessed by the client to dynamically load data into the website.
+
+Main epic: storage
+Priority: 1
+Estimate: 8 hours
+
+acceptance criteria:
+- Data is successfully loaded to the cloud
+
+Task Breakdown:
+	•	Write script to dynamically save data to backend service (e.g. Firebase) as it is scraped
