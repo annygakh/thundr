@@ -1,0 +1,61 @@
+You will have 5 minutes to demonstrate your product (5 minutes is the absolute maximum and will be strictly enforced!). Go through the user stories and show how your product provides the functionality described in your user stories. Every team member should participate in the demo and I highly recommend that you practice your demo before you meet with your product owner. You may want to bring a demo script so that you are confident that you won’t forget to demo anything. The TA will also ask you questions about your implementation and design (these questions will be directed towards individuals, so you should have a general idea about the project, its implementation and design).
+
+[Scraping SSC and Parsing] (by Mike)
+As a developer, I will write a web scraper to scrape course information from the SSC
+course website and parse it.
+Main Epic: Import and clean data
+Estimate: 20 hours
+Priority: 1
+Acceptance Criteria:
+- Data is comprehensively scraped from the SSC website
+- Data is correctly parsed into relevant categories (course name, course code, professor, location, time, prerequisites (of and for), etc.)
+Task Breakdance:
+- Find library to parse HTML for course links
+- Create algorithm to follow all links on SSC website
+- Follow links and parse for class information
+- Aggregate class info into JSON format
+
+[Storing Parsed Information] (by Mike)
+As a developer, I will store the parsed course data into a backend cloud data storage
+service, where the data will persistently be kept and accessed by the client to dynamically
+load data into the website.
+Main epic: storage
+Priority: 1
+Estimate: 8 hours
+Acceptance Criteria:
+- Data is successfully loaded to the cloud
+Task Breakdown:
+- Write script to dynamically save data to backend service (e.g. Firebase) as it is scrape
+<We changed to using Parse. Show Parse database here? Show Section and SubSection, maybe explain objectId and how it is assigned to each piece of data? How relationship, pre-reqs, post-reqs work or how will approach it if not yet completed?>
+
+[Searching by Desired Criteria]
+(by Scott -> CSS and HTML & Anny -> Search Function in AppView.js & Naomi -> CourseView.js + CourseModel.js)
+As a UBC student, I would like to be able to search for course/lab/tutorial sections
+according to filters (e.g. Semester, course code, professors, title, time, location, etc.) and
+have them displayed in form of a list.
+Main epic: Data display
+Priority: 1
+Estimate: 20 hours
+Acceptance Criteria:
+- User should be able to find a course by a course code and have the relevant course list returned.
+- If the user decides to search only by enter a department, all courses that are in that department will be displayed in the results section.
+- User should be able to find courses where sections are taught by a specified professor, where a search string could be either first name and last name, or just the last name, the results are displayed in the results section.
+- User should be able to find courses where sections are taking place in between specified start and end time.
+- Users should be able to find courses where sections take place in a particular building.
+- User must be able to indicate the semester, and then the results must include only the sections from that semester.
+- User must be able to enter the name of the building, and the results must include only the sections that take place in the indicated building
+- User must be able to use several filters at once (e.g. select time slot +
+building).
+- If the search filter is invalid (e.g. invalid professor name) no results must displayed and an error message will be displayed.
+Task Breakdown:
+- HTML/CSS frame for a single page app with sidebar (search by filters and worklist) and main area (detailed course information)
+a container that will have the results, and will be updated according to filters, when “search” button is pressed
+- Backbone views (for each dynamic section of the page)
+- Backbone controllers
+- A selector for course/lab/tutorial section
+- A selector for semester(semester 1 or semester 2)
+- A textbox to enter department + must be able to populate the list
+- A textbox to enter course code + must be able to populate the list
+- A textbox to enter professors name + must be able to populate the list
+- A textbox to enter time span (will change this a bit) + must be able to populate the list
+- A textbox to select building (will change to have autofill function) + must be able to populate the list
