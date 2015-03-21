@@ -11,8 +11,8 @@ var root = '/cs/main?pname=subjarea&tname=subjareas&req=0'
 var base = 'https://courses.students.ubc.ca';
 var urls = new HashMap();
 
-var Section = Parse.Object.extend("Section");
-var SubSection = Parse.Object.extend("SubSection");
+var Section = Parse.Object.extend("SectionTest");
+var SubSection = Parse.Object.extend("SubSectionTest");
 
 function scrape() {
 	urls.set(200, new Array());
