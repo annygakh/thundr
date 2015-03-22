@@ -193,9 +193,13 @@
     <script type="text/template" id="course-template">
       <table class="item" id="<%=html_id%>">
         <tr class="course-result">
-              <td class="course-result"><%=course_title%></td>
-              <td class="credits course-result-credits"><%=num_credits%></td>
-          </tr>
+          <td class="course-result">
+            <%=course_title%>
+            <br>
+            <button class="add-button">Add to worklist</button>
+          </td>
+          <td class="credits course-result-credits"><%=num_credits%></td>
+        </tr>
       </table>
     </script>
 

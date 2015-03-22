@@ -166,7 +166,7 @@ input {
 	color: #333333;
 }
 
-button {
+#search-button {
 	display: block;
 	margin: 20px auto 0 auto;
 	padding: 5px 10px;
@@ -175,6 +175,17 @@ button {
 	background-color: #004786;
 	color: #FFFFFF;
 }
+
+.add-button {
+	display: block;
+	padding: 5px 10px;
+	border-radius: 4px;
+	border-width: 1px;
+	background-color: #004786;
+	color: #FFFFFF;	
+}
+
+
 .term-checkboxes{
 	diplay: block;
 }
@@ -247,9 +258,13 @@ td.table-header-credits {
 }
 
 tr.course-result, td.course-result {
-
 	width: 100%;
 }
+
+.course-result {
+	
+}
+
 td.credits.course-result {
 	text-align: center;
 	padding-right: 35px;
