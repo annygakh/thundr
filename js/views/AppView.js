@@ -68,7 +68,7 @@ app.AppView = Backbone.View.extend({
 	},
 
 	find_courses_from_subsections: function(){
-		$('#results').html('');
+		this.$('#results').html('');
 		/*------------Getting values from input form-----------*/
 
 		var code_input = this.$('#code').val().trim();
@@ -198,7 +198,7 @@ app.AppView = Backbone.View.extend({
 		var	inner_query = new Parse.Query(app.SubsectionModel);
 		var inner_query_needed = false;
 
-		$('#results').html(''); 
+		this.$('#results').html(''); 
 
 		if (self.looking_for_courses){
 			// var extra_queries = [];
@@ -299,7 +299,6 @@ app.AppView = Backbone.View.extend({
 			});
 		}
 	
-
 	},
 
 	query_on_success: function(results){
@@ -318,11 +317,6 @@ app.AppView = Backbone.View.extend({
 					app.results.add(obj);
 				}
 			} 
-			// else if (obj instanceof(app.SubsectionModel)) {
-			// 	if (document.getElementById(obj.id) == null) {
-			// 		app.sub_results.add(obj);
-			// 	}
-			// };
 			
 		}
 
@@ -355,19 +349,6 @@ app.AppView = Backbone.View.extend({
 	add_to_cart_error: function(obj, err){
 		alert("couldnt add the item to the worklist, err msg: " + err.message); // idea: add error msges to faq, idk
 	},
-	logOut: function(){
-
-	},
-	logIn: function(){
-
-	},
-	sort_by_department: function(){
-
-	},
-	sort_by_level: function(){
-
-	},
-
 
 	addCourse: function(obj){
 		var view = new self.app.CourseView({model: obj});
@@ -379,7 +360,7 @@ app.AppView = Backbone.View.extend({
 	},
 
 	reset_all_courses: function(){
-		$('#results').html('');
+		self.$('#results').html('');
 	},
 
 	addCourseByCredits: function(obj){
