@@ -7,6 +7,7 @@ app.AppView = Backbone.View.extend({
 	results_header_template: _.template($('#results-header-template').html()),
 	events: {
 		'click #search-button' : 'search_router',
+		'click .add-button' : 'add_to_cart'
 		// 'keyup .code' : 'search',
 		// 'keyup .title' : 'search',
 		// 'keyup .dept' : 'search',
@@ -337,14 +338,9 @@ app.AppView = Backbone.View.extend({
 
 	},
 	add_to_cart: function(event){
-		var id_obj = event.target.className.split(" ")[0];
-		var query = new Parse.Query(app.CourseModel);
-		console.log(id_obj);
-		console.log(query);
-		query.get(id_obj, {
-			success: this.add_to_cart_success,
-			error: this.add_to_cart_error
-		})
+		var id_obj = event.target.className;
+		var course_id = $(event.target + ':first').closest('.course-result').text();
+		$('#worklist-container').append(course_id);
 	},
 	add_to_cart_success: function(obj){
 		var view = new self.app.CourseView({model: obj});
