@@ -1,4 +1,6 @@
 var app = app || {};
+var worklist = {};
+
 // var window.app = app;
 
 app.AppView = Backbone.View.extend({
@@ -14,7 +16,6 @@ app.AppView = Backbone.View.extend({
 		// 'keyup .prof' : 'search',
 		// 'keyup .time' : 'search',
 		// 'click #table-header-credits': 'handle_sorting_by_credits',
-
 	},
 	initialize: function(){
 		this.$('#search-button').click(function(event){
@@ -341,7 +342,9 @@ app.AppView = Backbone.View.extend({
 		var id_obj = event.target.className;
 		var course_id = $(event.target).closest('.course-result').children('p').text();
 		console.log(course_id);
-		$('#courses').append('<li> <p>' + course_id + '</p> </li>');
+		if ($.inArray(course_id, worklist) == -1) {
+			$('#courses').append('<li> <p>' + course_id + '</p> </li>');
+		}
 	},
 	add_to_cart_success: function(obj){
 		var view = new self.app.CourseView({model: obj});
