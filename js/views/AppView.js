@@ -10,7 +10,7 @@ app.AppView = Backbone.View.extend({
 	events: {
 		'click #search-button' : 'search_router',
 		'click .add-button' : 'add_to_cart',
-		'click .icon' : 'remove-course'
+		'click .worklist-delete' : 'remove_from_cart'
 		// 'keyup .code' : 'search',
 		// 'keyup .title' : 'search',
 		// 'keyup .dept' : 'search',
@@ -340,7 +340,6 @@ app.AppView = Backbone.View.extend({
 
 	},
 	add_to_cart: function(event){
-		var id_obj = event.target.className;
 		var course_id = $(event.target).closest('.course-result').children('p').text();
 		console.log(course_id);
 		if ($.inArray(course_id, worklist) == -1) {
@@ -363,8 +362,10 @@ app.AppView = Backbone.View.extend({
 		alert("couldnt add the item to the worklist, err msg: " + err.message); // idea: add error msges to faq, idk
 	},
 	remove_from_cart: function(event){
-		$(this).closest('li').remove();
-		//worklist.remove(course_id);
+		console.log("remove course");
+		var course_id = $(event.target).closest('li');
+		worklist.splice($.inArray(course_id.text(), worklist));
+		course_id.remove();
 	},
 	logOut: function(){
 
