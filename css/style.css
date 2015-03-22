@@ -72,6 +72,10 @@ a {
 	text-decoration: none;
 }
 
+ul {
+	list-style-type: none;
+}
+
 section {
 	display: inline-block;
 }
@@ -207,6 +211,7 @@ input {
 
 .worklist p {
 	float: left;
+	width: 75%;
 }
 
 .worklist div.icon {

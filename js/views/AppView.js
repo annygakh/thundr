@@ -1,5 +1,5 @@
 var app = app || {};
-var worklist = {};
+var worklist = [];
 
 // var window.app = app;
 
@@ -343,7 +343,13 @@ app.AppView = Backbone.View.extend({
 		var course_id = $(event.target).closest('.course-result').children('p').text();
 		console.log(course_id);
 		if ($.inArray(course_id, worklist) == -1) {
-			$('#courses').append('<li> <p>' + course_id + '</p> </li>');
+			$('#courses').append('<li>' + 
+									'<div class="item">' +
+									'<p class="worklist-title">' + course_id + '</p>' +
+									'<i class="fa fa-trash-o worklist-delete"></i>' + 
+									'</div>' +
+								 '</li>');
+			worklist.push(course_id);
 		}
 	},
 	add_to_cart_success: function(obj){
