@@ -1,4 +1,6 @@
 var app = app || {};
+var worklist = [];
+
 // var window.app = app;
 
 app.AppView = Backbone.View.extend({
@@ -7,13 +9,8 @@ app.AppView = Backbone.View.extend({
 	results_header_template: _.template($('#results-header-template').html()),
 	events: {
 		'click #search-button' : 'search_router',
-		// 'keyup .code' : 'search',
-		// 'keyup .title' : 'search',
-		// 'keyup .dept' : 'search',
-		// 'keyup .prof' : 'search',
-		// 'keyup .time' : 'search',
-		// 'click #table-header-credits': 'handle_sorting_by_credits',
-
+		'click .add-button' : 'add_to_cart',
+		'click .worklist-delete' : 'remove_from_cart'
 	},
 	initialize: function(){
 		this.$('#search-button').click(function(event){
@@ -100,20 +97,10 @@ app.AppView = Backbone.View.extend({
 			var index_of_space = search_string_prof.indexOf(' ');
 			var contains_spaces = index_of_space > -1;
 
-			// if (contains_spaces){
-			// 	var first_name = search_string_prof.slice(0, index_of_space);
-			// 	var last_name = search_string_prof.slice(index_of_space + 1);
-			// 	var search_string_prof = '["' + last_name + ", " + first_name + '"]';
-			// 	console.log(search_string_prof);
-			// }
-			// 	// just contains the last name;
-
 			if (contains_spaces){
-				// var prof_names = [];
 				var first_name = search_string_prof.slice(0, index_of_space);
 				var last_name = search_string_prof.slice(index_of_space + 1);
 				search_string_prof =  last_name + ", " + first_name + " " ;
-				// prof_names.push(search_string_prof);
 			}
 				console.log(search_string_prof);
 				query.startsWith("instructor", search_string_prof);
@@ -122,8 +109,9 @@ app.AppView = Backbone.View.extend({
 		if (time_input) {
 			var time_string = time_input;
 			var format = "HHMM-HHMM";
+			var user_time_input_matches_specified_format =( time_string.length == format.length);
 
-			if (time_string.length == format.length) {
+			if (user_time_input_matches_specified_format) {
 				var start_time = parseInt(time_string.slice(0, 4));
 				var end_time = parseInt(time_string.slice(5));
 				query.greaterThanOrEqualTo("startTime", start_time);
@@ -201,15 +189,6 @@ app.AppView = Backbone.View.extend({
 		this.$('#results').html(''); 
 
 		if (self.looking_for_courses){
-			// var extra_queries = [];
-			// for (var k =0; k< app.queries.length; k++){
-			// 	var c = new Parse.Query(app.CourseModel);
-			// 	c.equalTo("section_id", app.queries[k]);
-			// 	extra_queries.push(c);
-			// }
-			// var q = new Parse.Query.or.apply(, extra_queries);
-			// var q = new Parse.Query("Section");
-			// q._orQuery(extra_queries);
 			query.containedIn("section_id", app.queries);
 
 		} else {
@@ -226,69 +205,6 @@ app.AppView = Backbone.View.extend({
 					query.startsWith("section_id", search_string_code);
 				}
 			}
-			// if (prof_input) {
-			// 	// inner_query_needed = true;
-			// 	var search_string_prof = prof_input.toUpperCase();
-
-			// 	var index_of_space = search_string_prof.indexOf(' ');
-			// 	var contains_spaces = index_of_space > -1;
-
-				// if (contains_spaces){
-				// 	var first_name = search_string_prof.slice(0, index_of_space);
-				// 	var last_name = search_string_prof.slice(index_of_space + 1);
-				// 	var search_string_prof = '["' + last_name + ", " + first_name + '"]';
-				// 	console.log(search_string_prof);
-				// }
-				// 	// just contains the last name;
-
-
-
-				// if (contains_spaces){
-				// 	inner_query_needed = true;
-				// 	var prof_names = [];
-				// 	var first_name = search_string_prof.slice(0, index_of_space);
-				// 	var last_name = search_string_prof.slice(index_of_space + 1);
-				// 	search_string_prof =  last_name + ", " + first_name + " " ;
-				// 	console.log(search_string_prof);
-				// 	prof_names.push(search_string_prof);
-				// 	inner_query.containedIn("instructor", prof_names);
-				// } else {
-				// 	prof_names.push(search_string_prof);
-				// 	inner_query.containedIn("instructor", prof_names);
-				// }
-
-			
-			// if (time_input) {
-			// 	inner_query_needed = true;
-			// 	var time_string = time_input;
-			// 	var format = "HHMM-HHMM";
-
-			// 	if (time_string.length == format.length) {
-			// 		var start_time = parseInt(time_string.slice(0, 4));
-			// 		var end_time = parseInt(time_string.slice(5));
-			// 		inner_query.greaterThanOrEqualTo("startTime", start_time);
-			// 		inner_query.lessThanOrEqualTo("endTime", end_time);
-			// 	}
-			// }
-			// will implement later when we display actual sections
-			// if (term1_is_checked || term2_is_checked){
-
-			// 	if (term1_is_checked && !term2_is_checked){
-			// 		inner_query_needed = true;
-			// 		inner_query.lessThan("term", 2);
-
-			// 	} else if (!term1_is_checked && term2_is_checked){
-			// 		inner_query_needed = true;
-			// 		inner_query.greaterThan("term", 1);
-			// 	}
-
-			// }
-			// if (building_input) {
-			// 	inner_query_needed = true;
-			// 	var building_search_string = building_input;
-			// 	console.log(building_search_string);
-			// 	inner_query.startsWith("location", building_search_string);
-			// }
 		}
 		if (code_input || prof_input || time_input || building_input
 				|| term_input ){
@@ -324,21 +240,23 @@ app.AppView = Backbone.View.extend({
 
 	query_on_error: function(err){
 		app.results.reset();
-		// alert(err.message);
 		self.$('#results').html('');
 		var error_msg = '<p>Error message: ' + err.message + '</p>';
 		self.$('#results').prepend(error_msg);
 
 	},
 	add_to_cart: function(event){
-		var id_obj = event.target.className.split(" ")[0];
-		var query = new Parse.Query(app.CourseModel);
-		console.log(id_obj);
-		console.log(query);
-		query.get(id_obj, {
-			success: this.add_to_cart_success,
-			error: this.add_to_cart_error
-		})
+		var course_id = $(event.target).closest('.course-result').children('p').text();
+		console.log(course_id);
+		if ($.inArray(course_id, worklist) == -1) {
+			$('#courses').append('<li>' + 
+									'<div class="item">' +
+									'<p class="worklist-title">' + course_id + '</p>' +
+									'<i class="fa fa-trash-o worklist-delete"></i>' + 
+									'</div>' +
+								 '</li>');
+			worklist.push(course_id);
+		}
 	},
 	add_to_cart_success: function(obj){
 		var view = new self.app.CourseView({model: obj});
@@ -349,6 +267,26 @@ app.AppView = Backbone.View.extend({
 	add_to_cart_error: function(obj, err){
 		alert("couldnt add the item to the worklist, err msg: " + err.message); // idea: add error msges to faq, idk
 	},
+
+	remove_from_cart: function(event){
+		console.log("remove course");
+		var course_id = $(event.target).closest('li');
+		worklist.splice($.inArray(course_id.text(), worklist));
+		course_id.remove();
+	},
+	logOut: function(){
+
+	},
+	logIn: function(){
+
+	},
+	sort_by_department: function(){
+
+	},
+	sort_by_level: function(){
+
+	},
+
 
 	addCourse: function(obj){
 		var view = new self.app.CourseView({model: obj});

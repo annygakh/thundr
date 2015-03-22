@@ -3,50 +3,56 @@ var Assert = require('assert');
 
 Parse.initialize('GPBcV6zGuJ2E6OD9nsBZ5q3XnLAkrybuA8RFC4HB', '0mfkZM9QM8Vnc5fMt3JrKpGwLQbKrfYCvohsNgBG');
 
-var Section = Parse.Object.extend("Section");
-var SubSection = Parse.Object.extend("SubSection");
+var Section = Parse.Object.extend("SectionTest");
+var SubSection = Parse.Object.extend("SubSectionTest");
 
 var sec_query = new Parse.Query(Section);
-sec_query.each(function(section) {
-	testReqs(section);
-});
 
-var sub_query = new Parse.Query(SubSection);
-sub_query.each(function(subsection) {
-	testSubsection(subsection);
-});
+testPrereqs();
+// testSubsection();
 
-
-function testReqs(section) {
-	var prereqs_str = section.get('prereqs_str');
-	var prereqs_rel = section.relation('prereqs');
-	prereqs_rel.query().find().then(function(prereqs) {
-		var prereqs_rel_str = [];
-		for (var i = 0; i < prereqs.length; i++)
-			prereqs_rel_str.push(prereqs[i].get('section_id'));
-
-		for (var i = 0; i < prereqs_str.length; i++) {
-			var exists_id = prereqs_str[i];
-			var exists_query = new Parse.Query(Section);
-			exists_query.equalTo('section_id', exists_id);
-			exists_query.first().then(function(existing_section) {
-				if (existing_section != null) {
-					// All items from prereqs_str are in prereqs_rel unless they are not in the db
-					Assert(prereqs_rel_str.indexOf(existing_section.get('section_id')) != -1, section.get('section_id') + " should contain prereqs: " + prereqs_rel_str + 'but does not contain:' + existing_section.get('section_id'));
-				}
-			});
-		}
-	});
+function testPrereqs() {
+	describe ('Reqs', function() {
+		it ('all reqs in prereq_str must be realtions in prereqs', function(done) {
+			sec_query.each(function(section) {
+				var prereqs_str = section.get('prereqs_str');
+				var prereqs_rel = section.relation('prereqs');
+				prereqs_rel.query().find({
+					success: function(prereqs) {
+						Assert.equal(prereqs.length, prereqs_str.length, section.get('section_id'));
+						for (var i = 0; i < prereqs_str.length; i++) {
+							var testPrereq = prereqs_str[i];
+							Assert.equal(prereqs.equalTo('section_id', testPrereq).first().get('section_id'), testPrereq);
+						};
+					}
+				});
+			}).then(function() { done() });
+		})
+	})
 }
 
+
+
+var sub_query = new Parse.Query(SubSection);
+
 function testSubsection(subsection) {
-	var section_id = subsection.get('section_id');
-	Assert(section_id);
-	var section_rel = subsection.get('section');
-	var query = new Parse.Query(Section);
-	query.get(section_rel, {
-		success: function(section) {
-			Assert.equal(section.get('section_id'), section_id, section_id + " is missing subsection " + subsection_id);
-		}
-	});
+	describe ('Subsections', function() {
+		var query = new Parse.Query(Section);
+		it ('all subsections must exist', function(done) {
+			sub_query.each(function(subsection) {
+
+				var section_id = subsection.get('section_id');
+				var section_rel = subsection.get('section');
+
+				Assert(section_id);
+
+				query.get(section_rel, {
+					success: function(section) {
+						Assert.equal(section.get('section_id'), section_id);
+						done();
+					}
+				});
+			})
+		})
+	})
 }

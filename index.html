@@ -5,6 +5,7 @@
     <title>Thundr</title>
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/evil-icons/1.5.0/evil-icons.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     
@@ -144,19 +145,7 @@
         <div class="worklist">
           <div class="container regular-font" id="worklist-container">
             <p class="title medium-font">Worklist</p>
-            <!-- <div class="item">
-              <p>CPSC310: Software Engineering</p>
-              <div class="icon" data-icon="ei-trash" data-size="s"></div>
-            </div>
-            <div class="item">
-              <p>CPSC310: Software Engineering</p>
-              <div class="icon" data-icon="ei-trash" data-size="s"></div>
-            </div>
-            <div class="item">
-              <p>CPSC310: Software Engineering</p>
-              <div class="icon" data-icon="ei-trash" data-size="s"></div>
-            </div> -->
-
+            <ul id="courses"><ul>
           </div>
         </div>
 
@@ -192,10 +181,14 @@
 
     <script type="text/template" id="course-template">
       <table class="item" id="<%=html_id%>">
-        <tr class="course-result">
-              <td class="course-result"><%=course_title%></td>
-              <td class="credits course-result-credits"><%=num_credits%></td>
-          </tr>
+        <tr class="course-container">
+          <td class="course-result">
+            <p class="course-title"><%=course_title%></p>
+            <br>
+            <button class="add-button">ADD TO WORKLIST</button>
+          </td>
+          <td class="credits course-result-credits"><%=num_credits%></td>
+        </tr>
       </table>
     </script>
 
