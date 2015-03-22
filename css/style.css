@@ -217,6 +217,7 @@ input {
 
 .worklist i {
 	float: right;
+	cursor: pointer;
 }
 
 /** Right **/
