@@ -202,6 +202,7 @@ input {
 .worklist {
 	height: 40vh;
 	min-height: 250px;
+	overflow: auto;
 }
 
 .worklist .item {
@@ -211,10 +212,10 @@ input {
 
 .worklist p {
 	float: left;
-	width: 75%;
+	width: 90%;
 }
 
-.worklist div.icon {
+.worklist i {
 	float: right;
 }
 
