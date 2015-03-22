@@ -9,7 +9,8 @@ app.AppView = Backbone.View.extend({
 	results_header_template: _.template($('#results-header-template').html()),
 	events: {
 		'click #search-button' : 'search_router',
-		'click .add-button' : 'add_to_cart'
+		'click .add-button' : 'add_to_cart',
+		'click .icon' : 'remove-course'
 		// 'keyup .code' : 'search',
 		// 'keyup .title' : 'search',
 		// 'keyup .dept' : 'search',
@@ -360,6 +361,10 @@ app.AppView = Backbone.View.extend({
 	},
 	add_to_cart_error: function(obj, err){
 		alert("couldnt add the item to the worklist, err msg: " + err.message); // idea: add error msges to faq, idk
+	},
+	remove_from_cart: function(event){
+		$(this).closest('li').remove();
+		//worklist.remove(course_id);
 	},
 	logOut: function(){
 
