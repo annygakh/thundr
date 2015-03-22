@@ -339,8 +339,9 @@ app.AppView = Backbone.View.extend({
 	},
 	add_to_cart: function(event){
 		var id_obj = event.target.className;
-		var course_id = $(event.target + ':first').closest('.course-result').text();
-		$('#worklist-container').append(course_id);
+		var course_id = $(event.target).closest('.course-title').text();
+		console.log(course_id);
+		//$(course_id).appendTo("#worklist-container");
 	},
 	add_to_cart_success: function(obj){
 		var view = new self.app.CourseView({model: obj});
