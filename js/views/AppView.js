@@ -96,15 +96,27 @@ app.AppView = Backbone.View.extend({
 
 			var index_of_space = search_string_prof.indexOf(' ');
 			var contains_spaces = index_of_space > -1;
+			var regex_pattern, regex_object;
 
 			if (contains_spaces){
-				var first_name = search_string_prof.slice(0, index_of_space);
-				var last_name = search_string_prof.slice(index_of_space + 1);
-				search_string_prof =  last_name + ", " + first_name + " " ;
-			}
-				console.log(search_string_prof);
-				query.startsWith("instructor", search_string_prof);
+				var first_word = search_string_prof.slice(0, index_of_space);
+				var second_word = search_string_prof.slice(index_of_space + 1);
 
+				var first_second = first_word + "\.\\s" + second_word;
+				var second_first = second_word + "\.\\s" + first_word;
+
+				regex_pattern = "(" + first_second +  "|" + second_first + ")";
+
+			} else {
+				regex_pattern =  search_string_prof;
+				console.log(regex_pattern);
+				
+				console.log(search_string_prof);
+				// query.startsWith("instructor", search_string_prof); //what we had before
+			}
+
+				regex_object = new RegExp(regex_pattern);
+				query.matches("instructor", regex_object, 'i');
 		}
 		if (time_input) {
 			var time_string = time_input;
@@ -125,7 +137,7 @@ app.AppView = Backbone.View.extend({
 
 			} else if (!term1_is_checked && term2_is_checked){
 				query.equalTo("term", 2);
-			}
+			}  // THE TERM 3 THING DOESNT WORK MAN, IM JUST GONNA IGNORE IT
 
 		}
 		if (building_input) {
