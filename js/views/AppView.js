@@ -11,8 +11,6 @@ app.AppView = Backbone.View.extend({
 		'click #search-button' : 'search_router',
 		'click .add-button' : 'add_to_cart',
 		'click .worklist-delete' : 'remove_from_cart',
-		// 'click #precoreqs' : 'show_precoreqs_search',
-		// 'click #postreqs' : 'show_post_reqs_search'
 	},
 	initialize: function(){
 		this.$('#search-button').click(function(event){
@@ -343,7 +341,9 @@ app.AppView = Backbone.View.extend({
 		var contains_spaces = index_of_space > -1;
 
 		if (contains_spaces){
-			search_string_code = search_string_code.slice(0, 4) + search_string_code.slice(index_of_space);
+			var last_index_of_space = search_string_code.lastIndexOf(" ");
+			search_string_code = search_string_code.slice(0, 4) + search_string_code.slice(last_index_of_space+1);
+			console.log(search_string_code);
 		} 
 		/*-----------filtering the departments -----------------*/
 
@@ -610,7 +610,6 @@ app.AppView = Backbone.View.extend({
 
 	},
 
-
 	addCourse: function(obj){
 		var view = new self.app.CourseView({model: obj});
 		self.$('#results').append(view.el);
@@ -633,26 +632,12 @@ app.AppView = Backbone.View.extend({
 	},
 
 	addCourseByCredits: function(obj){
-		var view = new self.app.CourseView({model: obj});
-		self.$('#results').append(view.el);
+
 	},
 	sort_by_credits: function(){
-		app.results.sortBy(function(course){
-			return course.get("credits");
-		});		
+	
 	},
 	handle_sorting_by_credits: function(){
-		function sort_by_credits(){
-			app.results.sortBy(function(course){
-			return course.get("credits");
-		});	}
 
-		$('#results').html('');
-		sort_by_credits.forEach(function(course){
-			console.log("adding the views");
-			console.log(course);
-			console.log(course instanceof(app.CourseModel)); // returns true 
-			this.app.appp.addCourse(course);
-		});
 	}
 });
