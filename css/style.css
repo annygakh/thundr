@@ -195,6 +195,34 @@ input {
 .term-checkboxes{
 	diplay: block;
 }
+/** Search navigation**/
+
+ul#tabs{
+	list-style: none;
+	/*width: 20px;*/
+	margin-top: 20px;
+	margin-bottom: 20px;
+
+	padding: 5px;
+
+	text-align: center;
+}
+
+ul#tabs li {
+	background-color: white;
+	color: black;
+	/*display: inline;*/
+	cursor: pointer;
+}
+ul#tabs li.active {
+	background-color: #004786;
+	color: white;
+}
+
+
+.hide-totally {
+	display: none;
+}
 
 
 /** Worklist **/
@@ -291,11 +319,12 @@ td.credits.course-result {
 .checkbox-custom, .radio-custom {
     opacity: 0;
     position: absolute;  
-    /*display: inline;	*/
+    /*display: block;	*/
 }
 
 .checkbox-custom, .checkbox-custom-label, .radio-custom, .radio-custom-label {
     display: inline-block;
+    /*display: block;*/
     vertical-align: middle;
 
     /*margin: 5px;*/
@@ -304,7 +333,7 @@ td.credits.course-result {
 }
 
 .checkbox-custom-label, .radio-custom-label {
-    position: relative;
+
 }
 
 .checkbox-custom + .checkbox-custom-label:before, .radio-custom + .radio-custom-label:before {
@@ -316,7 +345,8 @@ td.credits.course-result {
     width: 20px;
     height: 20px;
     padding: 2px;
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: 10px;
     text-align: center;
 }
 

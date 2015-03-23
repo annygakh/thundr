@@ -14,9 +14,9 @@ app.CourseCollection = Parse.Collection.extend({
 			return course.get("credits");
 		});	
 	},
-	// comparator: function(course1, course2){
-	// 	return course1.get("section_id") < course2.get("section_id");
-	
+	comparator: function(course){
+		return course.get("section_id");
+	}
 	// },
 
 
