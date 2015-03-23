@@ -11,8 +11,8 @@ app.AppView = Backbone.View.extend({
 		'click #search-button' : 'search_router',
 		'click .add-button' : 'add_to_cart',
 		'click .worklist-delete' : 'remove_from_cart',
-		'click #precoreqs' : 'show_precoreqs_search',
-		'click #postreqs' : 'show_post_reqs_search'
+		// 'click #precoreqs' : 'show_precoreqs_search',
+		// 'click #postreqs' : 'show_post_reqs_search'
 	},
 	initialize: function(){
 		this.$('#search-button').click(function(event){
@@ -25,20 +25,31 @@ app.AppView = Backbone.View.extend({
 			'subsections_query_on_success', 'subsections_query_on_error',
 			'precoreqs_query_on_success', 'precoreqs_query_on_error',
 			'find_prereqs_for_each_course_on_success', 'find_prereqs_for_each_course_on_error',
-			'reset_results_html');
+			'reset_results_html',
+			'find_postreqs_from_course_code_on_success', 'find_postreqs_from_course_code_on_error');
 
 		/*---------------Declare and initialize some variables-----------------------*/
 		app.results = new app.CourseCollection();
 		app.sub_results = new app.SubsectionCollection();
 		app.queries = [];
-		app.prereqs = [];
 		app.option_building;
 
 		app.reqs_results = new app.CourseCollection();
+		app.prereqs = []; // i think we can delete this
 		app.departments = [];
 		app.contains_depts = false;
-		app.prereqs_search_level = 3;
 		app.DEFAULT_PREREQS_SEARCH_LEVEL = 3;
+		app.prereqs_search_level = app.DEFAULT_PREREQS_SEARCH_LEVEL;
+
+		app.post_req_results = new app.CourseCollection();
+		app.courses_of_interest = [];
+		app.post_departments = [];
+		app.contains_post_departments = false;
+		app.DEFAULT_POSTREQS_SEARCH_LEVEL = 3;
+		app.postreqs_search_level = app.DEFAULT_POSTREQS_SEARCH_LEVEL;
+
+
+
 
 		/*----------------Setting up listeners-----------------------*/
 		this.listenTo(app.results, 'add', this.addCourse);
@@ -46,6 +57,7 @@ app.AppView = Backbone.View.extend({
 		this.listenTo(app.results, 'reset', this.reset_all_courses);
 		this.listenTo(app.sub_results, 'reset', this.reset_all_courses);
 		this.listenTo(app.reqs_results, 'add', this.addCourse);
+		this.listenTo(app.post_req_results, 'add', this.addCourse);
 
 		$("input[name=buildings]").focusout(function () {
             app.option_building = ($(this).val());
@@ -86,7 +98,7 @@ app.AppView = Backbone.View.extend({
 			} else if (code_input) {
 				this.find_courses_from_course_code();
 			} else {
-				self.$('#results').html('');
+				this.reset_results_html();
 			}
 		} else if (searching_for_precoreqs) {
 			/*------------ Checking if the user has filled out textboxes -----------*/
@@ -99,7 +111,14 @@ app.AppView = Backbone.View.extend({
 			}
  
 		} else if (searching_for_postreqs){
-			// TODO	
+			/*------------ Checking if the user has filled out textboxes -----------*/
+			var courses_input = this.$('#code-post-reqs').val().trim();
+
+			if (courses_input) {
+				this.find_postreqs_from_course_code();
+			} else {
+				this.reset_results_html();
+			}
 		}
 
 	},
@@ -190,6 +209,7 @@ app.AppView = Backbone.View.extend({
 		}
 
 		if (code_input || prof_input || time_input || building_input ) {
+			query.addAscending("section_id");
 			query.find({
 				success: this.subsections_query_on_success,
 				error: this.subsections_query_on_error
@@ -263,7 +283,7 @@ app.AppView = Backbone.View.extend({
 		}
 		if (code_input || prof_input || time_input || building_input
 				|| term_input ){
-
+			query.addAscending("section_id");
 			query.find({
 				success: this.query_on_success,
 				error: this.query_on_error
@@ -277,7 +297,7 @@ app.AppView = Backbone.View.extend({
 		app.queries = [];
 		this.reset_all_collections();
 		if (results.length == 0){
-			self.no_results_found();
+			this.no_results_found();
 		}
 		for (var i = 0; i < results.length; i++){
 			var obj = results[i];
@@ -291,10 +311,7 @@ app.AppView = Backbone.View.extend({
 
 	},	
 
-	no_results_found: function(){
-		var error_msg = '<p>No results were found. Please check your spelling.</p>';
-		self.$('#results').prepend(error_msg);
-	},
+	
 
 	query_on_error: function(err){
 		app.results.reset();
@@ -305,7 +322,14 @@ app.AppView = Backbone.View.extend({
 	},
 
 	find_precoreqs_from_course_code: function() {
+
+		/*-------------- Reset results ------------*/
 		this.reset_results_html();
+		/*------------ (Re) initialize everything-------------*/
+		app.departments = [];
+		app.reqs_results.reset();
+		app.contains_depts = false;
+		app.each_prereq = [];
 		/*------------- Getting user input ------------*/
 		var code_input = this.$('#code-reqs').val().trim();
 		var department_input = this.$('#department-reqs').val().trim();
@@ -323,10 +347,6 @@ app.AppView = Backbone.View.extend({
 		} 
 		/*-----------filtering the departments -----------------*/
 
-		app.departments = [];
-		app.reqs_results.reset();
-		app.contains_depts = false;
-		app.each_prereq = [];
 
 
 		if (department_input) {
@@ -358,12 +378,10 @@ app.AppView = Backbone.View.extend({
 
 
 		/*------------Form appropriate queries---------------*/
-		var	query = new Parse.Query(app.CourseModel);
 		app.reqs_results.reset();
-
-		
-
+		var	query = new Parse.Query(app.CourseModel);
 		query.startsWith('section_id', search_string_code);
+		query.addAscending("section_id");
 		query.find({
 			success: this.precoreqs_query_on_success,
 			error: this.precoreqs_query_on_error
@@ -391,6 +409,7 @@ app.AppView = Backbone.View.extend({
 			var	query = new Parse.Query(app.CourseModel);
 			query.containedIn("section_id", course_codes);
 			app.each_prereq = [];
+			query.addAscending("section_id");
 			query.find({
 				success: this.find_prereqs_for_each_course_on_success,
 				error: this.find_prereqs_for_each_course_on_error
@@ -439,6 +458,113 @@ app.AppView = Backbone.View.extend({
 	find_prereqs_for_each_course_on_error: function(err){
 		console.log("Error upon finding subsequent prerequisites: " + err.message);
 			
+	},
+
+	find_postreqs_from_course_code: function() {
+		/*-------------- Reset results ------------*/
+		this.reset_results_html();
+		/*-------- (Re)Initialize everything ------------ */
+		app.courses_of_interest = [];
+		app.post_departments = [];
+		app.post_req_results.reset();
+		app.contains_post_departments = false;
+		// app.postreqs_search_level = app.DEFAULT_POSTREQS_SEARCH_LEVEL;
+
+		
+		/*------------- Getting user input ------------*/
+		var courses_input = this.$('#code-post-reqs').val().trim();
+		var dept_input = this.$('#dept-postreqs').val().trim();
+		var num_results_input = this.$('#num-results-postreqs').val().trim();
+		
+		/*------------- Filtering user input ------------*/
+
+		/*------------- Filtering courses input ------------*/
+		var courses_input_string = courses_input.toUpperCase();
+
+		var index_of_comma = courses_input_string.indexOf(","); 
+		var contains_comma = index_of_comma > -1;
+
+		if (contains_comma){
+			app.courses_of_interest = courses_input_string.split(",");
+		} else {
+			app.courses_of_interest = courses_input_string.split(" ");
+		}
+		/* -------------- Filtering dept input-------------- */
+
+		if (dept_input){
+			var dept_input_string = dept_input.toUpperCase();
+
+			var index_of_comma = dept_input_string.indexOf(","); 
+			var contains_comma = index_of_comma > -1;
+
+			if (contains_comma){
+				app.courses_of_interest = dept_input_string.split(",");
+			} else {
+				app.courses_of_interest = dept_input_string.split(" ");
+			}
+			app.contains_post_departments = true;
+		}
+		/* -------------- Filtering num results input -------------- */
+
+		if (num_results_input)
+			app.postreqs_search_level = num_results_input;
+		else
+			app.postreqs_search_level = app.DEFAULT_POSTREQS_SEARCH_LEVEL;
+		/* --------------Creation of the query -------------------- */
+
+		var query = new Parse.Query(app.CourseModel);
+		query.containedIn("prereqs_str", app.courses_of_interest);
+		query.addAscending("section_id");
+		query.find({
+			success: this.find_postreqs_from_course_code_on_success,
+			error: this.find_postreqs_from_course_code_on_error
+		});
+		// check for the department match later on
+
+
+
+
+	},
+	find_postreqs_from_course_code_on_success: function(results){
+		if (results.length == 0 ){
+			this.no_results_found();
+		} else {
+			var i = 0;
+			while (i < results.length && app.postreqs_search_level > 0){
+				var course = results[i];
+				var course_id = course.id;
+				var course_dept = course.get("section_id").slice(0, 4);
+
+				var contains_the_postreq = app.post_req_results.get(course_id) instanceof(app.CourseModel);
+				var matches_one_of_the_depts = false;
+				
+				if (!contains_the_postreq) {
+					if (app.contains_post_departments) {
+						for (var n = 0; n < app.post_departments.length; n++){
+							var dept = app.post_departments[n];
+							if (dept == course_dept){
+								matches_one_of_the_depts = true;
+							}
+						}
+					} else {
+						// the user didn't input any requirements for the department, 
+						// so we want to display all departments
+						matches_one_of_the_depts = true;
+					}
+
+					if (matches_one_of_the_depts){
+						app.postreqs_search_level--;
+						app.post_req_results.add(course);
+					}
+
+				}
+				i++;
+			} 
+		}
+	},
+
+	find_postreqs_from_course_code_on_error: function(err){
+		console.log("Error finding post reqs from course code: " + err.message);
 	},
 
 
@@ -500,6 +626,10 @@ app.AppView = Backbone.View.extend({
 	reset_all_collections: function(){
 		app.results.reset(); 
 		app.sub_results.reset();
+	},
+	no_results_found: function(){
+		var error_msg = '<p>No results were found. Please check your spelling.</p>';
+		self.$('#results').prepend(error_msg);
 	},
 
 	addCourseByCredits: function(obj){

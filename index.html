@@ -58,7 +58,7 @@
 
       <div class="active search-for-sections">
             <form class="search" id="form">
-              <input id="code" placeholder='Course code, e.g. "CPSC 210"'>
+              <input id="code" placeholder='Course code, e.g. "CPSC 210" or "cpsc"'>
               <input id="prof" placeholder="Professor's name,  e.g. 'Sam Lee'"> 
               <input id="time" placeholder="Time, 24hr, HHMM-HHMM, e.g. '1230-1530'">
               <!-- <button id="prereqs-button">prereqs</button> -->
@@ -153,7 +153,7 @@
                 <form class="search-pre-co-reqs-form" >
                   <input id="code-reqs" placeholder='Course code, e.g. "CPSC 210"'>
                   <input id="department-reqs" placeholder='1 or more department, e.g. "CPSC MATH APSC"'>
-                  <input id="num-results-reqs" placeholder='Number of courses to be displayed, e.g. "8"'>
+                  <input id="num-results-reqs" placeholder='Number of courses to be displayed, e.g. "3"'>
  
                   <!-- <div class="req-checkboxes">
                    
@@ -170,7 +170,9 @@
               </div><!-- ^^^ search for pre and co reqs --> 
               <div class="search-for-post-reqs hide-totally">
                 <form class="search-pre-co-reqs-form" >
-                  <input id="code" placeholder='Enter 1 or more department, e.g. "APSC CPSC MATH "'>
+                  <input id="code-post-reqs" placeholder='1 or more courses, e.g. "CPSC210 CPSC221"'>
+                  <input id="dept-postreqs" placeholder='1 or more department, e.g. "CPSC MATH APSC"'>
+                  <input id="num-results-postreqs" placeholder='Number of courses to be displayed, e.g. "3"'>
                 </form>
         
               </div> <!-- ^^^search for post reqs -->
