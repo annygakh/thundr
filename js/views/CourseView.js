@@ -10,6 +10,12 @@ app.CourseView = Backbone.View.extend({
 	num_tmpl: 1,
 	reg_template:  _.template($('#course-template').html()),
 	worklist_template: _.template($('#worklist-item-template').html()),
+    detailed_view_template: _.template($('#detailed-view-template').html()),
+    lecture_template:  _.template($('#lecture-template').html()),
+    lab_template:  _.template($('#lab-template').html()),
+    tutorial_template:  _.template($('#tutorial-template').html()),
+    discussion_template:  _.template($('#discussion-template').html()),
+    other_template:  _.template($('#other-template').html()),
 
 	events: {
 		"click .item" : "toggleItem",
@@ -36,7 +42,7 @@ app.CourseView = Backbone.View.extend({
         
         this.get("description");
         
-        var viewCourse = new self.app.SubSection({model: obj});
+        var viewCourse = new app.SubSection({model: obj});
         // self.$("#results").append(view.el); // u need to define your own html element with its own id to write results to
         
         
@@ -57,7 +63,13 @@ app.CourseView = Backbone.View.extend({
 
 	},
 	render_header: function(){
-
+        var obj = {
+            "html_id" : this.model.id,
+			"course_title" : this.model.get("title").trim(),
+			"num_credits" : this.model.get("credits")
+        };
+        $(this.el).html(this.detailed_view_template(obj));
+        return this;
 	},
 	handle_click: function(){
 		// reroute??

@@ -666,7 +666,6 @@ app.AppView = Backbone.View.extend({
 			alert("Noo");
 			console.log("Error, should only be 1 couse remaining ");
 		}
-
 	},
 	handle_sorting_by_credits: function(){
 
