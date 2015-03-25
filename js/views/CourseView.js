@@ -12,15 +12,25 @@ app.CourseView = Backbone.View.extend({
 	worklist_template: _.template($('#worklist-item-template').html()),
 
 	events: {
-		"click .item" : "toggleItem"
+		"click .item" : "toggleItem",
+		'click td' : 'toggle_status',
 	},
 
 	initialize: function(){
 		this.template = this.reg_template;
 		this.render();
+		_.bindAll(this, 'toggle_status');
+		/* -------------- Initialize listeners -------------- */
+		
 
 	},
-    
+    toggle_status: function(){
+    	var $tr = this.$el;
+    	console.log($tr);
+    	console.log( 'id of the element $tr: ' + $tr.attr('id'));
+    	$tr.addClass("active-class");
+    	console.log()
+    },
     toggleCourse: function (){
         
         this.get("description");

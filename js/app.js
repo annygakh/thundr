@@ -21,6 +21,8 @@ $(function(){
         }
 	});
 
+    
+
 	
 	/*----- kick things off by creating THE AP -------*/
 	 new app.AppView();	

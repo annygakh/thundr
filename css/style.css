@@ -301,6 +301,9 @@ tr.course-result, td.course-result {
 .course-result {
 	
 }
+.course-result:hover {
+	background-color: #E6EDF3; /*silver, copied from flat ui colors*/
+}
 
 td.credits.course-result {
 	text-align: center;
