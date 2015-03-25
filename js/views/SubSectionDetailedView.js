@@ -17,10 +17,9 @@ app.subsection-detailed-view = Backbone.View.extend({
 	}
 	render: function(){
 		
-	}
-	render_title: function(){
 		
 	}
+
 	render_lab: function(){
 
 	}

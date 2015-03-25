@@ -30,6 +30,8 @@ app.CourseView = Backbone.View.extend({
     	console.log( 'id of the element $tr: ' + $tr.attr('id'));
     	$tr.addClass("active-class");
     	console.log()
+
+    	
     },
     toggleCourse: function (){
         
