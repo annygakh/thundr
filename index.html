@@ -228,6 +228,70 @@
           <td class="table-header">Credits</td>
       </tr>
   </script>
+  
+  <script type="text/template" id="detailed-view-template">
+    <table class="subsection" id="html_id">
+        <tr class="subsection-container">
+          <td class="subsection-result">
+            <p class="subsection-title"><%=course_title%></p>
+          </td>
+          <td class="credits course-result-credits"><%=num_credits%></td>
+        </tr>
+        <tr class="subsection-container" id="subsection">
+          <td class="subsection-result">
+            <p class="subsection-description">Description</p>
+            <p class="subsection-description">Pre-Req/Co-Req</p>
+            <a href="#">SSC</a>
+          </td>
+        </tr>
+    </table>
+  </script>
+  
+  <script type="text/template" id="lecture-template">
+    <tr class="course-header" id="subsection">
+      <td class="lecture-header">Lecture Sections</td>
+    </tr>
+  </script>
+  
+  <script type="text/template" id="lab-template">
+    <tr class="laboratory-header" id="lab">
+      <td class="lab-header">Lab Sections</td>
+    </tr>
+  </script>
+        
+  <script type="text/template" id="tutorial-template">
+    <tr class="tutorial-header" id="tut">
+      <td class="tut-header">Tutorial Sections</td>
+    </tr>
+  </script>
+        
+  <script type="text/template" id="discussion-template">
+    <tr class="discussion-header" id="discussion">
+      <td class="dis-header">Discussion Sections</td>
+    </tr>
+  </script>
+        
+  <script type="text/template" id="other-template">
+    <tr class="others-header" id="other">
+      <td class="other-header">Other Sections</td>
+    </tr>
+  </script>
+        
+  <script type="text/template" id="detailed-view-details-template">
+    <tr class="subsection-header" id="sub-section">
+      <td class="term"><%=term%></td>
+      <td class="code"><%=code%></td>
+      <td class="days"><%=days%></td>
+      <td class="time"><%=start_time%>-<%=end_time%></td>
+      <td class="instructor"><%=instructor%></td>
+    </tr>
+    <tr class="subsection-loc">
+      <td class="blank"></td>
+      <td class="s-location">
+        <a href="#">MAP</a>
+      </td>
+    </tr>
+  </script>
 
   <!-- <script src="js/views"></script> -->
   <script src="js/lib/jquery.min.js"></script>
