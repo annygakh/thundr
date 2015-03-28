@@ -32,38 +32,38 @@ app.CourseView = Backbone.View.extend({
         _.bindAll(this, 'find_subsection_on_success');
 	},
     toggle_status: function(){
-        app.subsections = new app.SubSectionCollection();        
+        app.subsections = new app.SubsectionCollection();        
         this.listenTo(app.subsections, 'add', this.addSubSection);
     	var $tr = this.$el;
     	console.log($tr);
     	console.log( 'id of the element $tr: ' + $tr.attr('id'));
     	$tr.addClass("active-class");
         
-        var query = new Parse.Query(app.SubSectionModel);
+        var query = new Parse.Query(app.SubsectionModel);
         query.equalTo("type", "Lecture");
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
-        query = new Parse.Query(app.SubSectionModel);
+        query = new Parse.Query(app.SubsectionModel);
         query.equalTo("type", "Laboratory");
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
-        query = new Parse.Query(app.SubSectionModel);
+        query = new Parse.Query(app.SubsectionModel);
         query.equalTo("type", "Tutorial");
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
-        query = new Parse.Query(app.SubSectionModel);
+        query = new Parse.Query(app.SubsectionModel);
         query.equalTo("type", "Discussion");
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
-        query = new Parse.Query(app.SubSectionModel);
+        query = new Parse.Query(app.SubsectionModel);
         query.notEqualTo("type", "Lecture");
         query.notEqualTo("type", "Laboratory");
         query.notEqualTo("type", "Tutorial");
