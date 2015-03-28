@@ -26,7 +26,8 @@ app.AppView = Backbone.View.extend({
 			'precoreqs_query_on_success', 'precoreqs_query_on_error',
 			'find_prereqs_for_each_course_on_success', 'find_prereqs_for_each_course_on_error',
 			'reset_results_html',
-			'find_postreqs_from_course_code_on_success', 'find_postreqs_from_course_code_on_error');
+			'find_postreqs_from_course_code_on_success', 'find_postreqs_from_course_code_on_error',
+			'prepare_for_detailed_view');
 
 		/*---------------Declare and initialize some variables-----------------------*/
 		app.results = new app.CourseCollection();
@@ -47,6 +48,8 @@ app.AppView = Backbone.View.extend({
 		app.contains_post_departments = false;
 		app.DEFAULT_POSTREQS_SEARCH_LEVEL = 3;
 		app.postreqs_search_level = app.DEFAULT_POSTREQS_SEARCH_LEVEL;
+
+		app.views = [];
 
 
 
@@ -380,6 +383,8 @@ app.AppView = Backbone.View.extend({
 		app.results.reset(); // new
 		var	query = new Parse.Query(app.CourseModel);
 		query.startsWith('section_id', search_string_code);
+		var PREREQ = 'Pre-reqs';
+		query.startsWith("req_str", PREREQ);
 		query.addAscending("section_id");
 		query.find({
 			success: this.precoreqs_query_on_success,
@@ -618,6 +623,7 @@ app.AppView = Backbone.View.extend({
 
 	addCourse: function(obj){
 		var view = new self.app.CourseView({model: obj});
+		app.views.push(view);
 		self.$('#results').append(view.el);
 	},
 
@@ -627,10 +633,15 @@ app.AppView = Backbone.View.extend({
 
 	reset_results_html: function(){
 		this.$('#results').html('');
+		for (var k = 0; k < app.views; k++){
+			app.views[k].remove();
+		}
+		
 	},
 	reset_all_collections: function(){
 		app.results.reset(); 
 		app.sub_results.reset();
+		app.views = [];
 	},
 	no_results_found: function(){
 		var error_msg = '<p>No results were found. Please check your spelling.</p>';
@@ -650,22 +661,40 @@ app.AppView = Backbone.View.extend({
 		$selected_course.prevAll().remove();
 		
 		var models_to_remove = new app.CourseCollection();
+
 		for (var i = 0; i < app.results.length; i++){
 			var current_model = app.results.at(i);
+
 			var current_model_id = current_model.id;
 			if (current_model_id != selected_course_id){
 				models_to_remove.add(current_model);
+
 			} 
 		}
 		for (var k = 0; k < models_to_remove.length; k++){
 			var current_model_to_remove = models_to_remove.at(k);
 			app.results.remove(current_model_to_remove);
 		}
-		console.log("length: " + app.results.length);	
+
 		if (app.results.length != 1){
-			alert("Noo");
-			console.log("Error, should only be 1 couse remaining ");
+			console.log("Error, should only be 1 course remaining ");
 		}
+		var id_of_the_remaining_course_model = app.results.at(0).id;
+
+		var remaining_views = [];
+		for (var j = 0; j < app.views.length; j++){
+			var current_view = app.views[j];
+			var current_id_of_views_model = current_view.model.id ;
+			if (current_id_of_views_model == id_of_the_remaining_course_model) {
+				remaining_views.push(current_view);
+				break;
+			}
+		}
+		this.reset_results_html();
+		app.views = remaining_views;
+		var remaining_view = app.views[0];
+		var templ = remaining_view.render_header();
+		self.$('#results').append(templ);
 	},
 	handle_sorting_by_credits: function(){
 
