@@ -10,6 +10,7 @@ app.CourseView = Backbone.View.extend({
 	num_tmpl: 1,
 	reg_template:  _.template($('#course-template').html()),
 	worklist_template: _.template($('#worklist-item-template').html()),
+
     detailed_view_template: _.template($('#detailed-view-template').html()),
     lecture_template:  _.template($('#lecture-template').html()),
     lab_template:  _.template($('#lab-template').html()),
@@ -38,57 +39,70 @@ app.CourseView = Backbone.View.extend({
     	console.log($tr);
     	console.log( 'id of the element $tr: ' + $tr.attr('id'));
     	$tr.addClass("active-class");
+        /*------------create queries ------------*/
         
         var query = new Parse.Query(app.SubsectionModel);
+        var section = this.model.get("section_id");
+        console.log(section);
         query.equalTo("type", "Lecture");
+        query.equalTo("section_id", section);
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
         query = new Parse.Query(app.SubsectionModel);
         query.equalTo("type", "Laboratory");
+        query.equalTo("section_id", section);
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
         query = new Parse.Query(app.SubsectionModel);
         query.equalTo("type", "Tutorial");
+        query.equalTo("section_id", section);
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
         query = new Parse.Query(app.SubsectionModel);
         query.equalTo("type", "Discussion");
+        query.equalTo("section_id", section);
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
         query = new Parse.Query(app.SubsectionModel);
-        query.notEqualTo("type", "Lecture");
-        query.notEqualTo("type", "Laboratory");
-        query.notEqualTo("type", "Tutorial");
-        query.notEqualTo("type", "Discussion");
+        query.equalTo("section_id", section);
+        var prev_types = ["Lecture", "Laboratory", 
+                        "Tutorial", "Discussion"];
+        query.notContainedIn("type", prev_types);
         query.find({
             success: this.find_subsection_on_success,
             error: this.find_subsection_on_error
         });
+
+
     },
     find_subsection_on_success: function(results){
-        if (results[0].get("type") == "Lecture"){
-            this.render_lecture_header;
-        } else if (results[0].get("type") == "Laboratory"){
-            this.render_lab_header;
-        } else if (results[0].get("type") == "Tutorial"){
-            this.render_tut_header;
-        } else if (results[0].get("type") == "Discussion"){
-            this.render_dis_header;
-        } else {
-            this.render_other_header;
-        }
-        
-        for (var i = 0; i < results.length ; i++) {
-            var result = results[i];
-            app.subsections.add(result);
+        console.log('find subsectiosn_on_success');
+        // console.log(results[0]);
+        if (results.length > 0) {
+            if (results[0].get("type") == "Lecture"){
+                this.render_lecture_header();
+            } else if (results[0].get("type") == "Laboratory"){
+                this.render_lab_header();
+            } else if (results[0].get("type") == "Tutorial"){
+                this.render_tut_header();
+            } else if (results[0].get("type") == "Discussion"){
+                this.render_dis_header();
+            } else {
+                this.render_other_header();
+            }
+            
+            for (var i = 0; i < results.length ; i++) {
+                var result = results[i];
+                app.subsections.add(result);
+            }
         }
     },
     // do we need an error?
@@ -101,26 +115,14 @@ app.CourseView = Backbone.View.extend({
             "days" : this.model.get("days"),
             "start_time" : this.model.get("startTime"),
             "end_time" : this.model.get("endTime"),
-            "instructor" : this.model.get("instructor")
-            // "map" ： this.model.get("map")
-            // not sure if i should place this here...
+            "instructor" : this.model.get("instructor"),
+            "map" : this.model.get("map")
         };
-        var subsection_header_result = this.detailed-view-details-template(obj);
+        var subsection_header_result = this.detailed_view_template(obj);
+        console.log(subsection_header_result);
         return subsection_header_result;
         
-        // not too sure where to place these ><
-        /* if (this.model.get("location") == "No Scheduled Meeting"){
-            this.model.get("location") = "N/A";
-        }
-        if (this.model.get("startTime") == null) {
-            this.model.get("startTime") = "N/A";
-        }
-        if (this.model.get("endTime") == null) {
-            this.model.get("endTime") = "N/A";
-        }
-        if (this.model.get("map") == undefined) {
-            this.model.get("map") = "N/A";
-        } */
+      
     },
     toggleCourse: function (){
         
@@ -138,28 +140,28 @@ app.CourseView = Backbone.View.extend({
 				"course_title" : this.model.get("title").trim(),
 				"num_credits" : this.model.get("credits")
 			};
-			$(this.el).html(this.template(obj));
+			$(this.el).html(this.reg_template(obj));
 			return this; // to allow chained calls
 
 	},
     render_lecture_header: function(){
-        var lecture_header_result = this.lecture_template;
+        var lecture_header_result = this.lecture_template();
         return lecture_header_result;
     },
     render_lab_header: function(){
-        var lab_header_result = this.lab_template;
+        var lab_header_result = this.lab_template();
         return lab_header_result;
     },
     render_tut_header: function(){
-        var tut_header_result = this.tutorial_template;
+        var tut_header_result = this.tutorial_template();
         return tut_header_result;
     },
     render_dis_header: function(){
-        var dis_header_result = this.discussion_template;
+        var dis_header_result = this.discussion_template();
         return dis_header_result;
     },
     render_other_header: function(){
-        var other_other_result = this.other_template;
+        var other_other_result = this.other_template();
         return other_header_result;
     },
 	render_header: function(){
@@ -181,6 +183,7 @@ app.CourseView = Backbone.View.extend({
     addSubSection: function(obj){
         var SubsectionView = new app.SubsectionView({model: obj});
         // app.subsections.append(SubsectionView.el);
+        console.log(obj.get("section_id"));
     }
    
 
