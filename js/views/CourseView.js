@@ -108,21 +108,8 @@ app.CourseView = Backbone.View.extend({
     // do we need an error?
     // find_subsection_on_error: function(results){
     // }
-    render_subsection_header: function(){
-        var obj = {
-            "term" : this.model.get("term"),
-            "code" : this.model.get("subsection_id"),
-            "days" : this.model.get("days"),
-            "start_time" : this.model.get("startTime"),
-            "end_time" : this.model.get("endTime"),
-            "instructor" : this.model.get("instructor"),
-            "map" : this.model.get("map")
-        };
-        var subsection_header_result = this.detailed_view_template(obj);
-        console.log(subsection_header_result);
-        return subsection_header_result;
-        
-      
+
+    render_subsection_header: function(){  
     },
     toggleCourse: function (){
         
