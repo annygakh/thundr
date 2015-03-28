@@ -32,6 +32,7 @@ app.SubsectionView = Backbone.View.extend({
         if (location == "No Scheduled Meeting"){
             location = "N/A";
         }
+        var map = this.model.get("map");
 		var obj = {
             "term" : this.model.get("term"),
             "code" : this.model.get("subsection_id"),
@@ -39,8 +40,8 @@ app.SubsectionView = Backbone.View.extend({
             "start_time" : startTime,
             "end_time" : endTime,
             "instructor" : this.model.get("instructor"),
-            "map" ： this.model.get("map"),
-            "location" : location
+            "map" : this.model.get("map"),
+            "location" : location,
         };
         var subsection_header_result = this.detailed_view_template(obj);
         return subsection_header_result;

@@ -88,7 +88,7 @@ app.CourseView = Backbone.View.extend({
         // console.log(results[0]);
         if (results.length > 0) {
             if (results[0].get("type") == "Lecture"){
-                this.render_lecture_header();
+                this.$el.append(this.render_lecture_header());                ;
             } else if (results[0].get("type") == "Laboratory"){
                 this.render_lab_header();
             } else if (results[0].get("type") == "Tutorial"){
@@ -105,16 +105,12 @@ app.CourseView = Backbone.View.extend({
             }
         }
     },
-    // do we need an error?
-    // find_subsection_on_error: function(results){
-    // }
-
-    render_subsection_header: function(){  
+    find_subsection_on_error: function(err){
+        console.log("Error retrieving subsections: " + err.message);
     },
+
     toggleCourse: function (){
-        
         this.get("description");
-        
         var viewCourse = new app.SubSection({model: obj});
         // self.$("#results").append(view.el); // u need to define your own html element with its own id to write results to
         
