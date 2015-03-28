@@ -1,7 +1,7 @@
 var app = app || {};
-app.subsection-detailed-view = Backbone.View.extend({
+app.SubsectionView = Backbone.View.extend({
 	// className tagName el id?
-	model: app.SubSectionModel,
+	model: app.SubsectionModel,
 
 	className: 'subsection', 
 	tagName: 'div',

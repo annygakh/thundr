@@ -179,8 +179,8 @@ app.CourseView = Backbone.View.extend({
 		this.$('.add-cart').addClass("hidden");
 	},
     addSubSection: function(obj){
-        var SubSectionView = new app.SubSectionView({model: obj});
-        // app.subsections.append(SubSectionView.el);
+        var SubsectionView = new app.SubsectionView({model: obj});
+        // app.subsections.append(SubsectionView.el);
     }
    
 
