@@ -94,33 +94,7 @@ app.CourseView = Backbone.View.extend({
     // do we need an error?
     // find_subsection_on_error: function(results){
     // }
-    render_subsection_header: function(){
-        var obj = {
-            "term" : this.model.get("term"),
-            "code" : this.model.get("subsection_id"),
-            "days" : this.model.get("days"),
-            "start_time" : this.model.get("startTime"),
-            "end_time" : this.model.get("endTime"),
-            "instructor" : this.model.get("instructor")
-            // "map" ： this.model.get("map")
-            // not sure if i should place this here...
-        };
-        var subsection_header_result = this.detailed-view-details-template(obj);
-        return subsection_header_result;
-        
-        // not too sure where to place these ><
-        /* if (this.model.get("location") == "No Scheduled Meeting"){
-            this.model.get("location") = "N/A";
-        }
-        if (this.model.get("startTime") == null) {
-            this.model.get("startTime") = "N/A";
-        }
-        if (this.model.get("endTime") == null) {
-            this.model.get("endTime") = "N/A";
-        }
-        if (this.model.get("map") == undefined) {
-            this.model.get("map") = "N/A";
-        } */
+    render_subsection_header: function(){  
     },
     toggleCourse: function (){
         
