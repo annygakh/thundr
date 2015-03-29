@@ -580,11 +580,23 @@ app.AppView = Backbone.View.extend({
 
 
 	add_to_cart: function(event){
+		var SubSection = Parse.Object.extend("SubSection");
 		if (Parse.User.current()) {
-			// all that stuff
+			//var subsection_id = $(event.target).closest('.course-result').children('p').text();
+			var relation = Parse.User.current().relation("Worklist");
+			var query = new Parse.Query(SubSection);
+			query.get("UIxj3AH22k", {
+				success: function(subsection) {
+					relation.add(subsection);
+					Parse.User.current().save();
+				},
+				failure: function(error) {
+				}
+			});
 		} else {
 			alert("Please log in");
 		}
+
 
 		// var course_id = $(event.target).closest('.course-result').children('p').text();
 		// if ($.inArray(course_id, app.worklist_ids) == -1) {

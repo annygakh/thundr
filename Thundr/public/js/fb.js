@@ -1,9 +1,15 @@
-(function () {
-	console.log("FUCK");
+(function () {	
+	$('#courses').append('<li>' + 
+									 '<div class="item">' +
+									 '<p class="worklist-title">' + 'FUCK' + '</p>' +
+									 '<i class="fa fa-trash-o worklist-delete"></i>' + 
+									 '</div>' +
+								 	 '</li>');
+
+
 	if (Parse.User.current()) {
 		showLogout();
-
-		// render worklist
+		render();
 	} else {
 		showLogin();
 	}
@@ -34,20 +40,21 @@ $(".fb-login").click(function() {
 });
 
 function render() {
-	var query = new Parse.Query
 	var user = Parse.User.current();
 	var relation = user.relation("Worklist");
-	var subsections = relation.query().find({
+	relation.query().find({
 		success: function(results) {
-			$('#courses').append('<li>' + 
-									'<div class="item">' +
-									'<p class="worklist-title">' + course_id + '</p>' +
-									'<i class="fa fa-trash-o worklist-delete"></i>' + 
-									'</div>' +
-								 '</li>');
+			console.log(results);
+			for (var i = 0; i < results.length; i++) {
+				$('#courses').append('<li>' + 
+									 '<div class="item">' +
+									 '<p class="worklist-title">' + results[i].get("section_id") + '</p>' +
+									 '<i class="fa fa-trash-o worklist-delete"></i>' + 
+									 '</div>' +
+								 	 '</li>');
+			}
 		}
-	})
-	for ()
+	});
 }
 
 $(".fb-logout").click(function() {
