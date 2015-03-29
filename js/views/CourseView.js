@@ -27,6 +27,10 @@ app.CourseView = Backbone.View.extend({
 		this.render();
 		_.bindAll(this, 'toggle_status');
 		/* -------------- Initialize listeners -------------- */
+<<<<<<< HEAD
+=======
+		var click = false;
+>>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 		
 
 	},
@@ -49,6 +53,7 @@ app.CourseView = Backbone.View.extend({
     },
     
 	render: function(){
+<<<<<<< HEAD
 		var obj = {
 			"html_id" : this.model.id,
 			"course_title" : this.model.get("title").trim(),
@@ -57,6 +62,16 @@ app.CourseView = Backbone.View.extend({
 		// console.log(typeof obj.num_credits === 'number' );
 		$(this.el).html(this.template(obj));
 		return this; // to allow chained calls
+=======
+			var obj = {
+				"html_id" : this.model.id,
+				"course_title" : this.model.get("title").trim(),
+				"num_credits" : this.model.get("credits")
+			};
+			$(this.el).html(this.template(obj));
+			return this; // to allow chained calls
+
+>>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	},
 
 	render_sections: function(){
@@ -64,12 +79,21 @@ app.CourseView = Backbone.View.extend({
 	},
 	render_header: function(){
         var obj = {
+<<<<<<< HEAD
             "html_id" : this.model.id,
 			"course_title" : this.model.get("title").trim(),
 			"num_credits" : this.model.get("credits")
         };
         $(this.el).html(this.detailed_view_template(obj));
         return this;
+=======
+            	"html_id" : this.model.id,
+				"course_title" : this.model.get("title").trim(),
+				"num_credits" : this.model.get("credits")
+	        };
+	        var templ = this.detailed_view_template(obj);
+	        return templ;
+>>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	},
 	handle_click: function(){
 		// reroute??
