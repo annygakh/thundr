@@ -1,3 +1,5 @@
+[CPSC 310 - Spearman (Sprint 2)]
+
 1.	As a UBC student, I would like to view a selected number of prerequisite and/or co-requisite courses, in one or more selected departments, that I need to take for a specific course or courses, in form of a list.
 
 Main epic it belongs to: Data display
@@ -5,9 +7,8 @@ Priority: 2
 Estimate: 20 hours
 acceptance criteria: 
 - User must be able to select a course (the course that he is interested in to discover the prerequisite and/or co-requisite courses)
-- User must be able to select a number of results to be displayed 
-- User must be able to select whether he wants to see prerequisite courses, co-requisite courses, or both
-- If the user selects the option to show both prerequisite and co-requisite courses, then the results will contain indicated number(chosen by the user earlier) of prerequisite courses, and indicated number of co-requisite courses.
+- User must be able to select a number of results to be displayed (e.g. level of pre-reqs)
+- User must be able to select whether he wants to see prerequisite courses
 - User must be able to select one or more department
 - The results will be displayed in a list
 - Initially, in the list, results will be displayed alphabetically. 
@@ -15,7 +16,7 @@ acceptance criteria:
 Task breakdown: 
 - Create parse queries to find prerequisite and/or requisite courses using user's input as requirements
 - Create a separate tab that will contain different input options
-- Display the results in form of a list(possibly in form of a graph)
+- Display the results in form of a list
 
 2. 	As a UBC student, if I choose to display prerequisite and/or co-requisite courses in form of a list, I would like to be able to sort the list by departments, level of the course(first digit of the course number), title of the course(alphabetically).
 
@@ -24,10 +25,12 @@ Priority: 3
 Estimate: 10 hours
 Acceptance criteria: 
 - User must be able to click on the heading "Department", and as a result of that, the results will be sorted by department
-- User must be able to click on the heading "Course number", and as a result of that,  the results will be sorted by course number
+- User must be able to click on the heading "Course number", and as a result of that,  the results will be sorted by course number
 - User must be able to click on the heading "Course title", and as a result of that, the results will be sorted by the course title.
 - Each course tuple will have the following information displayed: department, course number, number of credits, and course title
-Tasks breakdown: TODO
+Tasks breakdown:
+- Create parse queries to find prerequisite and/or requisite courses using user's input as requirements
+- Display the results in form of a list organized by course name and code
 
 3.	As a UBC student, I would like to view a selected number of courses I can take, in one or more selected departments, as a result of completing a specific course or courses, in form of a list.
 Main epic: Display
@@ -42,7 +45,7 @@ acceptance criteria:
 Task breakdown: 
 - Create parse queries to find post requisite courses using user's input as requirements
 - Create a separate tab that will contain different input options
-- Display the results in form of a list(possibly in form of a graph)
+- Display the results in form of a list
 
 4.	 As a UBC student, I would like to be able to create a worklist that will contain desired courses and view the resultant in form of a list or a timetable.
 
@@ -58,7 +61,6 @@ acceptance criteria:
 Tasks breakdown:
 - Create the option for the user to add a section of the course to the user's worklist
 - Display the course in the worklist section in form of a graph or possibly in form of a timetable
-- Save user's courses using Backbone's local storage
 
  
 5. 	As a UBC student, I would like to login via Facebook, and I would like to be able to save my worklist, so that when I log out my worklist is not deleted.
@@ -105,7 +107,7 @@ Acceptance Criteria:
 - If browsing course sections, user must be able to enter the name of the professor, and the results must include only the course sections that are taught by the indicated professor
 - User must be able to enter the time slot and the results must include only the sections that take place during the indicated time slot
 - User must be able to enter the name of the building, and the results must include only the sections that take place in the indicated building
-- User must be able to use several filters at once (e.g. select time slot +  building)
+- User must be able to use several filters at once (e.g. select time slot +  building)
 - If the search filter is invalid (e.g. invalid professor name) no results must displayed and an error message will be displayed.
 - Each section tuple will have the following information displayed: department, course #, # of credits, title, time, location, professor(if applicable) 
 
