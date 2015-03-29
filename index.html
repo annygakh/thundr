@@ -211,12 +211,14 @@
     <script type="text/template" id="course-template">
       <table class="item" id="<%=html_id%>">
         <tr class="course-container">
+        
           <td class="course-result">
             <p class="course-title"><%=course_title%></p>
             <br>
             <button class="add-button">ADD TO WORKLIST</button>
           </td>
           <td class="credits course-result-credits"><%=num_credits%></td>
+          </tr>
         </tr>
       </table>
     </script>
@@ -252,10 +254,19 @@
       <td class="lecture-header">Lecture Sections</td>
     </tr>
   </script>
+
+ <!-- <script type="text/template" id="lab-template">
+    <tr class="laboratory-header" id="lab">
+      <td class="lab-header">Lab Sections</td>
+    </tr>
+  </script>-->
+
+
   
   <script type="text/template" id="lab-template">
     <tr class="laboratory-header" id="lab">
       <td class="lab-header">Lab Sections</td>
+   
     </tr>
   </script>
         
@@ -278,12 +289,15 @@
   </script>
         
   <script type="text/template" id="detailed-view-details-template">
+  <td>
     <tr class="subsection-header" id="sub-section">
-      <td class="term"><%=term%></td>
+      <td class="term">Term <%=term%></td>
       <td class="code"><%=code%></td>
       <td class="days"><%=days%></td>
       <td class="time"><%=start_time%>-<%=end_time%></td>
       <td class="instructor"><%=instructor%></td>
+      <td class="add-button-row"><button class="add-button">ADD TO WORKLIST</button> </td>
+      
     </tr>
     <tr class="subsection-loc">
       <td class="blank"></td>
@@ -291,6 +305,7 @@
         <a href="<%=map%>"><%=location%></a>
       </td>
     </tr>
+    </td>
   </script>
 
   <!-- <script src="js/views"></script> -->

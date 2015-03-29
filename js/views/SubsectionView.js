@@ -4,7 +4,7 @@ app.SubsectionView = Backbone.View.extend({
 	model: app.SubsectionModel,
 
 	tagName: 'tr',
-    detailed_view_template: _.template($('#detailed-view-template').html()),
+    detailed_view_template: _.template($('#detailed-view-details-template').html()),
 	id: function(){
 		return this.model.get('section_id') + '-' + this.model.get('subsection_id'); //html id will be something like CPSC304-L1A
 	},
@@ -16,6 +16,8 @@ app.SubsectionView = Backbone.View.extend({
 
 	},
 	render: function(){
+		// console.log("SubsectionView: render()");
+
         var startTime = this.model.get("startTime");
         if (startTime == null) {
             startTime = "N/A";
@@ -32,7 +34,6 @@ app.SubsectionView = Backbone.View.extend({
         if (location == "No Scheduled Meeting"){
             location = "N/A";
         }
-        var map = this.model.get("map");
 		var obj = {
             "term" : this.model.get("term"),
             "code" : this.model.get("subsection_id"),
@@ -43,7 +44,10 @@ app.SubsectionView = Backbone.View.extend({
             "map" : this.model.get("map"),
             "location" : location,
         };
+        // console.log(obj);
         var subsection_header_result = this.detailed_view_template(obj);
+        $(this.el).html(subsection_header_result);
+        // console.log(subsection_header_result);
         return subsection_header_result;
 		
 	},

@@ -690,11 +690,11 @@ app.AppView = Backbone.View.extend({
 				break;
 			}
 		}
-		this.reset_results_html();
+		// this.reset_results_html();
 		app.views = remaining_views;
 		var remaining_view = app.views[0];
-		var templ = remaining_view.render_header();
-		self.$('#results').append(templ);
+		// var templ = remaining_view.render_header();
+		// self.$('#results').append(templ);
 	},
 	handle_sorting_by_credits: function(){
 

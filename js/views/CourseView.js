@@ -29,21 +29,33 @@ app.CourseView = Backbone.View.extend({
 		_.bindAll(this, 'toggle_status');
 		/* -------------- Initialize listeners -------------- */
 		var click = false;
-		
-        _.bindAll(this, 'find_subsection_on_success');
+        var html_el;
+		var self = this;
+        _.bindAll(this, 'find_subsection_on_success', 'render_lab_header', 
+            'render_lecture_header', 'render_dis_header',
+            'render_tut_header');
 	},
     toggle_status: function(){
+        this.click  = true;
         app.subsections = new app.SubsectionCollection();        
         this.listenTo(app.subsections, 'add', this.addSubSection);
     	var $tr = this.$el;
-    	console.log($tr);
-    	console.log( 'id of the element $tr: ' + $tr.attr('id'));
+    	// console.log($tr);
+    	// console.log( 'id of the element $tr: ' + $tr.attr('id'));
     	$tr.addClass("active-class");
         /*------------create queries ------------*/
+        // var obj = {
+        //     "html_id" : this.model.id,
+        //     "course_title" : this.model.get("title").trim(),
+        //     "num_credits" : this.model.get("credits")
+        // };
+
+        $('.add-button').addClass("hide-totally");
+       
         
         var query = new Parse.Query(app.SubsectionModel);
         var section = this.model.get("section_id");
-        console.log(section);
+        // console.log(section);
         query.equalTo("type", "Lecture");
         query.equalTo("section_id", section);
         query.find({
@@ -82,13 +94,14 @@ app.CourseView = Backbone.View.extend({
         });
 
 
+        // this.click = false;
     },
     find_subsection_on_success: function(results){
-        console.log('find subsectiosn_on_success');
+        // console.log('find subsectiosn_on_success');
         // console.log(results[0]);
-        if (results.length > 0) {
+        if (results.length > 0 && this.click == true) {
             if (results[0].get("type") == "Lecture"){
-                this.$el.append(this.render_lecture_header());                ;
+                this.render_lecture_header();
             } else if (results[0].get("type") == "Laboratory"){
                 this.render_lab_header();
             } else if (results[0].get("type") == "Tutorial"){
@@ -113,39 +126,56 @@ app.CourseView = Backbone.View.extend({
         this.get("description");
         var viewCourse = new app.SubSection({model: obj});
         // self.$("#results").append(view.el); // u need to define your own html element with its own id to write results to
-        
-        
     },
     
-	render: function(){
-			var obj = {
-				"html_id" : this.model.id,
-				"course_title" : this.model.get("title").trim(),
-				"num_credits" : this.model.get("credits")
-			};
-			$(this.el).html(this.reg_template(obj));
-			return this; // to allow chained calls
+    render: function(){
+            var obj = {
+                "html_id" : this.model.id,
+                "course_title" : this.model.get("title").trim(),
+                "num_credits" : this.model.get("credits")
+            };
+            $(this.el).html(this.reg_template(obj));
+            return this; // to allow chained calls
 
-	},
+    },
     render_lecture_header: function(){
+        console.log("render_lecture_header");
         var lecture_header_result = this.lecture_template();
-        return lecture_header_result;
+        return this.render_all_header(lecture_header_result);
     },
     render_lab_header: function(){
+        console.log("render_lab_header");
+        this.$el.html(this.html_el);
         var lab_header_result = this.lab_template();
-        return lab_header_result;
+        return this.render_all_header(lab_header_result);
     },
+     
     render_tut_header: function(){
+        console.log("render_tut_header");
+        this.$el.html(this.html_el);
         var tut_header_result = this.tutorial_template();
-        return tut_header_result;
+        return this.render_all_header(tut_header_result);
     },
     render_dis_header: function(){
+
+        console.log("render_dis_header");
+        this.$el.html(this.html_el);
         var dis_header_result = this.discussion_template();
-        return dis_header_result;
+        return this.render_all_header(dis_header_result);
     },
     render_other_header: function(){
+        console.log("render_other_header");
+        this.$el.html(this.html_el);
         var other_other_result = this.other_template();
-        return other_header_result;
+        return this.render_all_header(other_other_result);
+    },
+    render_all_header: function(result_header){
+        var thing = "<tr>" + this.$el.html() + "</tr>";
+        var thing = this.$el.html();
+        thing+=result_header;
+        this.$el.html(thing);
+        this.html_el = thing;
+        return this;
     },
 	render_header: function(){
         var obj = {
@@ -164,9 +194,14 @@ app.CourseView = Backbone.View.extend({
 		this.$('.add-cart').addClass("hidden");
 	},
     addSubSection: function(obj){
-        var SubsectionView = new app.SubsectionView({model: obj});
-        // app.subsections.append(SubsectionView.el);
-        console.log(obj.get("section_id"));
+        var subview = new app.SubsectionView({model: obj});
+        var view_el_to_add = subview.render();
+        var thing = this.$el.html();
+        thing += view_el_to_add;
+        this.$el.html(thing);
+        this.html_el = thing;
+        this.html_el = this.$el.html();
+        return this;
     }
    
 
