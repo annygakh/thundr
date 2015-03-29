@@ -39,7 +39,6 @@ app.CourseView = Backbone.View.extend({
     	
     },
     toggleCourse: function (){
-        
         this.get("description");
         
         var viewCourse = new app.SubSection({model: obj});

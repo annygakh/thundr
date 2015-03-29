@@ -5,11 +5,5 @@ app.SubsectionCollection = Parse.Collection.extend({
 
 	initialize: function(){
 		var self = this;
-		// self.comparator = 'section_id';	
 	},
-	// comparator: 'section_id', //for now
-	
-
-
 });
-

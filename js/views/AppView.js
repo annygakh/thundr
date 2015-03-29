@@ -1,5 +1,4 @@
 var app = app || {};
-var worklist = [];
 
 // var window.app = app;
 
@@ -35,6 +34,8 @@ app.AppView = Backbone.View.extend({
 		app.option_building;
 
 		app.reqs_results = new app.CourseCollection();
+		app.worklist = new app.CourseCollection();
+		app.worklist_ids = [];
 		app.prereqs = []; // i think we can delete this
 		app.departments = [];
 		app.contains_depts = false;
@@ -576,15 +577,56 @@ app.AppView = Backbone.View.extend({
 
 	add_to_cart: function(event){
 		var course_id = $(event.target).closest('.course-result').children('p').text();
-		console.log(course_id);
-		if ($.inArray(course_id, worklist) == -1) {
+		if ($.inArray(course_id, app.worklist_ids) == -1) {
+			var query = new Parse.Query(SubSection);
+			query.equalTo("section_id", course_id);
+			query.first(
+			  	success: function(result) {
+			  		app.worklist.push(result);
+			  		var days = result.get("days");
+			  		var start = result.get("startTime");
+			  		var end = result.get("endTime");
+			  		var times;
+
+			  		for (var i = start; i <= end; i+=30)
+			  			times.push(i);
+
+			  		for (course in app.worklist) {
+			  			if (start >= course.get("startTime") && start < course.get("endTime")) {
+			  				course_color = 'red'
+			  			} else if (end > course.get("startTime") && end <= course.get("endTime")) {
+			  				course_color = 'red'
+			  			} else if (start < course.get("startTime") && end > course.get("endTime")) {
+			  				course_color = 'red'
+			  			} else if (start > course.get("startTime") && end < course.get("endTime")) {
+			  				course_color = 'red'
+			  			} else {
+			  				course_color = 'green'
+			  			}
+			  		}
+
+			  		for (var day in days) {
+			  			for (var time in times) {
+			  				switch (day) {
+			  					case 1: day = 'mon'; break;
+			  					case 2: day = 'tue'; break;
+			  					case 3: day = 'wed'; break;
+			  					case 4: day = 'thu'; break;
+			  					case 5: day = 'fri'; break;
+			  					case default: day = null;
+			  				}
+			  				$('.worklist-table-container' + '.' + day + '.' + time).css({"background-color": course_color})
+			  			}
+			  		}
+			  	}
+			});
 			$('#courses').append('<li>' + 
 									'<div class="item">' +
 									'<p class="worklist-title">' + course_id + '</p>' +
 									'<i class="fa fa-trash-o worklist-delete"></i>' + 
 									'</div>' +
 								 '</li>');
-			worklist.push(course_id);
+			app.worklist_ids.push(course_id);
 		}
 	},
 	add_to_cart_success: function(obj){
@@ -600,7 +642,7 @@ app.AppView = Backbone.View.extend({
 	remove_from_cart: function(event){
 		console.log("remove course");
 		var course_id = $(event.target).closest('li');
-		worklist.splice($.inArray(course_id.text(), worklist));
+		app.worklist_ids.splice($.inArray(course_id.text(), app.worklist_ids));
 		course_id.remove();
 	},
 	logOut: function(){
