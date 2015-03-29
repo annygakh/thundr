@@ -209,18 +209,12 @@
 
 
     <script type="text/template" id="course-template">
-      <table class="item" id="<%=html_id%>">
-        <tr class="course-container">
-        
-          <td class="course-result">
-            <p class="course-title"><%=course_title%></p>
-            <br>
-            <button class="add-button">ADD TO WORKLIST</button>
-          </td>
+    <table>
+        <tr class="course-container" id="<%=html_id%>">
+          <td class="course-result"><%=course_title%></td>
           <td class="credits course-result-credits"><%=num_credits%></td>
           </tr>
-        </tr>
-      </table>
+    <table>
     </script>
 
 
@@ -230,68 +224,78 @@
           <td class="table-header">Credits</td>
       </tr>
   </script>
+
+  <script type='text/template' id='detailed-results-header-template'>
+  <tr class="table-header-section-details">
+
+          <td>Term</td>
+          <td>Section & Location</td>
+          <td>Days</td>
+          <td>Time</td>
+          <td>Instructor</td>
+          <td></td>
+  </tr>
+
+  </script>
+
   
   <script type="text/template" id="detailed-view-template">
-    <table class="subsection" id="<%=html_id%>">
-        <tr class="subsection-container">
-          <td class="subsection-result">
-            <p class="subsection-title"><%=course_title%></p>
-          </td>
-          <td class="credits course-result-credits"><%=num_credits%></td>
-        </tr>
-        <tr class="subsection-container" id="subsection">
-          <td class="subsection-result">
-            <p class="subsection-description">Description</p>
-            <p class="subsection-description">Pre-Req/Co-Req</p>
-            <a href="#">SSC</a>
-          </td>
-        </tr>
-    </table>
+  <tr>
+
+           <tr><td  colspan='6'class="subsection-result"><%=course_title%>: <a href="<%=link%>">SSC link</a></td></tr>
+           <tr><td  colspan='6'class="credits course-result-credits">
+           <%=num_credits%>
+           <% if (num_credits == 1) print('credit') 
+              else print ('credits') %>
+
+           </td></tr>
+           <tr><td  colspan='6'class="subsection-description"><%=description%>
+          </td></tr>
+           <tr><td  colspan='6'class="subsection-description"><%=req_str%></td></tr>
+
+ 
+
+          
+
+    </tr>
   </script>
   
   <script type="text/template" id="lecture-template">
-    <tr class="course-header" id="subsection">
-      <td class="lecture-header">Lecture Sections</td>
+    <tr  class="subsections-header" id="subsection">
+      <td colspan='6' class="lecture-header" >Lecture Sections</td>
     </tr>
   </script>
 
- <!-- <script type="text/template" id="lab-template">
-    <tr class="laboratory-header" id="lab">
-      <td class="lab-header">Lab Sections</td>
-    </tr>
-  </script>-->
-
-
-  
   <script type="text/template" id="lab-template">
-    <tr class="laboratory-header" id="lab">
-      <td class="lab-header">Lab Sections</td>
-   
+    <tr  class="subsections-header" id="lab">
+      <td colspan='6' class="lab-header">Lab Sections</td>
     </tr>
+  </script>
+
+
   </script>
         
   <script type="text/template" id="tutorial-template">
-    <tr class="tutorial-header" id="tut">
-      <td class="tut-header">Tutorial Sections</td>
+    <tr  class="subsections-header" id="tut">
+      <td colspan='6' class="tut-header">Tutorial Sections</td>
     </tr>
   </script>
         
   <script type="text/template" id="discussion-template">
-    <tr class="discussion-header" id="discussion">
-      <td class="dis-header">Discussion Sections</td>
+    <tr  class="subsections-header" id="discussion">
+      <td colspan='6' class="dis-header">Discussion Sections</td>
     </tr>
   </script>
         
   <script type="text/template" id="other-template">
-    <tr class="others-header" id="other">
-      <td class="other-header">Other Sections</td>
+    <tr  class="subsections-header" id="other">
+      <td colspan='6' class="other-header">Other Sections</td>
     </tr>
   </script>
         
   <script type="text/template" id="detailed-view-details-template">
-  <td>
-    <tr class="subsection-header" id="sub-section">
-      <td class="term">Term <%=term%></td>
+    <tr class="subsection-header sub-section">
+      <td class="term" rowspan="2">Term <%=term%></td>
       <td class="code"><%=code%></td>
       <td class="days"><%=days%></td>
       <td class="time"><%=start_time%>-<%=end_time%></td>
@@ -300,12 +304,10 @@
       
     </tr>
     <tr class="subsection-loc">
-      <td class="blank"></td>
       <td class="subsection-location">
         <a href="<%=map%>"><%=location%></a>
       </td>
     </tr>
-    </td>
   </script>
 
   <!-- <script src="js/views"></script> -->

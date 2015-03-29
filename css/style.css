@@ -290,6 +290,9 @@ td.table-header-credits {
 	
 }
 /*------------Results Table----------*/
+td#results {
+	width: 100%;
+}
 .course-result{
 	/*border: 1px solid black;*/
 }
@@ -310,6 +313,18 @@ td.credits.course-result {
 	padding-right: 35px;
 	/*padding-left: 30px;*/
 }
+tr.subsections-header {
+	background-color: yellow; /*change this haha*/
+}
+tr.table-header-section-details  {
+	background-color: cyan; /*change this haha*/
+
+}
+.sub-section {
+	padding: 5px;
+	background-color: orange; /*change this haha*/
+}
+
 /*---------Scrolling - header of the table */
 /*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
 .left::-webkit-scrollbar,

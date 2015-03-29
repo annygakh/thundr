@@ -8,7 +8,6 @@ app.SubsectionView = Backbone.View.extend({
 	id: function(){
 		return this.model.get('section_id') + '-' + this.model.get('subsection_id'); //html id will be something like CPSC304-L1A
 	},
-	// template: TODO
 	events: {
 
 	},
@@ -16,7 +15,6 @@ app.SubsectionView = Backbone.View.extend({
 
 	},
 	render: function(){
-		// console.log("SubsectionView: render()");
 
         var startTime = this.model.get("startTime");
         if (startTime == null) {
@@ -28,26 +26,46 @@ app.SubsectionView = Backbone.View.extend({
         }
         var map = this.model.get("map");
         if (map == undefined) {
-            map = "N/A";
+            map = "";
         }
         var location = this.model.get("location");
         if (location == "No Scheduled Meeting"){
             location = "N/A";
         }
+        var days_string;
+        var days = this.model.get("days");
+	        if (days == undefined){
+	        	days_string = 'N/A';
+        	} else {
+		        days_string = "";
+		        for (var j = 0; j < days.length; j++){
+		        	if (days[j] == 1) 
+		        		days_string += 'M';
+		        	else if (days[j] == 2)
+		        		days_string += 'Tu';
+		        	else if (days[j] == 3)
+		        		days_string += 'W';
+		        	else if (days[j] == 4)
+		        		days_string += 'Th';
+		        	else if (days[j] == 5)
+		        		days_string += 'F';
+		        		
+	        	}
+	        }
+        
+
 		var obj = {
             "term" : this.model.get("term"),
             "code" : this.model.get("subsection_id"),
-            "days" : this.model.get("days"),
+            "days" : days_string,
             "start_time" : startTime,
             "end_time" : endTime,
             "instructor" : this.model.get("instructor"),
             "map" : this.model.get("map"),
             "location" : location,
         };
-        // console.log(obj);
         var subsection_header_result = this.detailed_view_template(obj);
         $(this.el).html(subsection_header_result);
-        // console.log(subsection_header_result);
         return subsection_header_result;
 		
 	},

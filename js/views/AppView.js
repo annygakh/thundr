@@ -7,11 +7,11 @@ app.AppView = Backbone.View.extend({
 	el: 'body', 
 	
 	results_header_template: _.template($('#results-header-template').html()),
+    detailed_results_header_template: _.template($('#detailed-results-header-template').html()),
 	events: {
 		'click #search-button' : 'search_router',
 		'click .add-button' : 'add_to_cart',
 		'click .worklist-delete' : 'remove_from_cart',
-		'click .course-result' : 'prepare_for_detailed_view',
 		'click .course-result' : 'prepare_for_detailed_view',
 	},
 	initialize: function(){
@@ -51,6 +51,8 @@ app.AppView = Backbone.View.extend({
 
 		app.views = [];
 
+		app.clicked = false;
+
 
 
 
@@ -78,6 +80,7 @@ app.AppView = Backbone.View.extend({
 
 	},
 	search_router: function(){
+		
 		this.reset_all_collections();
 		this.reset_results_html(); // new
 		/*------------Are we searching for sections/prereqs&coreqs/postreqs?-------*/
@@ -580,6 +583,7 @@ app.AppView = Backbone.View.extend({
 
 
 	add_to_cart: function(event){
+		console.log("adding to cart");
 		var course_id = $(event.target).closest('.course-result').children('p').text();
 		console.log(course_id);
 		if ($.inArray(course_id, worklist) == -1) {
@@ -593,6 +597,7 @@ app.AppView = Backbone.View.extend({
 		}
 	},
 	add_to_cart_success: function(obj){
+
 		var view = new self.app.CourseView({model: obj});
 		view.$('.add-cart').addClass("hidden");
 		view.$('.credits').addClass("hidden");
@@ -655,9 +660,12 @@ app.AppView = Backbone.View.extend({
 	
 	},
 	prepare_for_detailed_view: function(){
+
+		console.log('hello');
 		var $selected_course = $('#results .active-class');
 		var selected_course_id = $selected_course.attr('id');
 		$selected_course.nextAll().remove();
+		
 		$selected_course.prevAll().remove();
 		
 		var models_to_remove = new app.CourseCollection();
@@ -687,14 +695,15 @@ app.AppView = Backbone.View.extend({
 			var current_id_of_views_model = current_view.model.id ;
 			if (current_id_of_views_model == id_of_the_remaining_course_model) {
 				remaining_views.push(current_view);
-				break;
+				// break;
+			} else {
+				current_view.remove();
 			}
 		}
-		// this.reset_results_html();
+		
 		app.views = remaining_views;
 		var remaining_view = app.views[0];
-		// var templ = remaining_view.render_header();
-		// self.$('#results').append(templ);
+
 	},
 	handle_sorting_by_credits: function(){
 
