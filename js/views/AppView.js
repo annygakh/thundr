@@ -628,6 +628,7 @@ app.AppView = Backbone.View.extend({
 	},
 
 	prepare_for_detailed_view: function(){
+		console.log('hey');
 
 		var $selected_course = $('#results .active-class');
 		var selected_course_id = $selected_course.attr('id');

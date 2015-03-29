@@ -20,9 +20,7 @@ app.CourseView = Backbone.View.extend({
     detailed_results_header_template: _.template($('#detailed-results-header-template').html()),
 
 	events: {
-        "click .add-button" : 'toggleButton',
-		// "click .item" : "toggleItem",
-		'click td' : 'toggle_status',
+        "click .add-button" : 'toggleButton'
 	},
 
 	initialize: function(){
@@ -30,18 +28,20 @@ app.CourseView = Backbone.View.extend({
 		this.render();
 		_.bindAll(this, 'toggle_status');
 		/* -------------- Initialize listeners -------------- */
-		var click = false;
-        var html_el;
-		var self = this;
+		
         _.bindAll(this, 'find_tutorial_on_success', 'find_labs_on_success',
             'find_lectures_on_success', 'find_discussion_on_success',
             'find_others_on_success',
             'render_lab_header', 
             'render_lecture_header', 'render_dis_header',
-            'render_tut_header', 'toggle_status');
-        // this.on('click td', 'toggle_status', this);
+            'render_tut_header');
 
-	},
+        this.$el.on('click', 'td', this.toggle_status);
+        var click = false;
+        var html_el;
+        var self = this;
+
+    },
     render: function(){
             var obj = {
                 "html_id" : this.model.id,
@@ -54,9 +54,7 @@ app.CourseView = Backbone.View.extend({
     },
     toggle_status: function(){
 
-        $(this.el).off();
-        $(this.el).on('click .add-button', this.toggleButton, this);
-        console.log(this instanceof(app.CourseView));
+        this.$el.off('click', this.toggle_status);
 
         app.subsections = new app.SubsectionCollection();        
         this.listenTo(app.subsections, 'add', this.addSubSection);
@@ -244,7 +242,7 @@ app.CourseView = Backbone.View.extend({
         return this;
     }, 
     toggleButton: function(){
-        this.$('.add-button').addClass("hidden");
+        // this.$('.add-button').addClass("hidden");
     },
    
 
