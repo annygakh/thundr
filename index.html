@@ -237,12 +237,16 @@
           </td>
           <td class="credits course-result-credits"><%=num_credits%></td>
         </tr>
-        <tr class="subsection-container" id="subsection">
+        <tr class="subsection-container" id="subsection-1">
           <td class="subsection-result">
-            <p class="subsection-description">Description</p>
-            <p class="subsection-description">Pre-Req/Co-Req</p>
-            <a href="#">SSC</a>
+            <br class="subsection-description">Description</br>
+            <br class="subsection-description"><%=description%></br>
           </td>
+        <tr class="subsection-container" id="subsection-2">
+            <td class="subsection-description"><%=req_str%></td>
+        </tr>
+        <tr class="subsection-container" id="subsection-3">
+          <a href="<%=ssc_link%>">SSC</a>
         </tr>
     </table>
   </script>
