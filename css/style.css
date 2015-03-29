@@ -83,7 +83,7 @@ section {
 .container {
 	width: 90%;
 	margin: 0px auto;
-	position :relative;
+	position: relative;
 	height: auto;
 	/*will-change: overflow; //new*/
 	/*overflow: hidden; //new*/
@@ -106,12 +106,14 @@ section {
 }
 
 section.header {
+	position: relative;
 	width: 100vw;
 	min-width: 800px;
 	height: 10vh;
 	min-height: 80px;
 	background-color: #004786;
 	color: #FFFFFF;
+	overflow: hidden;
 }
 
 section.header * {
@@ -122,6 +124,37 @@ section.header * {
 
 section.header p {
 	line-height: 100%;
+}
+
+.fb-login {
+	float: right;
+	position: absolute;
+	height: 30px;
+	width: 160px;
+	text-align: center;
+	background-color: #FFFFFF;
+	color: #004786;
+	top: 35%;
+	bottom: 65%;
+	right: 30px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.fb-logout{
+	display: none;
+	float: right;
+	position: absolute;
+	height: 30px;
+	width: 160px;
+	text-align: center;
+	background-color: #FFFFFF;
+	color: #004786;
+	top: 35%;
+	bottom: 65%;
+	right: -9999px;
+	cursor: pointer;
+	border-radius: 5px;
 }
 
 .logo {
