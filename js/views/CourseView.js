@@ -215,6 +215,7 @@ app.CourseView = Backbone.View.extend({
 				"course_title" : this.model.get("title").trim(),
 				"num_credits" : this.model.get("credits"),
                 "description" : this.model.get("desc"),
+
                 "req_str" : this.model.get("req_str"),
                 "link" : this.model.get("link")
 	        };
