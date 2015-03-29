@@ -1,8 +1,6 @@
 var app = app || {};
 var worklist = [];
 
-// var window.app = app;
-
 app.AppView = Backbone.View.extend({
 	el: 'body', 
 	
@@ -20,10 +18,9 @@ app.AppView = Backbone.View.extend({
 		});
 		var self = this;
 		_.bindAll(this, 'query_on_success', 'query_on_error', 
-			'add_to_cart_success', 'add_to_cart_error', 'addCourse', 'sort_by_credits'
-			,'handle_sorting_by_credits', 
+			'add_to_cart_success', 'add_to_cart_error', 'addCourse', 
 			'subsections_query_on_success', 'subsections_query_on_error',
-			'precoreqs_query_on_success', 'precoreqs_query_on_error',
+			'prereqs_query_on_success', 'prereqs_query_on_error',
 			'find_prereqs_for_each_course_on_success', 'find_prereqs_for_each_course_on_error',
 			'reset_results_html',
 			'find_postreqs_from_course_code_on_success', 'find_postreqs_from_course_code_on_error',
@@ -245,7 +242,7 @@ app.AppView = Backbone.View.extend({
 	subsections_query_on_error: function(err){
 		this.reset_all_collections();
 		this.reset_results_html(); 
-		console.log(err.message());
+		console.log('Error finding subsections: ' + err.message());
 	},
 
 	find_courses_from_course_code: function(){
@@ -262,8 +259,6 @@ app.AppView = Backbone.View.extend({
 		/*------------Form appropriate queries---------------*/
 		var	query = new Parse.Query(app.CourseModel);
 		query.limit(500);
-		var	inner_query = new Parse.Query(app.SubsectionModel);
-		var inner_query_needed = false;
 
 		if (self.looking_for_courses){
 			query.containedIn("section_id", app.queries);
@@ -316,18 +311,14 @@ app.AppView = Backbone.View.extend({
 	query_on_error: function(err){
 		this.reset_all_collections();
 		this.reset_results_html();
-		var error_msg = '<p>Error message: ' + err.message + '</p>';
-		self.$('#results').prepend(error_msg);
+		console.log('find_courses_from_course_code error: ' + err.message);
 
 	},
 
 	find_precoreqs_from_course_code: function() {
 
-		/*-------------- Reset results ------------*/
-		// this.reset_results_html();
 		/*------------ (Re) initialize everything-------------*/
 		app.departments = [];
-		// app.reqs_results.reset(); // old
 		app.results.reset(); // new
 		app.contains_depts = false;
 		app.each_prereq = [];
@@ -365,11 +356,6 @@ app.AppView = Backbone.View.extend({
 			} else { // we assume its separated by spaces
 				app.departments = department_string.split(" ");
 			} 
-			// for (var j = 0; j < app.departments.length; j++){
-			// 	var dept_obj = app.departments[j];
-			// 	app.departments[j] = dept_obj.slice(0, 4);
-
-			// }
 			app.contains_depts = true;
 		} 
 
@@ -381,7 +367,6 @@ app.AppView = Backbone.View.extend({
 
 
 		/*------------Form appropriate queries---------------*/
-		// app.reqs_results.reset(); // old
 		app.results.reset(); // new
 		var	query = new Parse.Query(app.CourseModel);
 		query.startsWith('section_id', search_string_code);
@@ -389,24 +374,32 @@ app.AppView = Backbone.View.extend({
 		query.startsWith("req_str", PREREQ);
 		query.addAscending("section_id");
 		query.find({
-			success: this.precoreqs_query_on_success,
-			error: this.precoreqs_query_on_error
+			success: this.prereqs_query_on_success,
+			error: this.prereqs_query_on_error
 		});
 
 	},
-	precoreqs_query_on_success: function(results) {
+	prereqs_query_on_success: function(results) {
 		if (results.length == 0){
+
 			this.no_results_found();
 		} else {
-			var result = results[0]; // should be only one
+			var result = results[0]; // results.length should be one, always
 			if (result instanceof(app.CourseModel)){ // should always be true
 				var course_codes = result.get("prereqs_str");
-				this.find_prereqs_from_list_of_course_codes(course_codes);
+				if (course_codes.length > 0 ){
+					this.find_prereqs_from_list_of_course_codes(course_codes);
+				} else {
+					this.no_prereqs_message();
+				}
 			}
 
 		}
 	},
-	precoreqs_query_on_error: function(err) {
+	no_prereqs_message: function() {
+		this.display_message('No prerequisite courses were found.');
+	},
+	prereqs_query_on_error: function(err) {
 		this.reset_all_collections();
 		this.reset_results_html();
 		console.log("couldn't find pre/co-reqs, error: " + err.message);
@@ -430,7 +423,6 @@ app.AppView = Backbone.View.extend({
 			var obj_course = results[i];
 			var obj_id = obj_course.id;
 			var obj_dept = obj_course.get("section_id").slice(0, 4);
-			// var contains_the_prereq = app.reqs_results.get(obj_id) instanceof(app.CourseModel); // old
 			var contains_the_prereq = app.results.get(obj_id) instanceof(app.CourseModel);
 			var matches_one_of_the_depts = false;
 			
@@ -449,7 +441,6 @@ app.AppView = Backbone.View.extend({
 				}
 
 				if (matches_one_of_the_depts){
-					// app.reqs_results.add(obj_course); //old
 					app.results.add(obj_course); //new
 				}
 
@@ -475,11 +466,9 @@ app.AppView = Backbone.View.extend({
 		/*-------- (Re)Initialize everything ------------ */
 		app.courses_of_interest = [];
 		app.post_departments = [];
-		// app.post_req_results.reset(); // old
 		app.results.reset(); // new
 
 		app.contains_post_departments = false;
-		// app.postreqs_search_level = app.DEFAULT_POSTREQS_SEARCH_LEVEL;
 
 		
 		/*------------- Getting user input ------------*/
@@ -538,7 +527,7 @@ app.AppView = Backbone.View.extend({
 	},
 	find_postreqs_from_course_code_on_success: function(results){
 		if (results.length == 0 ){
-			this.no_results_found();
+			this.no_post_reqs_found();
 		} else {
 			var i = 0;
 			while (i < results.length && app.postreqs_search_level > 0){
@@ -546,7 +535,6 @@ app.AppView = Backbone.View.extend({
 				var course_id = course.id;
 				var course_dept = course.get("section_id").slice(0, 4);
 
-				// var contains_the_postreq = app.post_req_results.get(course_id) instanceof(app.CourseModel); // old
 				var contains_the_postreq = app.results.get(course_id) instanceof(app.CourseModel); // new
 				var matches_one_of_the_depts = false;
 				
@@ -566,7 +554,6 @@ app.AppView = Backbone.View.extend({
 
 					if (matches_one_of_the_depts){
 						app.postreqs_search_level--;
-						// app.post_req_results.add(course); // old
 						app.results.add(course); // new
 					}
 
@@ -575,11 +562,13 @@ app.AppView = Backbone.View.extend({
 			} 
 		}
 	},
+	no_post_reqs_found: function(){
+		this.display_message('This course is not a prerequisite for any courses');
+	},
 
 	find_postreqs_from_course_code_on_error: function(err){
 		console.log("Error finding post reqs from course code: " + err.message);
 	},
-
 
 	add_to_cart: function(event){
 		console.log("adding to cart");
@@ -603,7 +592,7 @@ app.AppView = Backbone.View.extend({
 		self.$('#worklist-container').append(view.el);
 	},
 	add_to_cart_error: function(obj, err){
-		alert("couldnt add the item to the worklist, err msg: " + err.message); // idea: add error msges to faq, idk
+		console.log("couldnt add the item to the worklist, err msg: " + err.message); // idea: add error msges to faq, idk
 	},
 
 	remove_from_cart: function(event){
@@ -611,18 +600,6 @@ app.AppView = Backbone.View.extend({
 		var course_id = $(event.target).closest('li');
 		worklist.splice($.inArray(course_id.text(), worklist));
 		course_id.remove();
-	},
-	logOut: function(){
-
-	},
-	logIn: function(){
-
-	},
-	sort_by_department: function(){
-
-	},
-	sort_by_level: function(){
-
 	},
 
 	addCourse: function(obj){
@@ -647,23 +624,15 @@ app.AppView = Backbone.View.extend({
 		app.views = [];
 	},
 	no_results_found: function(){
-		var error_msg = '<p>No results were found. Please check your spelling.</p>';
-		self.$('#results').prepend(error_msg);
+		this.display_message('No results were found, please check your spelling.');
 	},
 
-	addCourseByCredits: function(obj){
-
-	},
-	sort_by_credits: function(){
-	
-	},
 	prepare_for_detailed_view: function(){
 
-		console.log('hello');
 		var $selected_course = $('#results .active-class');
 		var selected_course_id = $selected_course.attr('id');
+
 		$selected_course.nextAll().remove();
-		
 		$selected_course.prevAll().remove();
 		
 		var models_to_remove = new app.CourseCollection();
@@ -690,7 +659,6 @@ app.AppView = Backbone.View.extend({
 			var current_id_of_views_model = current_view.model.id ;
 			if (current_id_of_views_model == id_of_the_remaining_course_model) {
 				remaining_views.push(current_view);
-				// break;
 			} else {
 				current_view.remove();
 			}
@@ -700,7 +668,9 @@ app.AppView = Backbone.View.extend({
 		var remaining_view = app.views[0];
 
 	},
-	handle_sorting_by_credits: function(){
+	display_message: function(msg) {
+		var message = '<p>' + msg +  '</p>';
+		self.$('#results').prepend(message);
+	},
 
-	}
 });

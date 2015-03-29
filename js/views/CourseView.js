@@ -74,6 +74,7 @@ app.CourseView = Backbone.View.extend({
         var section = this.model.get("section_id");
         query.equalTo("type", "Lecture");
         query.equalTo("section_id", section);
+        query.addAscending("subsection_id");
         query.find({
             success: this.find_lectures_on_success,
             error: this.find_lectures_on_error
@@ -93,6 +94,7 @@ app.CourseView = Backbone.View.extend({
         var section = this.model.get("section_id");
         query.equalTo("type", "Laboratory");
         query.equalTo("section_id", section);
+        query.addAscending("subsection_id");
         query.find({
             success: this.find_labs_on_success,
             error: this.find_labs_on_error
@@ -116,6 +118,7 @@ app.CourseView = Backbone.View.extend({
         var section = this.model.get("section_id");
         query.equalTo("type", "Tutorial");
         query.equalTo("section_id", section);
+        query.addAscending("subsection_id");
         query.find({
             success: this.find_tutorial_on_success,
             error: this.find_tutorial_on_error
@@ -138,6 +141,7 @@ app.CourseView = Backbone.View.extend({
         var section = this.model.get("section_id");
         query.equalTo("type", "Discussion");
         query.equalTo("section_id", section);
+        query.addAscending("subsection_id");
         query.find({
             success: this.find_discussion_on_success,
             error: this.find_discussion_on_error
@@ -161,6 +165,7 @@ app.CourseView = Backbone.View.extend({
         var prev_types = ["Lecture", "Laboratory", 
                         "Tutorial", "Discussion"];
         query.notContainedIn("type", prev_types);
+        query.addAscending("subsection_id");
         query.find({
             success: this.find_others_on_success,
             error: this.find_others_on_error
