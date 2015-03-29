@@ -26,12 +26,8 @@ app.AppView = Backbone.View.extend({
 			'precoreqs_query_on_success', 'precoreqs_query_on_error',
 			'find_prereqs_for_each_course_on_success', 'find_prereqs_for_each_course_on_error',
 			'reset_results_html',
-<<<<<<< HEAD
-			'find_postreqs_from_course_code_on_success', 'find_postreqs_from_course_code_on_error');
-=======
 			'find_postreqs_from_course_code_on_success', 'find_postreqs_from_course_code_on_error',
 			'prepare_for_detailed_view');
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 
 		/*---------------Declare and initialize some variables-----------------------*/
 		app.results = new app.CourseCollection();
@@ -53,11 +49,7 @@ app.AppView = Backbone.View.extend({
 		app.DEFAULT_POSTREQS_SEARCH_LEVEL = 3;
 		app.postreqs_search_level = app.DEFAULT_POSTREQS_SEARCH_LEVEL;
 
-<<<<<<< HEAD
-=======
 		app.views = [];
-
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 
 
 
@@ -390,11 +382,8 @@ app.AppView = Backbone.View.extend({
 		app.results.reset(); // new
 		var	query = new Parse.Query(app.CourseModel);
 		query.startsWith('section_id', search_string_code);
-<<<<<<< HEAD
-=======
 		var PREREQ = 'Pre-reqs';
 		query.startsWith("req_str", PREREQ);
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 		query.addAscending("section_id");
 		query.find({
 			success: this.precoreqs_query_on_success,
@@ -633,10 +622,7 @@ app.AppView = Backbone.View.extend({
 
 	addCourse: function(obj){
 		var view = new self.app.CourseView({model: obj});
-<<<<<<< HEAD
-=======
 		app.views.push(view);
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 		self.$('#results').append(view.el);
 	},
 
@@ -646,21 +632,14 @@ app.AppView = Backbone.View.extend({
 
 	reset_results_html: function(){
 		this.$('#results').html('');
-<<<<<<< HEAD
-=======
 		for (var k = 0; k < app.views; k++){
 			app.views[k].remove();
 		}
-		
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	},
 	reset_all_collections: function(){
 		app.results.reset(); 
 		app.sub_results.reset();
-<<<<<<< HEAD
-=======
 		app.views = [];
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	},
 	no_results_found: function(){
 		var error_msg = '<p>No results were found. Please check your spelling.</p>';
@@ -680,35 +659,17 @@ app.AppView = Backbone.View.extend({
 		$selected_course.prevAll().remove();
 		
 		var models_to_remove = new app.CourseCollection();
-<<<<<<< HEAD
 		for (var i = 0; i < app.results.length; i++){
 			var current_model = app.results.at(i);
 			var current_model_id = current_model.id;
 			if (current_model_id != selected_course_id){
 				models_to_remove.add(current_model);
-=======
-
-		for (var i = 0; i < app.results.length; i++){
-			var current_model = app.results.at(i);
-
-			var current_model_id = current_model.id;
-			if (current_model_id != selected_course_id){
-				models_to_remove.add(current_model);
-
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 			} 
 		}
 		for (var k = 0; k < models_to_remove.length; k++){
 			var current_model_to_remove = models_to_remove.at(k);
 			app.results.remove(current_model_to_remove);
 		}
-<<<<<<< HEAD
-		console.log("length: " + app.results.length);	
-		if (app.results.length != 1){
-			alert("Noo");
-			console.log("Error, should only be 1 couse remaining ");
-		}
-=======
 
 		if (app.results.length != 1){
 			console.log("Error, should only be 1 course remaining ");
@@ -729,7 +690,6 @@ app.AppView = Backbone.View.extend({
 		var remaining_view = app.views[0];
 		var templ = remaining_view.render_header();
 		self.$('#results').append(templ);
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	},
 	handle_sorting_by_credits: function(){
 
