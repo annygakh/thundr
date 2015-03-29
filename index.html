@@ -33,6 +33,29 @@
     <script src="https://cdn.jsdelivr.net/evil-icons/1.5.0/evil-icons.min.js"></script>
   </head>
   <body>
+    <script>
+      // Initialize Parse
+      Parse.initialize("GPBcV6zGuJ2E6OD9nsBZ5q3XnLAkrybuA8RFC4HB", "0mfkZM9QM8Vnc5fMt3JrKpGwLQbKrfYCvohsNgBG");
+
+      window.fbAsyncInit = function() {
+        Parse.FacebookUtils.init({ // this line replaces FB.init({
+          appId      : '760116324105753', // Facebook App ID
+          //status     : true,  // check Facebook Login status
+          cookie     : true,  // enable cookies to allow Parse to access the session
+          xfbml      : true,  // initialize Facebook social plugins on the page
+          version    : 'v2.2' // point to the latest Facebook Graph API version
+        });
+      };
+
+      // Load the SDK asynchronously
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "http://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
 
 <div class="top">
     <section class="header">
@@ -40,7 +63,12 @@
         <img class="logo" src="images/cloud.png">
         <p class="large-font">Thundr</p>
       </div>
-
+      <div class="fb-login">
+        Login with Facebook
+      </div>
+      <div class="fb-logout">
+        Logout
+      </div>
     </section>
 
 </div>
@@ -185,6 +213,7 @@
         <div class="container">
         <table class="table-header top" >
           <tr class="table-header">
+            <td class="table-header">Department</td>
             <td class="table-header">Course Title</td>
             <td class="table-header" id="table-header-credits">Credits</td>
           </tr>
@@ -326,5 +355,6 @@
   <script src="js/views/SubsectionView.js"></script>
   <!-- // <script src="js/views"></script> -->
   <script src="js/app.js"></script>
+  <script src="js/fb.js"></script>
   </body>
 </html>

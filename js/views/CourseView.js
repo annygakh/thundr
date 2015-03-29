@@ -211,6 +211,7 @@ app.CourseView = Backbone.View.extend({
     },
 	render_header: function(){
         var obj = {
+
             	"html_id" : this.model.id,
 				"course_title" : this.model.get("title").trim(),
 				"num_credits" : this.model.get("credits"),

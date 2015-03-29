@@ -55,7 +55,6 @@ app.AppView = Backbone.View.extend({
 
 
 
-
 		/*----------------Setting up listeners-----------------------*/
 		this.listenTo(app.results, 'add', this.addCourse);
 		this.listenTo(app.sub_results, 'add', this.addSubsection);
@@ -641,7 +640,6 @@ app.AppView = Backbone.View.extend({
 		for (var k = 0; k < app.views; k++){
 			app.views[k].remove();
 		}
-		
 	},
 	reset_all_collections: function(){
 		app.results.reset(); 
@@ -669,14 +667,11 @@ app.AppView = Backbone.View.extend({
 		$selected_course.prevAll().remove();
 		
 		var models_to_remove = new app.CourseCollection();
-
 		for (var i = 0; i < app.results.length; i++){
 			var current_model = app.results.at(i);
-
 			var current_model_id = current_model.id;
 			if (current_model_id != selected_course_id){
 				models_to_remove.add(current_model);
-
 			} 
 		}
 		for (var k = 0; k < models_to_remove.length; k++){
