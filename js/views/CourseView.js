@@ -31,7 +31,10 @@ app.CourseView = Backbone.View.extend({
 		var click = false;
         var html_el;
 		var self = this;
-        _.bindAll(this, 'find_subsection_on_success', 'render_lab_header', 
+        _.bindAll(this, 'find_tutorial_on_success', 'find_labs_on_success',
+            'find_lectures_on_success', 'find_discussion_on_success',
+            'find_others_on_success',
+            'render_lab_header', 
             'render_lecture_header', 'render_dis_header',
             'render_tut_header');
 	},
@@ -44,81 +47,115 @@ app.CourseView = Backbone.View.extend({
     	// console.log( 'id of the element $tr: ' + $tr.attr('id'));
     	$tr.addClass("active-class");
         /*------------create queries ------------*/
-        // var obj = {
-        //     "html_id" : this.model.id,
-        //     "course_title" : this.model.get("title").trim(),
-        //     "num_credits" : this.model.get("credits")
-        // };
 
         $('.add-button').addClass("hide-totally");
        
         
         var query = new Parse.Query(app.SubsectionModel);
         var section = this.model.get("section_id");
-        // console.log(section);
         query.equalTo("type", "Lecture");
         query.equalTo("section_id", section);
         query.find({
-            success: this.find_subsection_on_success,
-            error: this.find_subsection_on_error
+            success: this.find_lectures_on_success,
+            error: this.find_lectures_on_error
         });
-        query = new Parse.Query(app.SubsectionModel);
+    },
+    find_lectures_on_success: function(results) {
+        if (results.length > 0) {
+            this.render_lecture_header();
+            for (var i = 0; i < results.length ; i++) {
+                var result = results[i];
+                app.subsections.add(result);
+            }
+        }
+
+        var query = new Parse.Query(app.SubsectionModel);
+        var section = this.model.get("section_id");
         query.equalTo("type", "Laboratory");
         query.equalTo("section_id", section);
         query.find({
-            success: this.find_subsection_on_success,
-            error: this.find_subsection_on_error
+            success: this.find_labs_on_success,
+            error: this.find_labs_on_error
         });
-        query = new Parse.Query(app.SubsectionModel);
+
+    },
+    find_lectures_on_error: function(err){
+        console.log("Error retrieving subsections: " + err.message);
+    },
+    find_labs_on_success: function(){
+        if (results.length > 0) {
+            this.render_lab_header();
+
+            for (var i = 0; i < results.length ; i++) {
+                var result = results[i];
+                app.subsections.add(result);
+            }
+        }
+        var query = new Parse.Query(app.SubsectionModel);
+        var section = this.model.get("section_id");
         query.equalTo("type", "Tutorial");
         query.equalTo("section_id", section);
         query.find({
-            success: this.find_subsection_on_success,
-            error: this.find_subsection_on_error
+            success: this.find_tutorial_on_success,
+            error: this.find_tutorial_on_error
         });
-        query = new Parse.Query(app.SubsectionModel);
+    },
+    find_labs_on_error: function(err){
+        console.log("Error retrieving subsections: " + err.message);
+    },
+    find_tutorial_on_success: function(results) {
+        if (results.length > 0) {
+            this.render_tut_header();
+
+            for (var i = 0; i < results.length ; i++) {
+                var result = results[i];
+                app.subsections.add(result);
+            }
+        }
+        var query = new Parse.Query(app.SubsectionModel);
+        var section = this.model.get("section_id");
         query.equalTo("type", "Discussion");
         query.equalTo("section_id", section);
         query.find({
-            success: this.find_subsection_on_success,
-            error: this.find_subsection_on_error
+            success: this.find_discussion_on_success,
+            error: this.find_discussion_on_error
         });
-        query = new Parse.Query(app.SubsectionModel);
+    },
+    find_tutorial_on_error: function(err) {
+        console.log("Error retrieving subsections: " + err.message);
+    },
+    find_discussion_on_success: function(results){
+        if (results.length > 0) {
+            this.render_dis_header();
+            for (var i = 0; i < results.length ; i++) {
+                var result = results[i];
+                app.subsections.add(result);
+            }
+        }
+        var query = new Parse.Query(app.SubsectionModel);
+        var section = this.model.get("section_id");
         query.equalTo("section_id", section);
         var prev_types = ["Lecture", "Laboratory", 
                         "Tutorial", "Discussion"];
         query.notContainedIn("type", prev_types);
         query.find({
-            success: this.find_subsection_on_success,
-            error: this.find_subsection_on_error
+            success: this.find_others_on_success,
+            error: this.find_others_on_error
         });
-
-
-        // this.click = false;
     },
-    find_subsection_on_success: function(results){
-        // console.log('find subsectiosn_on_success');
-        // console.log(results[0]);
-        if (results.length > 0 && this.click == true) {
-            if (results[0].get("type") == "Lecture"){
-                this.render_lecture_header();
-            } else if (results[0].get("type") == "Laboratory"){
-                this.render_lab_header();
-            } else if (results[0].get("type") == "Tutorial"){
-                this.render_tut_header();
-            } else if (results[0].get("type") == "Discussion"){
-                this.render_dis_header();
-            } else {
-                this.render_other_header();
-            }
-            
+    find_discussion_on_error: function(err){
+        console.log("Error retrieving subsections: " + err.message);
+    },
+    find_others_on_success: function(results){
+         if (results.length > 0) {
+            this.render_dis_header();
             for (var i = 0; i < results.length ; i++) {
                 var result = results[i];
                 app.subsections.add(result);
             }
         }
     },
-    find_subsection_on_error: function(err){
+    find_others_on_error: function(err){
         console.log("Error retrieving subsections: " + err.message);
     },
 
