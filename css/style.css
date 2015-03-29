@@ -63,11 +63,8 @@ body, html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   color: #333333;
-<<<<<<< HEAD
   background-color: #FFFFFF;
-=======
   background-color: #004786;
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	/*overflow: scroll;*/
 }
 
@@ -86,13 +83,8 @@ section {
 
 .container {
 	width: 90%;
-<<<<<<< HEAD
-	margin: 0px auto;
-	position: relative;
-=======
 	margin: auto;
 	position :relative;
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	height: auto;
 	/*will-change: overflow; //new*/
 	/*overflow: hidden; //new*/
@@ -101,55 +93,40 @@ section {
 	visibility: hidden;
 }
 
-<<<<<<< HEAD
 .container-all {
 	max-height: 85vh;
 	overflow: hidden;
 	margin-bottom: 0px;
 }
 
-/** Header
---------------------------------------------- **/
-
 .top {
 	margin: 0;
+	position: relative;
 }
 
-section.header {
-	position: relative;
-=======
 /** Header
 --------------------------------------------- **/
 
 section.header {
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	width: 100vw;
 	min-width: 800px;
 	height: 10vh;
 	min-height: 80px;
 	background-color: #004786;
 	color: #FFFFFF;
-<<<<<<< HEAD
 	overflow: hidden;
-=======
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 }
 
 section.header * {
 	display: inline-block;
 	float: left;
-<<<<<<< HEAD
-	margin: 0px auto;
-=======
 	margin: auto;
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 }
 
 section.header p {
 	line-height: 100%;
 }
 
-<<<<<<< HEAD
 .fb-login {
 	float: right;
 	position: absolute;
@@ -166,7 +143,6 @@ section.header p {
 }
 
 .fb-logout{
-	display: none;
 	float: right;
 	position: absolute;
 	height: 30px;
@@ -181,8 +157,6 @@ section.header p {
 	border-radius: 5px;
 }
 
-=======
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 .logo {
 	height: 10vh;
 	min-height: 80px;
@@ -207,10 +181,7 @@ section.header p {
 section.content {
 	width: 100vw;
 	min-width: 800px;
-<<<<<<< HEAD
 	max-height: 90vh;
-=======
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 }
 
 /** Left **/
@@ -218,11 +189,7 @@ section.content {
 .left {
 	width: 30vw;
 	min-width: 240px;
-<<<<<<< HEAD
 	height: 85vh;
-=======
-	height: 90vh;
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	/*overflow: auto; //new*/
 	min-height: 500px;
 	float: left;
@@ -313,10 +280,7 @@ ul#tabs li.active {
 .worklist .item {
 	display: inline-block;
 	width: 100%;
-<<<<<<< HEAD
 	margin-bottom: 5px;
-=======
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 }
 
 .worklist p {
@@ -331,18 +295,11 @@ ul#tabs li.active {
 
 /** Right **/
 
-<<<<<<< HEAD
 .right {
 	width: 70vw;
 	min-width: 560px;
 	height: 85vh;
 	overflow: auto;
-=======
-.right, .right-results {
-	width: 70vw;
-	min-width: 560px;
-	height: 100h;
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	/*min-height: 00px;*/
 	float: left;
 	background-color: white;
@@ -351,11 +308,7 @@ ul#tabs li.active {
 .right-results{
 	width: 100%;
 	/*min-width: 500px;*/
-<<<<<<< HEAD
 	height: 100%;
-=======
-	height: 80vh;
->>>>>>> 01477f293a0179b3c05e4fd3d1f2621112c33e89
 	overflow-y: auto; // new
 	overflow-x: hidden; // new
 	min-height: 400px;
