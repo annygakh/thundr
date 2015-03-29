@@ -181,7 +181,10 @@ app.CourseView = Backbone.View.extend({
         var obj = {
             	"html_id" : this.model.id,
 				"course_title" : this.model.get("title").trim(),
-				"num_credits" : this.model.get("credits")
+				"num_credits" : this.model.get("credits"),
+                "description" : this.model.get("description"),
+                "req_str" : this.model.get("req_str"),
+                "link" : this.model.get("link")
 	        };
 	        var templ = this.detailed_view_template(obj);
 	        return templ;
