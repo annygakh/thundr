@@ -585,12 +585,10 @@ app.AppView = Backbone.View.extend({
 			//var subsection_id = $(event.target).closest('.course-result').children('p').text();
 			var relation = Parse.User.current().relation("Worklist");
 			var query = new Parse.Query(SubSection);
-			query.get("UIxj3AH22k", {
+			query.get("OrotsCi8Sx", {
 				success: function(subsection) {
 					relation.add(subsection);
 					Parse.User.current().save();
-				},
-				failure: function(error) {
 				}
 			});
 		} else {
