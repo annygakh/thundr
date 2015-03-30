@@ -29,11 +29,13 @@ app.AppView = Backbone.View.extend({
 		/*---------------Declare and initialize some variables-----------------------*/
 		app.results = new app.CourseCollection();
 		app.sub_results = new app.SubsectionCollection();
+		app.selected_course_id = '';
 		app.queries = [];
 		app.option_building;
 
 		app.reqs_results = new app.CourseCollection();
 		app.worklist = new app.CourseCollection();
+		app.worklist_ids = [];
 		app.prereqs = []; // i think we can delete this
 		app.departments = [];
 		app.contains_depts = false;
@@ -572,7 +574,10 @@ app.AppView = Backbone.View.extend({
 	},
 
 	add_to_cart: function(event){
+<<<<<<< HEAD
 		consloe.log("ADEDED");
+=======
+>>>>>>> 6c4e72e568272e46e28ad67925bb817757c10125
 		var SubSection = Parse.Object.extend("SubSection");
 		var user = Parse.User.current();
 		if (user) {
