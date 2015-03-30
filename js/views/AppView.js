@@ -352,7 +352,7 @@ app.AppView = Backbone.View.extend({
 			var d_index_of_comma = department_string.indexOf(',');
 			var d_index_of_space = department_string.indexOf(' ');
 
-			var d_contains_commas = d_index_of_space > -1;
+			var d_contains_commas = d_index_of_comma > -1;
 
 			if (d_contains_commas) {
 				app.departments = department_string.split(",");
@@ -492,6 +492,7 @@ app.AppView = Backbone.View.extend({
 		} else {
 			app.courses_of_interest = courses_input_string.split(" ");
 		}
+		console.log(app.courses_of_interest);
 		/* -------------- Filtering dept input-------------- */
 
 		if (dept_input){
@@ -501,10 +502,11 @@ app.AppView = Backbone.View.extend({
 			var contains_comma = index_of_comma > -1;
 
 			if (contains_comma){
-				app.courses_of_interest = dept_input_string.split(",");
+				app.post_departments = dept_input_string.split(",");
 			} else {
-				app.courses_of_interest = dept_input_string.split(" ");
+				app.post_departments = dept_input_string.split(" ");
 			}
+			console.log(app.courses_of_interest);
 			app.contains_post_departments = true;
 		}
 		/* -------------- Filtering num results input -------------- */
