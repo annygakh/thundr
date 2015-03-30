@@ -52,13 +52,6 @@ app.CourseView = Backbone.View.extend({
             return this; // to allow chained calls
 
     },
-<<<<<<< HEAD
-    toggleCourse: function (){
-        this.get("description");
-        
-        var viewCourse = new app.SubSection({model: obj});
-        // self.$("#results").append(view.el); // u need to define your own html element with its own id to write results to
-=======
     toggle_status: function(){
 
         $(this.el).off();
@@ -71,7 +64,6 @@ app.CourseView = Backbone.View.extend({
         $tr.addClass("active-class");
 
         this.render_header();
->>>>>>> 62b7f771e7fbed21853b04ebbf43a95979a258b1
         
 
         /*------------create queries ------------*/
