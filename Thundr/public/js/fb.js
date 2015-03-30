@@ -50,7 +50,6 @@ fb.reload_worklist = function (results) {
 		var start = subsection.get("startTime");
 		var end = subsection.get("endTime");
 		var days = subsection.get("days");
-		var conflict = false;
 		// compare all courses in worklist
 		// console.log("course:")
 		// console.log(subsection.get("section_id"));
@@ -59,19 +58,22 @@ fb.reload_worklist = function (results) {
 			// check if days overlap
 			// console.log("comparing:")
 			// console.log(comp.get("section_id"));
-			for (var d = 0; d < days.length; d++) {
-				if (comp.get("days").indexOf(days[d]) != -1) {
+			var conflict = false;
+			if (subsection.get("term") == comp.get("term")) {
+				for (var d = 0; d < days.length; d++) {
+					if (comp.get("days").indexOf(days[d]) != -1) {
 
-					// check if times overlap
-					if (start >= comp.get("startTime") && start < comp.get("endTime")) {
-		  				conflict = true;
-		  			} else if (end > comp.get("startTime") && end <= comp.get("endTime")) {
-		  				conflict = true;
-		  			} else if (start < comp.get("startTime") && end > comp.get("endTime")) {
-		  				conflict = true;
-		  			} else if (start > comp.get("startTime") && end < comp.get("endTime")) {
-		  				conflict = true;
-		  			}
+						// check if times overlap
+						if (start >= comp.get("startTime") && start < comp.get("endTime")) {
+			  				conflict = true;
+			  			} else if (end > comp.get("startTime") && end <= comp.get("endTime")) {
+			  				conflict = true;
+			  			} else if (start < comp.get("startTime") && end > comp.get("endTime")) {
+			  				conflict = true;
+			  			} else if (start > comp.get("startTime") && end < comp.get("endTime")) {
+			  				conflict = true;
+			  			}
+					}
 				}
 			}
 			var course_color;
