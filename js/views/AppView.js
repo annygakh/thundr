@@ -350,9 +350,9 @@ app.AppView = Backbone.View.extend({
 			var department_string = department_input.toUpperCase();
 
 			var d_index_of_comma = department_string.indexOf(',');
-			var d_index_of_space = department_string.indexOf(' ');
+			// var d_index_of_space = department_string.indexOf(' ');
 
-			var d_contains_commas = d_index_of_space > -1;
+			var d_contains_commas = d_index_of_comma > -1;
 
 			if (d_contains_commas) {
 				app.departments = department_string.split(",");
@@ -501,9 +501,9 @@ app.AppView = Backbone.View.extend({
 			var contains_comma = index_of_comma > -1;
 
 			if (contains_comma){
-				app.courses_of_interest = dept_input_string.split(",");
+				app.post_departments = dept_input_string.split(",");
 			} else {
-				app.courses_of_interest = dept_input_string.split(" ");
+				app.post_departments = dept_input_string.split(" ");
 			}
 			app.contains_post_departments = true;
 		}
@@ -574,10 +574,6 @@ app.AppView = Backbone.View.extend({
 	},
 
 	add_to_cart: function(event){
-<<<<<<< HEAD
-		consloe.log("ADEDED");
-=======
->>>>>>> 6c4e72e568272e46e28ad67925bb817757c10125
 		var SubSection = Parse.Object.extend("SubSection");
 		var user = Parse.User.current();
 		if (user) {
