@@ -571,13 +571,16 @@ app.AppView = Backbone.View.extend({
 	},
 
 	add_to_cart: function(event){
+		console.log("FGAEFDS");
 		var SubSection = Parse.Object.extend("SubSection");
 		var user = Parse.User.current();
 		if (user) {
 			var subsection_id = $(event.target).closest('tr').attr('id');
+			console.log(subsection_id);
 			var query = new Parse.Query(SubSection);
 			query.get(subsection_id, {
 				success: function(subsection) {
+					console.log("success");
 					var relation = user.relation("Worklist");
 					relation.add(subsection);
 					user.save();
@@ -585,6 +588,7 @@ app.AppView = Backbone.View.extend({
 
 					relation.query().find({
 						success: function(results) {
+							console.log("reloading");
 							fb.reload_worklist(results);
 						}
 					});

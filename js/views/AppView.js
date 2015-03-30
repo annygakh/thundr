@@ -1,5 +1,5 @@
 var app = app || {};
-var worklist = [];
+var fb = fb || {};
 
 app.AppView = Backbone.View.extend({
 	el: 'body', 
@@ -33,6 +33,7 @@ app.AppView = Backbone.View.extend({
 		app.option_building;
 
 		app.reqs_results = new app.CourseCollection();
+		app.worklist = new app.CourseCollection();
 		app.prereqs = []; // i think we can delete this
 		app.departments = [];
 		app.contains_depts = false;
@@ -571,6 +572,7 @@ app.AppView = Backbone.View.extend({
 	},
 
 	add_to_cart: function(event){
+		consloe.log("ADEDED");
 		var SubSection = Parse.Object.extend("SubSection");
 		var user = Parse.User.current();
 		if (user) {
