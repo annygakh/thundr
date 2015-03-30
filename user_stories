@@ -1,14 +1,13 @@
 [CPSC 310 - Spearman (Sprint 2)]
 
-1.	As a UBC student, I would like to view a selected number of prerequisite and/or co-requisite courses, in one or more selected departments, that I need to take for a specific course or courses, in form of a list.
+1.	As a UBC student, I would like to view a selected number of prerequisite courses, in one or more selected departments, that I need to take for a specific course or courses, in form of a list.
 
 Main epic it belongs to: Data display
 Priority: 2
 Estimate: 20 hours
 acceptance criteria: 
-- User must be able to select a course (the course that he is interested in to discover the prerequisite and/or co-requisite courses)
-- User must be able to select a number of results to be displayed (e.g. level of pre-reqs)
-- User must be able to select whether he wants to see prerequisite courses
+- User must be able to select a course (the course that he is interested in to discover the prerequisite courses)
+- User must be able to select a level of prereqs he/she would like to see (1 for immediate prereqs, and 2 for prereqs of prereqs and so on)
 - User must be able to select one or more department
 - The results will be displayed in a list
 - Initially, in the list, results will be displayed alphabetically. 
@@ -18,7 +17,7 @@ Task breakdown:
 - Create a separate tab that will contain different input options
 - Display the results in form of a list
 
-2. 	As a UBC student, if I choose to display prerequisite and/or co-requisite courses in form of a list, I would like to be able to sort the list by departments, level of the course(first digit of the course number), title of the course(alphabetically).
+2. 	As a UBC student, if I choose to display prerequisite courses in form of a list, I would like to be able to sort the list by departments, level of the course(first digit of the course number), title of the course(alphabetically).
 
 Main epic it belongs to: Display
 Priority: 3

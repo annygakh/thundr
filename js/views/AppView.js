@@ -1,17 +1,16 @@
 var app = app || {};
-
-// var window.app = app;
+var fb = fb || {};
 
 app.AppView = Backbone.View.extend({
 	el: 'body', 
 	
 	results_header_template: _.template($('#results-header-template').html()),
+    detailed_results_header_template: _.template($('#detailed-results-header-template').html()),
 	events: {
 		'click #search-button' : 'search_router',
 		'click .add-button' : 'add_to_cart',
 		'click .worklist-delete' : 'remove_from_cart',
-		'click .course-result' : 'prepare_for_detailed_view',
-		'click .course-result' : 'prepare_for_detailed_view',
+		//'click .course-result' : 'prepare_for_detailed_view',
 	},
 	initialize: function(){
 		this.$('#search-button').click(function(event){
@@ -31,6 +30,7 @@ app.AppView = Backbone.View.extend({
 		/*---------------Declare and initialize some variables-----------------------*/
 		app.results = new app.CourseCollection();
 		app.sub_results = new app.SubsectionCollection();
+		app.selected_course_id = '';
 		app.queries = [];
 		app.option_building;
 
@@ -51,6 +51,8 @@ app.AppView = Backbone.View.extend({
 		app.postreqs_search_level = app.DEFAULT_POSTREQS_SEARCH_LEVEL;
 
 		app.views = [];
+
+		app.clicked = false;
 
 
 
@@ -581,80 +583,30 @@ app.AppView = Backbone.View.extend({
 
 	add_to_cart: function(event){
 		var SubSection = Parse.Object.extend("SubSection");
-		if (Parse.User.current()) {
-			//var subsection_id = $(event.target).closest('.course-result').children('p').text();
-			var relation = Parse.User.current().relation("Worklist");
+		var user = Parse.User.current();
+		if (user) {
+			var subsection_id = $(event.target).closest('tr').attr('id');
 			var query = new Parse.Query(SubSection);
-			query.get("OrotsCi8Sx", {
+			query.get(subsection_id, {
 				success: function(subsection) {
+					var relation = user.relation("Worklist");
 					relation.add(subsection);
-					Parse.User.current().save();
+					user.save();
+					var relation = user.relation("Worklist");
+
+					relation.query().find({
+						success: function(results) {
+							fb.reload_worklist(results);
+						}
+					});
 				}
 			});
 		} else {
 			alert("Please log in");
 		}
-
-
-		// var course_id = $(event.target).closest('.course-result').children('p').text();
-		// if ($.inArray(course_id, app.worklist_ids) == -1) {
-		// 	var query = new Parse.Query(SubSection);
-		// 	query.equalTo("section_id", course_id);
-		// 	query.first(
-		// 	  	success: function(result) {
-		// 	  		var user = Parse.User.current();
-		// 	  		var worklistRelation = user.relation("Worklist");
-		// 	  		worklistRelation.add(result);
-		// 	  		user.save();
-
-		// 	  		app.worklist.push(result);
-		// 	  		var days = result.get("days");
-		// 	  		var start = result.get("startTime");
-		// 	  		var end = result.get("endTime");
-		// 	  		var times;
-
-		// 	  		for (var i = start; i <= end; i+=30)
-		// 	  			times.push(i);
-
-		// 	  		for (course in app.worklist) {
-		// 	  			if (start >= course.get("startTime") && start < course.get("endTime")) {
-		// 	  				course_color = 'red'
-		// 	  			} else if (end > course.get("startTime") && end <= course.get("endTime")) {
-		// 	  				course_color = 'red'
-		// 	  			} else if (start < course.get("startTime") && end > course.get("endTime")) {
-		// 	  				course_color = 'red'
-		// 	  			} else if (start > course.get("startTime") && end < course.get("endTime")) {
-		// 	  				course_color = 'red'
-		// 	  			} else {
-		// 	  				course_color = 'green'
-		// 	  			}
-		// 	  		}
-
-		// 	  		for (var day in days) {
-		// 	  			for (var time in times) {
-		// 	  				switch (day) {
-		// 	  					case 1: day = 'mon'; break;
-		// 	  					case 2: day = 'tue'; break;
-		// 	  					case 3: day = 'wed'; break;
-		// 	  					case 4: day = 'thu'; break;
-		// 	  					case 5: day = 'fri'; break;
-		// 	  					case default: day = null;
-		// 	  				}
-		// 	  				$('.worklist-table-container' + '.' + day + '.' + time).css({"background-color": course_color})
-		// 	  			}
-		// 	  		}
-		// 	  	}
-		// 	});
-		// 	$('#courses').append('<li>' + 
-		// 							'<div class="item">' +
-		// 							'<p class="worklist-title">' + course_id + '</p>' +
-		// 							'<i class="fa fa-trash-o worklist-delete"></i>' + 
-		// 							'</div>' +
-		// 						 '</li>');
-		// 	app.worklist_ids.push(course_id);
-		// }
 	},
 	add_to_cart_success: function(obj){
+
 		var view = new self.app.CourseView({model: obj});
 		view.$('.add-cart').addClass("hidden");
 		view.$('.credits').addClass("hidden");
@@ -666,9 +618,24 @@ app.AppView = Backbone.View.extend({
 
 	remove_from_cart: function(event){
 		console.log("remove course");
-		var course_id = $(event.target).closest('li');
-		app.worklist_ids.splice($.inArray(course_id.text(), app.worklist_ids));
-		course_id.remove();
+		var SubSection = Parse.Object.extend("SubSection");
+		var subsection_id = $(event.target).closest('div').attr('id');
+		var query = new Parse.Query(SubSection);
+		user = Parse.User.current();
+		console.log(subsection_id);
+		query.get(subsection_id, {
+			success: function(subsection) {
+				var relation = user.relation("Worklist");
+				relation.remove(subsection);
+				user.save();
+				relation.query().find({
+					success: function(results) {
+						fb.reload_worklist(results);
+						console.log("rerenders");
+					}
+				});
+			}
+		});
 	},
 	logOut: function(){
 
@@ -716,43 +683,47 @@ app.AppView = Backbone.View.extend({
 	
 	},
 	prepare_for_detailed_view: function(){
-		var $selected_course = $('#results .active-class');
-		var selected_course_id = $selected_course.attr('id');
-		$selected_course.nextAll().remove();
-		$selected_course.prevAll().remove();
+
+		// var $selected_course = $('#results .active-class');
+		// app.selected_course_id = $selected_course.attr('id');
+		// console.log(app.selected_course_id);
+		// $selected_course.nextAll().remove();
 		
-		var models_to_remove = new app.CourseCollection();
-		for (var i = 0; i < app.results.length; i++){
-			var current_model = app.results.at(i);
-			var current_model_id = current_model.id;
-			if (current_model_id != selected_course_id){
-				models_to_remove.add(current_model);
-			} 
-		}
-		for (var k = 0; k < models_to_remove.length; k++){
-			var current_model_to_remove = models_to_remove.at(k);
-			app.results.remove(current_model_to_remove);
-		}
+		// $selected_course.prevAll().remove();
+		
+		// var models_to_remove = new app.CourseCollection();
+		// for (var i = 0; i < app.results.length; i++){
+		// 	var current_model = app.results.at(i);
+		// 	var current_model_id = current_model.id;
+		// 	if (current_model_id != app.selected_course_id){
+		// 		models_to_remove.add(current_model);
+		// 	} 
+		// }
+		// for (var k = 0; k < models_to_remove.length; k++){
+		// 	var current_model_to_remove = models_to_remove.at(k);
+		// 	app.results.remove(current_model_to_remove);
+		// }
 
-		if (app.results.length != 1){
-			console.log("Error, should only be 1 course remaining ");
-		}
-		var id_of_the_remaining_course_model = app.results.at(0).id;
+		// if (app.results.length != 1){
+		// 	console.log("Error, should only be 1 course remaining ");
+		// }
+		// var id_of_the_remaining_course_model = app.results.at(0).id;
 
-		var remaining_views = [];
-		for (var j = 0; j < app.views.length; j++){
-			var current_view = app.views[j];
-			var current_id_of_views_model = current_view.model.id ;
-			if (current_id_of_views_model == id_of_the_remaining_course_model) {
-				remaining_views.push(current_view);
-				break;
-			}
-		}
-		this.reset_results_html();
-		app.views = remaining_views;
-		var remaining_view = app.views[0];
-		var templ = remaining_view.render_header();
-		self.$('#results').append(templ);
+		// var remaining_views = [];
+		// for (var j = 0; j < app.views.length; j++){
+		// 	var current_view = app.views[j];
+		// 	var current_id_of_views_model = current_view.model.id ;
+		// 	if (current_id_of_views_model == id_of_the_remaining_course_model) {
+		// 		remaining_views.push(current_view);
+		// 		// break;
+		// 	} else {
+		// 		current_view.remove();
+		// 	}
+		// }
+		
+		// app.views = remaining_views;
+		// var remaining_view = app.views[0];
+
 	},
 	handle_sorting_by_credits: function(){
 

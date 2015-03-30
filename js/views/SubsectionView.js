@@ -55,6 +55,7 @@ app.SubsectionView = Backbone.View.extend({
         
 
 		var obj = {
+			"parse_id" : this.model.id,
             "term" : this.model.get("term"),
             "code" : this.model.get("subsection_id"),
             "days" : days_string,
