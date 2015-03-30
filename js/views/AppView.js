@@ -29,10 +29,13 @@ app.AppView = Backbone.View.extend({
 		/*---------------Declare and initialize some variables-----------------------*/
 		app.results = new app.CourseCollection();
 		app.sub_results = new app.SubsectionCollection();
+		app.selected_course_id = '';
 		app.queries = [];
 		app.option_building;
 
 		app.reqs_results = new app.CourseCollection();
+		app.worklist = new app.CourseCollection();
+		app.worklist_ids = [];
 		app.prereqs = []; // i think we can delete this
 		app.departments = [];
 		app.contains_depts = false;
@@ -571,17 +574,27 @@ app.AppView = Backbone.View.extend({
 	},
 
 	add_to_cart: function(event){
-		console.log("adding to cart");
-		var course_id = $(event.target).closest('.course-result').children('p').text();
-		console.log(course_id);
-		if ($.inArray(course_id, worklist) == -1) {
-			$('#courses').append('<li>' + 
-									'<div class="item">' +
-									'<p class="worklist-title">' + course_id + '</p>' +
-									'<i class="fa fa-trash-o worklist-delete"></i>' + 
-									'</div>' +
-								 '</li>');
-			worklist.push(course_id);
+		var SubSection = Parse.Object.extend("SubSection");
+		var user = Parse.User.current();
+		if (user) {
+			var subsection_id = $(event.target).closest('tr').attr('id');
+			var query = new Parse.Query(SubSection);
+			query.get(subsection_id, {
+				success: function(subsection) {
+					var relation = user.relation("Worklist");
+					relation.add(subsection);
+					user.save();
+					var relation = user.relation("Worklist");
+
+					relation.query().find({
+						success: function(results) {
+							fb.reload_worklist(results);
+						}
+					});
+				}
+			});
+		} else {
+			alert("Please log in");
 		}
 	},
 	add_to_cart_success: function(obj){
@@ -597,9 +610,24 @@ app.AppView = Backbone.View.extend({
 
 	remove_from_cart: function(event){
 		console.log("remove course");
-		var course_id = $(event.target).closest('li');
-		worklist.splice($.inArray(course_id.text(), worklist));
-		course_id.remove();
+		var SubSection = Parse.Object.extend("SubSection");
+		var subsection_id = $(event.target).closest('div').attr('id');
+		var query = new Parse.Query(SubSection);
+		user = Parse.User.current();
+		console.log(subsection_id);
+		query.get(subsection_id, {
+			success: function(subsection) {
+				var relation = user.relation("Worklist");
+				relation.remove(subsection);
+				user.save();
+				relation.query().find({
+					success: function(results) {
+						fb.reload_worklist(results);
+						console.log("rerenders");
+					}
+				});
+			}
+		});
 	},
 
 	addCourse: function(obj){
