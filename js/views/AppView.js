@@ -1,5 +1,5 @@
 var app = app || {};
-var worklist = [];
+var fb = fb || {};
 
 app.AppView = Backbone.View.extend({
 	el: 'body', 
