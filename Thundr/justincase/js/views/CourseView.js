@@ -53,9 +53,10 @@ app.CourseView = Backbone.View.extend({
 
     },
     toggle_status: function(){
-        console.log("FUCK");
+
         $(this.el).off();
         $(this.el).on('click .add-button', this.toggleButton, this);
+        console.log(this instanceof(app.CourseView));
 
         app.subsections = new app.SubsectionCollection();        
         this.listenTo(app.subsections, 'add', this.addSubSection);
@@ -71,7 +72,6 @@ app.CourseView = Backbone.View.extend({
         
         var query = new Parse.Query(app.SubsectionModel);
         var section = this.model.get("section_id");
-        app.selected_course_id = section;
         query.equalTo("type", "Lecture");
         query.equalTo("section_id", section);
         query.find({

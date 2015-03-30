@@ -1,3 +1,4 @@
+var fb = {};
 (function () {	
 	if (Parse.User.current()) {
 		showLogout();
@@ -28,51 +29,67 @@ $(".fb-login").click(function() {
 	});
 });
 
-function render() {
+function render () {
 	var user = Parse.User.current();
 	if (user) {
 		var relation = user.relation("Worklist");
 		relation.query().find({
 			success: function(results) {
-				for (var i = 0; i < results.length; i++) {
-					var subsection = results[i];
-					var start = subsection.get("startTime");
-					var end = subsection.get("endTime");
-					var days = subsection.get("days");
-					var course_color = 'green';
-					// compare all courses in worklist
-					for (var j = i; j < results.length; j++) {
-						var comp = results[j];
-						// check if days overlap
-						for (var d = 0; d < days.length; d++) {
-							if (comp.get("days").indexOf(days[d])) {
-								// check if times overlap
-								if (start >= comp.get("startTime") && start < comp.get("endTime")) {
-					  				course_color = 'red'
-					  			} else if (end > comp.get("startTime") && end <= comp.get("endTime")) {
-					  				course_color = 'red'
-					  			} else if (start < comp.get("startTime") && end > comp.get("endTime")) {
-					  				course_color = 'red'
-					  			} else if (start > comp.get("startTime") && end < comp.get("endTime")) {
-					  				course_color = 'red'
-					  			} else {
-					  				course_color = 'none'
-					  			}
-							}
-						}
-			  		}
-
-					$('#courses').append('<li>' + 
-						'<div class="item" style="background-color:' + course_color + '">' +
-						'<p class="worklist-title">' + subsection.get("section_id") + '</p>' +
-						'<i class="fa fa-trash-o worklist-delete"></i>' + 
-						'</div>' +
-						'</li>');
-				}
+				fb.reload_worklist(results);
 			}
 		});
 	} else {
 		$('#courses').empty();
+	}
+}
+
+fb.reload_worklist = function (results) {
+	$('#courses').empty();
+	for (var i = 0; i < results.length; i++) {
+		var subsection = results[i];
+		var start = subsection.get("startTime");
+		var end = subsection.get("endTime");
+		var days = subsection.get("days");
+		var conflict = false;
+		// compare all courses in worklist
+		// console.log("course:")
+		// console.log(subsection.get("section_id"));
+		for (var j = i+1; j < results.length; j++) {
+			var comp = results[j];
+			// check if days overlap
+			// console.log("comparing:")
+			// console.log(comp.get("section_id"));
+			for (var d = 0; d < days.length; d++) {
+				if (comp.get("days").indexOf(days[d]) != -1) {
+
+					// check if times overlap
+					if (start >= comp.get("startTime") && start < comp.get("endTime")) {
+		  				conflict = true;
+		  			} else if (end > comp.get("startTime") && end <= comp.get("endTime")) {
+		  				conflict = true;
+		  			} else if (start < comp.get("startTime") && end > comp.get("endTime")) {
+		  				conflict = true;
+		  			} else if (start > comp.get("startTime") && end < comp.get("endTime")) {
+		  				conflict = true;
+		  			}
+				}
+			}
+			var course_color;
+			if (conflict)
+				course_color = 'red'
+			else
+				course_color = 'none'
+  		}
+
+  		console.log("section: " + subsection.get("section_id"));
+  		console.log("subsection: " + subsection.get("subsection_id"));
+
+		$('#courses').append('<li>' + 
+			'<div class="item" style="background-color:' + course_color +  '" id="' + subsection.id  + '">' +
+			'<p class="worklist-title">' + subsection.get("section_id") + ' - ' + subsection.get("subsection_id") + '</p>' +
+			'<i class="fa fa-trash-o worklist-delete"></i>' + 
+			'</div>' +
+			'</li>');
 	}
 }
 
