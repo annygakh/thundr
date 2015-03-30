@@ -1,0 +1,14 @@
+{
+  "global": {
+    "parseVersion": "1.4.0"
+  },
+  "applications": {
+    "Thundr": {
+      "applicationId": "GPBcV6zGuJ2E6OD9nsBZ5q3XnLAkrybuA8RFC4HB",
+      "masterKey": "Fn2dFsZ14vemGog0NLLjqkUP06KZDblSoWVEWSIY"
+    },
+    "_default": {
+      "link": "Thundr"
+    }
+  }
+}
