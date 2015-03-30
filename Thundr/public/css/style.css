@@ -15,7 +15,7 @@
 }
 
 .large-font {
-	font-size: 50px;
+	font-size: 25px;
 	font-weight: 100;
 }
 
@@ -29,7 +29,7 @@
 	}
 
 	.large-font {
-		font-size: 60px;
+		font-size: 40px;
 		font-weight: 100;
 	}	
 }
@@ -44,7 +44,7 @@
 	}
 
 	.large-font {
-		font-size: 80px;
+		font-size: 55px;
 		font-weight: 700;
 	}		
 }
@@ -64,7 +64,7 @@ body, html {
   -webkit-font-smoothing: antialiased;
   color: #333333;
   background-color: #FFFFFF;
-  background-color: #004786;
+  height: 100%;
 	/*overflow: scroll;*/
 }
 
@@ -85,7 +85,6 @@ section {
 	width: 90%;
 	margin: auto;
 	position :relative;
-	height: auto;
 	/*will-change: overflow; //new*/
 	/*overflow: hidden; //new*/
 }
@@ -95,24 +94,22 @@ section {
 
 .container-all {
 	max-height: 85vh;
+	width: 100vw;
+	min-width: 800px;
 	overflow: hidden;
 	margin-bottom: 0px;
-}
-
-.top {
-	margin: 0;
-	position: relative;
-	overflow: hidden;
 }
 
 /** Header
 --------------------------------------------- **/
 
 section.header {
+	position: relative;
+	overflow: hidden;
 	width: 100vw;
 	min-width: 800px;
-	height: 10vh;
-	min-height: 80px;
+
+	height: 4vh;
 	background-color: #004786;
 	color: #FFFFFF;
 }
@@ -135,8 +132,8 @@ section.header p {
 	text-align: center;
 	background-color: #FFFFFF;
 	color: #004786;
-	top: 35%;
-	bottom: 65%;
+	top: 50%;
+	bottom: 50%;
 	right: 30px;
 	cursor: pointer;
 	border-radius: 5px;
@@ -158,8 +155,7 @@ section.header p {
 }
 
 .logo {
-	height: 10vh;
-	min-height: 80px;
+	height: 4vh;
 }
 
 
@@ -167,12 +163,40 @@ section.header p {
 	section.header p {
 		line-height: 100%;
 	}	
+
+	.logo {
+		height: 6vh;
+	}
+
+	section.header {
+		position: relative;
+		overflow: hidden;
+		width: 100vw;
+		min-width: 800px;
+		height: 6vh;
+		background-color: #004786;
+		color: #FFFFFF;
+	}
 }
 
 @media (min-width: 70rem) {
  	section.header p {
 		line-height: 100%;
-	}	
+	}
+
+	.logo {
+		height: 10vh;
+	}
+
+	section.header {
+		position: relative;
+		overflow: hidden;
+		width: 100vw;
+		min-width: 800px;
+		height: 8vh;
+		background-color: #004786;
+		color: #FFFFFF;
+	}
 }
 
 /** Content
@@ -181,7 +205,7 @@ section.header p {
 section.content {
 	width: 100vw;
 	min-width: 800px;
-	max-height: 90vh;
+	max-height: 92vh;
 }
 
 /** Left **/
@@ -189,7 +213,7 @@ section.content {
 .left {
 	width: 30vw;
 	min-width: 240px;
-	height: 85vh;
+	height: 92vh;
 	/*overflow: auto; //new*/
 	min-height: 500px;
 	float: left;
@@ -207,7 +231,7 @@ section.content {
 
 input {
 	width: 95%;
-	margin: 20px auto 0 auto;
+	margin: 5px auto 0 auto;
 	padding: 5px;
 	border-radius: 4px;
 	border-width: 1px;
@@ -216,7 +240,7 @@ input {
 
 #search-button {
 	display: block;
-	margin: 20px auto 0 auto;
+	margin: 5px auto 0 auto;
 	padding: 5px 10px;
 	border-radius: 4px;
 	border-width: 1px;
@@ -241,14 +265,12 @@ input {
 }
 /** Search navigation**/
 
+.search-for {
+	text-align: center;
+}
+
 ul#tabs{
 	list-style: none;
-	/*width: 20px;*/
-	margin-top: 20px;
-	margin-bottom: 20px;
-
-	padding: 5px;
-
 	text-align: center;
 }
 
@@ -257,12 +279,39 @@ ul#tabs li {
 	color: black;
 	/*display: inline;*/
 	cursor: pointer;
+	padding: 1px;
+	border-radius: 5px;
 }
 ul#tabs li.active {
 	background-color: #004786;
 	color: white;
 }
 
+@media (min-width: 50rem) {
+	ul#tabs li {
+		background-color: white;
+		color: black;
+		/*display: inline;*/
+		cursor: pointer;
+		display: inline;
+		margin: 0 4px;
+		padding: 1px;
+		border-radius: 2px;
+	}
+}
+
+@media (min-width: 70rem) {
+	ul#tabs li {
+		background-color: white;
+		color: black;
+		/*display: inline;*/
+		cursor: pointer;
+		display: inline;
+		margin: 0 10px;
+		padding: 5px;
+		border-radius: 5px;
+	}
+}
 
 .hide-totally {
 	display: none;
@@ -298,7 +347,7 @@ ul#tabs li.active {
 .right {
 	width: 70vw;
 	min-width: 560px;
-	height: 85vh;
+	height: 92vh;
 	overflow: auto;
 	/*min-height: 00px;*/
 	float: left;
@@ -309,8 +358,8 @@ ul#tabs li.active {
 	width: 100%;
 	/*min-width: 500px;*/
 	height: 100%;
-	overflow-y: auto; // new
-	overflow-x: hidden; // new
+	overflow-y: auto; 
+	overflow-x: hidden; 
 	min-height: 400px;
 	float: left;
 	background-color: white;
@@ -336,9 +385,6 @@ td.table-header-credits {
 	
 }
 /*------------Results Table----------*/
-td#results {
-	width: 100%;
-}
 .course-result{
 	/*border: 1px solid black;*/
 }
@@ -359,17 +405,32 @@ td.credits.course-result {
 	padding-right: 35px;
 	/*padding-left: 30px;*/
 }
-tr.subsections-header {
-	background-color: yellow; /*change this haha*/
+
+
+tr.subsections-header{
+	background-color: #ADB4C1; /*change this haha*/
 }
 tr.table-header-section-details  {
-	background-color: cyan; /*change this haha*/
+	background-color: #CCDAE7; /*change this haha*/
 
 }
-.sub-section {
+tr.sub-section {
 	padding: 5px;
-	background-color: orange; /*change this haha*/
+	/*background-color: #FAEFD2; /*change this haha*/
+	background-color: #EBF0F5; /*change this haha*/
 }
+tr.upper-info {
+
+}
+tr.lower-info {
+
+}
+tr.subsections-header, tr.lower-info, 
+	tr.table-header-section-details {
+	
+	border-bottom: 1px solid grey;
+}
+
 
 /*---------Scrolling - header of the table */
 /*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
@@ -392,7 +453,7 @@ tr.table-header-section-details  {
     vertical-align: middle;
 
     /*margin: 5px;*/
-    margin: 20px auto 0 auto;
+    margin: 5px auto 0 auto;
     cursor: pointer;
 }
 

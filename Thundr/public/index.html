@@ -57,7 +57,7 @@
       }(document, 'script', 'facebook-jssdk'));
     </script>
 
-<div class="top">
+
     <section class="header">
       <div class="container">
         <img class="logo" src="images/cloud.png">
@@ -71,16 +71,17 @@
       </div>
     </section>
 
-</div>
+
 <div class="container-all">
     <section class="content">
       <div class="left">
         <div class="search">
           <div class="container">
+          <p class="search-for">Search for:</p>
           <ul id="tabs">
-            <li class="active" id="sections">Search for sections</li>
-            <li id="precoreqs">Search for prereqs</li>
-            <li id="postreqs">Search for postreqs</li>
+            <li class="active" id="sections">Sections</li>
+            <li id="precoreqs">Prereqs</li>
+            <li id="postreqs">Postreqs</li>
           </ul>
           <div class="search-tabs">
 
@@ -202,7 +203,8 @@
         <div class="worklist">
           <div class="container regular-font" id="worklist-container">
             <p class="title medium-font">Worklist</p>
-            <ul id="courses"><ul>
+            <ul id="courses"></ul>
+            <!-- INSERT COURSES HERE -->
           </div>
         </div>
 
@@ -213,8 +215,7 @@
         <div class="container">
         <table class="table-header top" >
           <tr class="table-header">
-            <td class="table-header">Department</td>
-            <td class="table-header">Course Title</td>
+            <td class="table-header">Course title</td>
             <td class="table-header" id="table-header-credits">Credits</td>
           </tr>
         </table>
@@ -236,13 +237,18 @@
   </script>
 
     <script type="text/template" id="course-template">
-    <table>
-        <tr class="course-container" id="<%=html_id%>">
-          <td class="course-result"><%=course_title%></td>
+      <table class="item" id="<%=html_id%>">
+        <tr class="course-container">
+          <td class="course-result">
+            <p class="course-title"><%=course_title%></p>
+            <br>
+            <button class="add-button">ADD TO WORKLIST</button>
+          </td>
           <td class="credits course-result-credits"><%=num_credits%></td>
-          </tr>
-    <table>
+        </tr>
+      </table>
     </script>
+
 
   <script type="text/template" id="results-header-template">
       <tr class="table-header" id="top-row-results">
@@ -250,90 +256,68 @@
           <td class="table-header">Credits</td>
       </tr>
   </script>
-
-  <script type='text/template' id='detailed-results-header-template'>
-  <tr class="table-header-section-details">
-
-          <td>Term</td>
-          <td>Section & Location</td>
-          <td>Days</td>
-          <td>Time</td>
-          <td>Instructor</td>
-          <td></td>
-  </tr>
-
-  </script>
-
   
   <script type="text/template" id="detailed-view-template">
-  <tr>
-
-           <tr><td  colspan='6'class="subsection-result"><%=course_title%>: <a href="<%=link%>">SSC link</a></td></tr>
-           <tr><td  colspan='6'class="credits course-result-credits">
-           <%=num_credits%>
-           <% if (num_credits == 1) print('credit') 
-              else print ('credits') %>
-
-           </td></tr>
-           <tr><td  colspan='6'class="subsection-description"><%=description%>
-          </td></tr>
-           <tr><td  colspan='6'class="subsection-description"><%=req_str%></td></tr>
-
- 
-
-          
-
-    </tr>
-
+    <table class="subsection" id="<%=html_id%>">
+        <tr class="subsection-container">
+          <td class="subsection-result">
+            <p class="subsection-title"><%=course_title%></p>
+          </td>
+          <td class="credits course-result-credits"><%=num_credits%></td>
+        </tr>
+        <tr class="subsection-container" id="subsection">
+          <td class="subsection-result">
+            <p class="subsection-description">Description</p>
+            <p class="subsection-description">Pre-Req/Co-Req</p>
+            <a href="#">SSC</a>
+          </td>
+        </tr>
+    </table>
   </script>
   
   <script type="text/template" id="lecture-template">
-    <tr  class="subsections-header" id="subsection">
-      <td colspan='6' class="lecture-header" >Lecture Sections</td>
+    <tr class="course-header" id="subsection">
+      <td class="lecture-header">Lecture Sections</td>
     </tr>
   </script>
-
+  
   <script type="text/template" id="lab-template">
-    <tr  class="subsections-header" id="lab">
-      <td colspan='6' class="lab-header">Lab Sections</td>
+    <tr class="laboratory-header" id="lab">
+      <td class="lab-header">Lab Sections</td>
     </tr>
-  </script>
-
-
   </script>
         
   <script type="text/template" id="tutorial-template">
-    <tr  class="subsections-header" id="tut">
-      <td colspan='6' class="tut-header">Tutorial Sections</td>
+    <tr class="tutorial-header" id="tut">
+      <td class="tut-header">Tutorial Sections</td>
     </tr>
   </script>
         
   <script type="text/template" id="discussion-template">
-    <tr  class="subsections-header" id="discussion">
-      <td colspan='6' class="dis-header">Discussion Sections</td>
+    <tr class="discussion-header" id="discussion">
+      <td class="dis-header">Discussion Sections</td>
     </tr>
   </script>
         
   <script type="text/template" id="other-template">
-    <tr  class="subsections-header" id="other">
-      <td colspan='6' class="other-header">Other Sections</td>
+    <tr class="others-header" id="other">
+      <td class="other-header">Other Sections</td>
     </tr>
   </script>
         
   <script type="text/template" id="detailed-view-details-template">
-    <tr class="subsection-header sub-section" id="<%=parse_id%>">
+    <tr class="sub-section upper-info">
       <td class="term" rowspan="2">Term <%=term%></td>
       <td class="code"><%=code%></td>
       <td class="days"><%=days%></td>
       <td class="time"><%=start_time%>-<%=end_time%></td>
       <td class="instructor"><%=instructor%></td>
-      <td class="add-button-row"><button class="add-button">ADD TO WORKLIST</button> </td>
-      
     </tr>
-    <tr class="subsection-loc">
-      <td class="subsection-location">
+    <tr class="sub-section lower-info">
+      <td colspan='5' class="subsection-location">
         <a href="<%=map%>"><%=location%></a>
       </td>
+
     </tr>
   </script>
 
@@ -343,13 +327,12 @@
   <script src="js/lib/backbone-min.js"></script>
   <script src="js/lib/backbone.localStorage.js"></script>
   <script src="js/models/CourseModel.js"></script>
-  <script src="js/models/SubsectionModel.js"></script>
+  <script src="js/models/SubSectionModel.js"></script>
   <script src="js/collections/CourseCollection.js"></script>
   <script src="js/collections/SubsectionCollection.js"></script>
   <script src="js/views/AppView.js"></script>
   <!-- // <script  src="js/templates/buildings.js"></script> -->
   <script src="js/views/CourseView.js"></script>
-  <script src="js/views/SubsectionView.js"></script>
   <!-- // <script src="js/views"></script> -->
   <script src="js/app.js"></script>
   <script src="js/fb.js"></script>
