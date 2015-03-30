@@ -323,7 +323,7 @@
   </script>
         
   <script type="text/template" id="detailed-view-details-template">
-    <tr class="subsection-header sub-section">
+    <tr class="sub-section upper-info">
       <td class="term" rowspan="2">Term <%=term%></td>
       <td class="code"><%=code%></td>
       <td class="days"><%=days%></td>
@@ -332,10 +332,11 @@
       <td class="add-button-row"><button class="add-button">ADD TO WORKLIST</button> </td>
       
     </tr>
-    <tr class="subsection-loc">
-      <td class="subsection-location">
+    <tr class="sub-section lower-info">
+      <td colspan='5' class="subsection-location">
         <a href="<%=map%>"><%=location%></a>
       </td>
+
     </tr>
   </script>
 

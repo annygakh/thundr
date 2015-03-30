@@ -309,8 +309,8 @@ ul#tabs li.active {
 	width: 100%;
 	/*min-width: 500px;*/
 	height: 100%;
-	overflow-y: auto; // new
-	overflow-x: hidden; // new
+	overflow-y: auto; 
+	overflow-x: hidden; 
 	min-height: 400px;
 	float: left;
 	background-color: white;
@@ -359,17 +359,32 @@ td.credits.course-result {
 	padding-right: 35px;
 	/*padding-left: 30px;*/
 }
-tr.subsections-header {
-	background-color: yellow; /*change this haha*/
+
+
+tr.subsections-header{
+	background-color: #ADB4C1; /*change this haha*/
 }
 tr.table-header-section-details  {
-	background-color: cyan; /*change this haha*/
+	background-color: #CCDAE7; /*change this haha*/
 
 }
-.sub-section {
+tr.sub-section {
 	padding: 5px;
-	background-color: orange; /*change this haha*/
+	/*background-color: #FAEFD2; /*change this haha*/
+	background-color: #EBF0F5; /*change this haha*/
 }
+tr.upper-info {
+
+}
+tr.lower-info {
+
+}
+tr.subsections-header, tr.lower-info, 
+	tr.table-header-section-details {
+	
+	border-bottom: 1px solid grey;
+}
+
 
 /*---------Scrolling - header of the table */
 /*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
