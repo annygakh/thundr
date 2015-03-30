@@ -64,6 +64,7 @@ body, html {
   -webkit-font-smoothing: antialiased;
   color: #333333;
   background-color: #FFFFFF;
+  height: 100%;
 	/*overflow: scroll;*/
 }
 
@@ -84,7 +85,6 @@ section {
 	width: 90%;
 	margin: auto;
 	position :relative;
-	height: auto;
 	/*will-change: overflow; //new*/
 	/*overflow: hidden; //new*/
 }
@@ -204,7 +204,7 @@ section.header p {
 section.content {
 	width: 100vw;
 	min-width: 800px;
-	max-height: 90vh;
+	max-height: 92vh;
 }
 
 /** Left **/
@@ -212,7 +212,7 @@ section.content {
 .left {
 	width: 30vw;
 	min-width: 240px;
-	height: 85vh;
+	height: 92vh;
 	/*overflow: auto; //new*/
 	min-height: 500px;
 	float: left;
@@ -346,7 +346,7 @@ ul#tabs li.active {
 .right {
 	width: 70vw;
 	min-width: 560px;
-	height: 85vh;
+	height: 92vh;
 	overflow: auto;
 	/*min-height: 00px;*/
 	float: left;
