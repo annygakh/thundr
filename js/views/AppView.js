@@ -571,17 +571,27 @@ app.AppView = Backbone.View.extend({
 	},
 
 	add_to_cart: function(event){
-		console.log("adding to cart");
-		var course_id = $(event.target).closest('.course-result').children('p').text();
-		console.log(course_id);
-		if ($.inArray(course_id, worklist) == -1) {
-			$('#courses').append('<li>' + 
-									'<div class="item">' +
-									'<p class="worklist-title">' + course_id + '</p>' +
-									'<i class="fa fa-trash-o worklist-delete"></i>' + 
-									'</div>' +
-								 '</li>');
-			worklist.push(course_id);
+		var SubSection = Parse.Object.extend("SubSection");
+		var user = Parse.User.current();
+		if (user) {
+			var subsection_id = $(event.target).closest('tr').attr('id');
+			var query = new Parse.Query(SubSection);
+			query.get(subsection_id, {
+				success: function(subsection) {
+					var relation = user.relation("Worklist");
+					relation.add(subsection);
+					user.save();
+					var relation = user.relation("Worklist");
+
+					relation.query().find({
+						success: function(results) {
+							fb.reload_worklist(results);
+						}
+					});
+				}
+			});
+		} else {
+			alert("Please log in");
 		}
 	},
 	add_to_cart_success: function(obj){
@@ -592,14 +602,29 @@ app.AppView = Backbone.View.extend({
 		self.$('#worklist-container').append(view.el);
 	},
 	add_to_cart_error: function(obj, err){
-		console.log("couldnt add the item to the worklist, err msg: " + err.message); // idea: add error msges to faq, idk
+		alert("couldnt add the item to the worklist, err msg: " + err.message); // idea: add error msges to faq, idk
 	},
 
 	remove_from_cart: function(event){
 		console.log("remove course");
-		var course_id = $(event.target).closest('li');
-		worklist.splice($.inArray(course_id.text(), worklist));
-		course_id.remove();
+		var SubSection = Parse.Object.extend("SubSection");
+		var subsection_id = $(event.target).closest('div').attr('id');
+		var query = new Parse.Query(SubSection);
+		user = Parse.User.current();
+		console.log(subsection_id);
+		query.get(subsection_id, {
+			success: function(subsection) {
+				var relation = user.relation("Worklist");
+				relation.remove(subsection);
+				user.save();
+				relation.query().find({
+					success: function(results) {
+						fb.reload_worklist(results);
+						console.log("rerenders");
+					}
+				});
+			}
+		});
 	},
 
 	addCourse: function(obj){
