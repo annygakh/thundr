@@ -1,0 +1,103 @@
+Each team will have 13 minutes (strictly enforced) to demo the release candidate to the product owner. You should demonstrate all user stories that you have successfully implemented. Go through the most important elements of your Sprint 2 plan with the product owner and show how they were implemented.
+
+6 User Stories to cover in max 13 minutes with Q&A time with Bruce. So I’m estimating around 1-2 minutes per user story? Since some are quite long, though multiple displays may have overlaps.
+
+[Priority 2]
+Data Display
+
+-> Pre-Req Display and Detailed View (by Anny and Naomi)
+As a UBC student, I would like to view a selected number of prerequisite courses, in one or more selected departments, that I need to take for a specific course or courses, in form of a list.
+
+Main epic it belongs to: Data display
+Priority: 2
+Estimate: 20 hours
+Acceptance Criteria: 
+User must be able to select a course (the course that he is interested in to discover the prerequisite courses)
+User must be able to select a level of prereqs he/she would like to see (1 for immediate prereqs, and 2 for prereqs of prereqs and so on)
+User must be able to select one or more department
+The results will be displayed in a list
+Initially, in the list, results will be displayed alphabetically. 
+Each course tuple will have the following information displayed:  course title and number of credits
+Task breakdown: 
+Create parse queries to find prerequisite and/or requisite courses using user's input as requirements
+Create a separate tab that will contain different input options
+Display the results in form of a list
+
+-> Post-Req and Detailed View (by Anny and Naomi)
+As a UBC student, I would like to view a selected number of courses I can take, in one or more selected departments, as a result of completing a specific course or courses, in form of a list.
+Main epic: Display
+Priority: 2
+Estimate: 10 hours
+Acceptance Criteria:
+User must be able to select a course or multiple courses (course(s) that he wants to find out more about)
+User must be able to select a number of results to be displayed
+User must be able to select one or more departments
+Results must be displayed in a list
+In the results, each course tuple must have the following information displayed: department, course number, number of credits, and course title
+Task breakdown: 
+Create parse queries to find post requisite courses using user's input as requirements
+Create a separate tab that will contain different input options
+Display the results in form of a list
+
+-> Worklist and Timetable Display (by Mike and Scott)
+As a UBC student, I would like to be able to create a worklist that will contain desired courses and view the resultant in form of a list or a timetable.
+
+Main epic: Access
+Priority: 2
+Estimate: 20 hours
+Acceptance Criteria:
+User must be able to create a worklist
+When a user has opened a course/lab/tutorial section view, he must be able to add this section to the worklist
+When viewing courses in a worklist, the results will be displayed in form of a timetable by default
+User must be able to switch to list view or timetable view as needed.
+User must be able to delete sections from his worklist
+Tasks Breakdown:
+Create the option for the user to add a section of the course to the user's worklist
+Display the course in the worklist section in form of a graph or possibly in form of a timetable
+
+-> Errors & Conflicts Notification on Worklist (by Mike and Scott)
+As a UBC student, I would like to be notified in a visual manner (e.g. warning message upon selecting course, red color highlights) when my worklist contains conflicting scheduling arrangements.
+
+Main epic: Data display
+Priority: 2
+Estimate: 8 hours
+Acceptance Criteria:
+When the user selects the option to add the indicated section, that conflicts (time-wise) with another course in the indicated worklist, a warning message must be displayed to the user.
+Tasks Breakdown: 
+create some kind of visual warning that will remind user that his/hers worklist will now contain conflicting sections
+conflicting courses will be visually distinguishable in the worklist view
+
+
+[Priority 3]
+Data Display
+
+-> Search Result Display (by Anny)
+As a UBC student, if I choose to display prerequisite courses in form of a list, I would like to be able to sort the list by departments, level of the course(first digit of the course number), title of the course(alphabetically).
+
+Main epic it belongs to: Display
+Priority: 3
+Estimate: 10 hours
+Acceptance Criteria: 
+User must be able to click on the heading "Department", and as a result of that, the results will be sorted by department
+User must be able to click on the heading "Course number", and as a result of that,  the results will be sorted by course number
+User must be able to click on the heading "Course title", and as a result of that, the results will be sorted by the course title.
+Each course tuple will have the following information displayed: department, course number, number of credits, and course title
+Tasks Breakdown:
+Create parse queries to find prerequisite and/or requisite courses using user's input as requirements
+Display the results in form of a list organized by course name and code
+
+
+Social Network Integration
+
+-> Integration with Facebook Login (by Scott)
+As a UBC student, I would like to login via Facebook, and I would like to be able to save my worklist, so that when I log out my worklist is not deleted.
+
+Main Epic: Social network integration 
+Priority: 3
+Estimate: 20 hours
+Acceptance Criteria:
+User must be able to login with Facebook
+Upon logging in again, user must be able to see his worklist again
+Tasks Breakdown: 
+Create the option for the user to log in
+Hide courses saved in local storage, if the user is logged in, and show only the courses associated with his/hers Facebook account
