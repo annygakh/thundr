@@ -2,7 +2,7 @@
 Name of Application: Thundr
 
 App Link: http://thundr.parseapp.com/
-Branch: finalfinalfinal
+(most updated version could be found on the branch: finalfinalfinal)
 
 Summary of Application:
 
