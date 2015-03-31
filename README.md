@@ -1,8 +1,9 @@
 # Spearman
 Name of Application: Thundr
 
-App Link: http://thundr.parseapp.com/
 (most updated version could be found on the branch: finalfinalfinal)
+
+App Link: http://thundr.parseapp.com/
 
 Summary of Application:
 
